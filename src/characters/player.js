@@ -1,4 +1,4 @@
-export default class Player extends Phaser.Physics.Arcade.Sprite{
+export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, name, frame) {
         super(scene, x, y, name, frame);
         this.setScale(0.5);
@@ -6,7 +6,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing(this);
     }
 
-    update() {
+    update(collide) {
         const body = this.body;
         this.body.setVelocity(0);
         const speed = this.maxSpeed;
@@ -26,19 +26,32 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         body.velocity.normalize().scale(speed);
-        this.updateAnimation();
+        if (collide)
+            this.attack();
+        else
+            this.updateAnimation();
     };
+
+    attack() {
+        const animations = this.animationSets.get('Attack');
+        const animsController = this.anims;
+        animsController.play(animations[0], true);
+    }
+
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
+
         if (x < 0) {
             this.setScale(0.5, 0.5);
+            this.body.setOffset(100, 120);
             animsController.play(animations[0], true);
         } else if (x > 0) {
             this.setScale(-0.5, 0.5);
             animsController.play(animations[1], true);
+            this.body.setOffset(220, 120);
         } else if (y < 0) {
             animsController.play(animations[2], true);
         } else if (y > 0) {

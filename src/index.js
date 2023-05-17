@@ -4,17 +4,17 @@ import StartingScene from '../scenes/starting-scene';
 
 const config = {
   type: Phaser.AUTO,
-  width: 1600,
-  height: 900,
-  pixelArt: true,
+  width: 1590,
+  height: 880,
+  pixelArt: false,
   zoom: 1.0,
   scene: StartingScene,
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0,
-        debug: true // set to true to view zones
-        }
+      gravity: { y: 0// set to true to view zones
+        },
+      debug: true
     }
   },
 };

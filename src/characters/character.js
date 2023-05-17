@@ -11,7 +11,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         this.steerings = [];
     }
 
-    update() {
+    update(collide) {
         const body = this.body;
         this.body.setVelocity(0);
         let velocity = new Vector2();

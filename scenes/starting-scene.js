@@ -14,6 +14,9 @@ import sansSpriteSheet from '../assets/sprites/characters/sans.png'
 import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
 import CharacterFactory from "../src/characters/character_factory"
+import {Wander} from "../src/ai/steerings/wander";
+
+var inZone = false;
 
 let StartingScene = new Phaser.Class({
 
@@ -81,10 +84,12 @@ let StartingScene = new Phaser.Class({
 
         // Creating characters
         this.player = this.characterFactory.buildCharacter('vi', 100, 100, {player: true});
+        this.player.body.setSize(120, 150);
+        this.player.body.setOffset(100, 130);
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
-
+        this.player.setCollideWorldBounds();
 
         const zeus = this.characterFactory.buildNonPlayerCharacter("zeus", 1150, 180);
         this.gameObjects.push(zeus);
@@ -101,6 +106,9 @@ let StartingScene = new Phaser.Class({
         this.physics.add.collider(inky, worldLayer);
 
         const pinky = this.characterFactory.buildNonPlayerCharacter("pinky", 200, 200);
+        pinky.body.setSize(150, 150);
+        pinky.body.setOffset(140, 200);
+        this.physics.add.collider(this.player, pinky);
         this.gameObjects.push(pinky);
         pinky.setSteerings([
           //  new Wander(pinky, [this.player], 1)
@@ -138,7 +146,7 @@ let StartingScene = new Phaser.Class({
         const rock = this.characterFactory.buildNonPlayerCharacter("rock", 850, 140);
         this.gameObjects.push(rock);
         rock.setSteerings([
-            //new Wander(rock, [this.player], 1)
+            new Wander(rock, [this.player], 1)
         ]);
         this.physics.add.collider(rock, worldLayer);
 
@@ -160,14 +168,20 @@ let StartingScene = new Phaser.Class({
             // Turn on physics debugging to show player's hit-box
             this.physics.world.createDebugGraphic();
         });
+
+        this.physics.add.overlap(this.player, zeus, function (){
+            inZone = true;
+        })
+
+
     },
     update: function () {
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element) {
-                element.update();
+                element.update(inZone);
             });
         }
-
+        inZone = false;
     },
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];
