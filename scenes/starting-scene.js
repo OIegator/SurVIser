@@ -108,10 +108,11 @@ let StartingScene = new Phaser.Class({
         const pinky = this.characterFactory.buildNonPlayerCharacter("pinky", 200, 200);
         pinky.body.setSize(150, 150);
         pinky.body.setOffset(140, 200);
+        pinky.isOffset(140, 200);
         this.physics.add.collider(this.player, pinky);
         this.gameObjects.push(pinky);
         pinky.setSteerings([
-          //  new Wander(pinky, [this.player], 1)
+            new Wander(pinky, [this.player], 1)
         ]);
         this.physics.add.collider(pinky, worldLayer);
 

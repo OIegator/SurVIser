@@ -9,6 +9,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         this.velocity = velocity;
         this.steerings = [];
+        this.offset = {x: x, y: 0};
+    }
+
+    isOffset(x, y){
+        this.offset = {x: x, y: y};
     }
 
     update(collide) {
@@ -40,9 +45,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         if (x < 0) {
             this.setScale(0.5, 0.5);
             animsController.play(animations[0], true);
+            this.body.setOffset(this.offset.x, this.offset.y);
         } else if (x > 0) {
             this.setScale(-0.5, 0.5);
             animsController.play(animations[1], true);
+            this.body.setOffset( 2 * this.offset.x, this.offset.y);
         } else if (y < 0) {
             animsController.play(animations[2], true);
         } else if (y > 0) {
