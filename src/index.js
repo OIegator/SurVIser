@@ -14,9 +14,9 @@ const config = {
     arcade: {
       gravity: { y: 0// set to true to view zones
         },
-      debug: false
+      debug: true
     }
   },
 };
 
-const game = new Phaser.Game(config);
+new Phaser.Game(config);
