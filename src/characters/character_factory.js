@@ -15,6 +15,7 @@ import wizardConfigJson from "../../assets/animations/wizard.json";
 import AnimationLoader from "../utils/animation-loader";
 import Character from "./character";
 import Vector2 from 'phaser/src/math/Vector2'
+import Lower from "./lower_mob";
 
 
 export default class CharacterFactory {
@@ -81,6 +82,15 @@ export default class CharacterFactory {
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         return character;
 
+    }
+
+    buildLowerCharacter(spriteSheetName, centX, centY, camW, velocity = null){
+        let lower = new Lower(this.scene, centX, centY, camW, spriteSheetName, 2, velocity);
+        lower.maxSpeed = 100;
+        lower.setCollideWorldBounds(true);
+        lower.animationSets = this.animationLibrary.get(spriteSheetName);
+        lower.speed = new Vector2(0.5, 0.5);
+        return lower;
     }
 
     buildNonPlayerCharacter(spriteSheetName, x, y, velocity = null) {

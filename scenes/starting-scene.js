@@ -15,8 +15,11 @@ import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
 import CharacterFactory from "../src/characters/character_factory"
 import {Wander} from "../src/ai/steerings/wander";
+import Seek from "../src/ai/steerings/seek.js"
 
 var inZone = false;
+const maxLower = 15;
+let currLower = 15;
 
 let StartingScene = new Phaser.Class({
 
@@ -59,6 +62,11 @@ let StartingScene = new Phaser.Class({
         this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
     },
 
+    lowerColl(player, lower) {
+        lower.gotDamage =true;
+        //console.log("coll");
+    },
+
     create: function () {
         this.gameObjects = [];
         const map = this.make.tilemap({key: "map"});
@@ -70,6 +78,7 @@ let StartingScene = new Phaser.Class({
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         map.createLayer("Floor", tileset, 0, 0);
         const worldLayer = map.createLayer("Walls", tileset, 0, 0);
+        this.worldLayer = worldLayer;
         const aboveLayer = map.createLayer("Upper", tileset, 0, 0);
         this.tileSize = 32;
 
@@ -90,6 +99,25 @@ let StartingScene = new Phaser.Class({
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
         this.player.setCollideWorldBounds();
+
+        this.centX = this.cameras.main.centerX;
+        this.centY = this.cameras.main.centerY;
+        this.camW = this.cameras.main.width;
+
+        this.lowers = [];
+
+
+        let i = 0;
+        while (i < currLower){
+            const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+            this.gameObjects.push(lowerMob);
+            lowerMob.setSteerings([
+                new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+            ]);
+            this.physics.add.collider(lowerMob, worldLayer);
+            this.lowers.push(lowerMob);
+            i++
+        }
 
         const zeus = this.characterFactory.buildNonPlayerCharacter("zeus", 1150, 180);
         this.gameObjects.push(zeus);
@@ -177,12 +205,43 @@ let StartingScene = new Phaser.Class({
 
     },
     update: function () {
+        this.physics.overlap(this.player, this.lowers, (player, mob) => {
+            this.lowerColl(player, mob);
+        });
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element) {
                 element.update(inZone);
             });
+            this.gameObjects.forEach(function (element, index, object) {
+                if (element.constructor.name == "Lower")
+                    if (element.isDead) {
+                        element.destroy();
+                        object.splice(index, 1);
+                    }
+            });
+            this.lowers.forEach(function (element, index, object) {
+                if (element.isDead) {
+                    element.destroy();
+                    object.splice(index, 1);
+                    currLower--;
+                }
+            });
+
+            let i = currLower;
+            while (i < maxLower) {
+                const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+                this.gameObjects.push(lowerMob);
+                lowerMob.setSteerings([
+                    new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+                ]);
+                this.physics.add.collider(lowerMob, this.worldLayer);
+                this.lowers.push(lowerMob);
+                i++
+            }
+            currLower = maxLower;
+
+            inZone = false;
         }
-        inZone = false;
     },
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];

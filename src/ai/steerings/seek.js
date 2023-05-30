@@ -1,7 +1,7 @@
 import Steering from "./steering";
 import Vector2 from "phaser/src/math/Vector2";
 
-class Seek extends Steering {
+export default class Seek extends Steering {
     constructor(owner, objects, force = 1, ownerSpeed, targetSpeed) {
         super(owner, objects, force);
         this.ownerSpeed = ownerSpeed;
