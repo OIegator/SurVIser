@@ -11,13 +11,22 @@ const treeDefinition = `root {
                 repeat until(IsPlayerSpotted) {
                     action [Patrol]
                 }
-                repeat until(CanAttack) {   
-                    action [Pursuit]
-                }
-                repeat until(IsOutOfAmmo) {   
-                    sequence { 
-                        action [Attack]
-                        wait [2000]
+                repeat until(IsPlayerDead) {  
+                    selector {  
+                        repeat until(CanAttack) {   
+                            action [Pursuit]
+                        }
+                        repeat until(IsOutOfAmmo) {   
+                            sequence { 
+                                action [Attack]
+                                wait [2000]
+                            }
+                        }
+                        sequence { 
+                            wait [1000]
+                            action [Fall]
+                            wait [4000]
+                        }
                     }
                 }
             }
@@ -31,6 +40,7 @@ export default class Zeus extends Character {
         this.isOffset(200, 130);
         this.state = "idle";
         this.ammo = 3;
+        this.isVulnerable = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
@@ -68,6 +78,24 @@ export default class Zeus extends Character {
             this.setSteerings([]);
             this.scene.lightningGroup.fireLightning(this.x, this.y - 60);
             this.ammo--;
+
+            // Play attack animation
+            const attackAnimations = this.animationSets.get('Attack');
+            const animsController = this.anims;
+            animsController.play(attackAnimations[0]);
+            this.attackAnimationEnded = false;
+
+            return State.SUCCEEDED;
+        },
+        Fall: () => {
+            this.changeState("fall");
+            this.isVulnerable = true;
+            this.ammo = 3;
+
+            const deathAnimations = this.animationSets.get('Death');
+            const animsController = this.anims;
+            animsController.play(deathAnimations[0], true);
+
             return State.SUCCEEDED;
         },
         EnemyFar: () => {
@@ -107,27 +135,50 @@ export default class Zeus extends Character {
             return false;
         },
         IsOutOfAmmo: () => {
-            return this.ammo == 0;
+            return this.ammo === 0;
         }
     }
 
-    checkZone() {
-        // Get the screen size
-        const screenWidth = this.scene.cameras.main.width;
-        const screenHeight = this.scene.cameras.main.height;
-        // Calculate the range zone based on screen size
+    updateAnimation() {
+        const animations = this.animationSets.get('Walk');
+        const attackAnimations = this.animationSets.get('Attack');
+        const animsController = this.anims;
+        const x = this.body.velocity.x;
+        const y = this.body.velocity.y;
 
-        const attackZone = {
-            x: this.scene.player.x - screenWidth / 3,
-            y: this.scene.player.y - screenHeight / 3,
-            width: screenWidth,
-            height: screenHeight
-        };
+        if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
+            // Play attack animation if the SPACE key is pressed
+            animsController.play(attackAnimations[0]);
+            this.attackAnimationEnded = false;
+        }
 
-        const inAttackZone = Phaser.Geom.Rectangle.ContainsPoint(attackZone, this);
-
-        if (inAttackZone) {
-            this.changeState("attack");
+        if (animsController.isPlaying && this.state === "attack") {
+            // Attack animation is playing
+            if (!this.attackAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the attack animation
+                this.attackAnimationEnded = true;
+                animsController.stop(); // Stop the attack animation
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0]); // Play the idle animation
+            }
+        } else {
+            // Play walk or idle animations if no attack animation is playing
+            if (x < 0) {
+                this.setScale(0.5, 0.5);
+                animsController.play(animations[0], true);
+                this.body.setOffset(this.offset.x, this.offset.y);
+            } else if (x > 0) {
+                this.setScale(-0.5, 0.5);
+                animsController.play(animations[1], true);
+                this.body.setOffset(2 * this.offset.x, this.offset.y);
+            } else if (y < 0) {
+                animsController.play(animations[2], true);
+            } else if (y > 0) {
+                animsController.play(animations[3], true);
+            } else {
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0], true);
+            }
         }
     }
 
