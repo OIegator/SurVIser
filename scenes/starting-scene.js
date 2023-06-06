@@ -3,30 +3,27 @@ import dungeonRoomJson from '../assets/big_dungeon_room.json'
 
 import viSpriteSheet from '../assets/sprites/characters/vi.png'
 import zeusSpriteSheet from '../assets/sprites/characters/zeus.png'
-import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
-import Vector2 from 'phaser/src/math/Vector2';
+import inkySpriteSheet from '../assets/sprites/characters/inky.png'
+import pinkySpriteSheet from '../assets/sprites/characters/pinky.png'
+import clydeSpriteSheet from '../assets/sprites/characters/clyde.png'
+import blinkySpriteSheet from '../assets/sprites/characters/blinky.png'
+import berserkSpriteSheet from '../assets/sprites/characters/berserk.png'
+import garySpriteSheet from '../assets/sprites/characters/gary.png'
+import rockSpriteSheet from '../assets/sprites/characters/rock.png'
+import sansSpriteSheet from '../assets/sprites/characters/sans.png'
+import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
-//======================Projectiles===========================
-import lightning from '../assets/sprites/projectile/Weapon.png'
-
-//============================================================
-
-import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
-import {Patrol} from "../src/ai/steerings/patrol";
 import {Wander} from "../src/ai/steerings/wander";
-import {Pursuit} from "../src/ai/steerings/pursuit";
-import {Evade} from "../src/ai/steerings/evade";
-import {BehaviourTree, State} from "mistreevous";
+import Seek from "../src/ai/steerings/seek.js"
 
-
-let inZone = false;
-
+var inZone = false;
+const maxLower = 15;
+let currLower = 15;
 
 let StartingScene = new Phaser.Class({
 
-    Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
-
+    Extends: Phaser.Scene,
 
     initialize: function StartingScene() {
         Phaser.Scene.call(this, {key: 'StartingScene'});
@@ -36,8 +33,15 @@ let StartingScene = new Phaser.Class({
     slimeFrameConfig: {frameWidth: 32, frameHeight: 32},
     viFrameConfig: {frameWidth: 305, frameHeight: 305},
     zeusFrameConfig: {frameWidth: 683, frameHeight: 500},
-
-
+    inkyFrameConfig: {frameWidth: 476, frameHeight: 476},
+    pinkyFrameConfig: {frameWidth: 403, frameHeight: 403},
+    clydeFrameConfig: {frameWidth: 341, frameHeight: 341},
+    blinkyFrameConfig: {frameWidth: 357, frameHeight: 357},
+    berserkFrameConfig: {frameWidth: 500, frameHeight: 500},
+    garyFrameConfig: {frameWidth: 500, frameHeight: 500},
+    rockFrameConfig: {frameWidth: 996, frameHeight: 709},
+    sansFrameConfig: {frameWidth: 324, frameHeight: 324},
+    wizardFrameConfig: {frameWidth: 500, frameHeight: 500},
     preload: function () {
 
         //loading map tiles and json with positions
@@ -47,19 +51,24 @@ let StartingScene = new Phaser.Class({
         //loading spritesheets
         this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
-        this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
-
-        this.load.image('lightning', lightning);
+        this.load.spritesheet('inky', inkySpriteSheet, this.inkyFrameConfig);
+        this.load.spritesheet('pinky', pinkySpriteSheet, this.pinkyFrameConfig);
+        this.load.spritesheet('clyde', clydeSpriteSheet, this.clydeFrameConfig);
+        this.load.spritesheet('blinky', blinkySpriteSheet, this.blinkyFrameConfig);
+        this.load.spritesheet('berserk', berserkSpriteSheet, this.berserkFrameConfig);
+        this.load.spritesheet('gary', garySpriteSheet, this.garyFrameConfig);
+        this.load.spritesheet('rock', rockSpriteSheet, this.rockFrameConfig);
+        this.load.spritesheet('sans', sansSpriteSheet, this.sansFrameConfig);
+        this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
     },
 
     lowerColl(player, lower) {
-        lower.gotDamage = true;
+        lower.gotDamage =true;
+        //console.log("coll");
     },
 
     create: function () {
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
-        this.lightningGroup = new LightningGroup(this);
         const map = this.make.tilemap({key: "map"});
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
@@ -83,8 +92,7 @@ let StartingScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
-        this.player.speed = new Vector2(1);
+        this.player = this.characterFactory.buildCharacter('vi', 100, 100, {player: true});
         this.player.body.setSize(120, 150);
         this.player.body.setOffset(100, 130);
         this.gameObjects.push(this.player);
@@ -92,32 +100,149 @@ let StartingScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.player.setCollideWorldBounds();
 
-        this.zeus = this.characterFactory.buildZeus("zeus", 850, 580);
-        this.gameObjects.push(this.zeus);
-        this.physics.add.collider(this.zeus, worldLayer);
+        this.centX = this.cameras.main.centerX;
+        this.centY = this.cameras.main.centerY;
+        this.camW = this.cameras.main.width;
+
+        this.lowers = [];
+
+
+        let i = 0;
+        while (i < currLower){
+            const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+            this.gameObjects.push(lowerMob);
+            lowerMob.setSteerings([
+                new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+            ]);
+            this.physics.add.collider(lowerMob, worldLayer);
+            this.lowers.push(lowerMob);
+            i++
+        }
+
+        const zeus = this.characterFactory.buildNonPlayerCharacter("zeus", 1150, 180);
+        this.gameObjects.push(zeus);
+        zeus.setSteerings([
+            //   new Wander(zeus, [this.player], 1)
+        ]);
+        this.physics.add.collider(zeus, worldLayer);
+
+        const inky = this.characterFactory.buildNonPlayerCharacter("inky", 500, 200);
+        this.gameObjects.push(inky);
+        inky.setSteerings([
+            //  new Wander(inky, [this.player], 1)
+        ]);
+        this.physics.add.collider(inky, worldLayer);
+
+        const pinky = this.characterFactory.buildNonPlayerCharacter("pinky", 200, 200);
+        pinky.body.setSize(150, 150);
+        pinky.body.setOffset(140, 200);
+        pinky.isOffset(140, 200);
+        this.physics.add.collider(this.player, pinky);
+        this.gameObjects.push(pinky);
+        pinky.setSteerings([
+            new Wander(pinky, [this.player], 1)
+        ]);
+        this.physics.add.collider(pinky, worldLayer);
+
+        const clyde = this.characterFactory.buildNonPlayerCharacter("clyde", 300, 200);
+        this.gameObjects.push(clyde);
+        clyde.setSteerings([
+            //  new Wander(clyde, [this.player], 1)
+        ]);
+        this.physics.add.collider(clyde, worldLayer);
+
+        const blinky = this.characterFactory.buildNonPlayerCharacter("blinky", 400, 200);
+        this.gameObjects.push(blinky);
+        blinky.setSteerings([
+            //  new Wander(blinky, [this.player], 1)
+        ]);
+        this.physics.add.collider(blinky, worldLayer);
+
+        const berserk = this.characterFactory.buildNonPlayerCharacter("berserk", 650, 190);
+        this.gameObjects.push(berserk);
+        berserk.setSteerings([
+            // new Wander(berserk, [this.player], 1)
+        ]);
+        this.physics.add.collider(berserk, worldLayer);
+
+        const gary = this.characterFactory.buildNonPlayerCharacter("gary", 1300, 180);
+        this.gameObjects.push(gary);
+        gary.setSteerings([
+            //new Wander(gary, [this.player], 1)
+        ]);
+        this.physics.add.collider(gary, worldLayer)
+
+        const rock = this.characterFactory.buildNonPlayerCharacter("rock", 850, 140);
+        this.gameObjects.push(rock);
+        rock.setSteerings([
+            new Wander(rock, [this.player], 1)
+        ]);
+        this.physics.add.collider(rock, worldLayer);
+
+        const sans = this.characterFactory.buildNonPlayerCharacter("sans", 1430, 220);
+        this.gameObjects.push(sans);
+        sans.setSteerings([
+            //new Wander(sans, [this.player], 1)
+        ]);
+        this.physics.add.collider(sans, worldLayer);
+
+        const wizard = this.characterFactory.buildNonPlayerCharacter("wizard", 1030, 180);
+        this.gameObjects.push(wizard);
+        wizard.setSteerings([
+            //new Wander(wizard, [this.player], 1)
+        ]);
+        this.physics.add.collider(wizard, worldLayer);
+
+        this.input.keyboard.on("keydown_D", () => {
+            // Turn on physics debugging to show player's hit-box
+            this.physics.world.createDebugGraphic();
+        });
+
+        this.physics.add.overlap(this.player, zeus, function (){
+            inZone = true;
+        })
 
 
     },
-    update(time) {
-
-        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.zeus.pursuit(this.player);
-            this.zeus.behaviour.Attack();
-        }
-        //console.log(this.player.x + " " + this.player.y);
-        if (this.lightningGroup) {
-            this.lightningGroup.update(time); // Call the update method of the lightning group
-        }
-
+    update: function () {
+        this.physics.overlap(this.player, this.lowers, (player, mob) => {
+            this.lowerColl(player, mob);
+        });
         if (this.gameObjects) {
-            this.gameObjects.forEach((element) => {
+            this.gameObjects.forEach(function (element) {
                 element.update(inZone);
             });
+            this.gameObjects.forEach(function (element, index, object) {
+                if (element.constructor.name == "Lower")
+                    if (element.isDead) {
+                        element.destroy();
+                        object.splice(index, 1);
+                    }
+            });
+            this.lowers.forEach(function (element, index, object) {
+                if (element.isDead) {
+                    element.destroy();
+                    object.splice(index, 1);
+                    currLower--;
+                }
+            });
+
+            let i = currLower;
+            while (i < maxLower) {
+                const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+                this.gameObjects.push(lowerMob);
+                lowerMob.setSteerings([
+                    new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+                ]);
+                this.physics.add.collider(lowerMob, this.worldLayer);
+                this.lowers.push(lowerMob);
+                i++
+            }
+            currLower = maxLower;
+
+            inZone = false;
         }
     },
-
-
-
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];
     }
