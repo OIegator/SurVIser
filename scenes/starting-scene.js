@@ -95,58 +95,6 @@ let StartingScene = new Phaser.Class({
         this.zeus = this.characterFactory.buildZeus("zeus", 850, 580);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
-        this.zeus.patrol();
-        this.physics.add.overlap(this.player, this.zeus, function (){
-            inZone = true;
-        })
-
-
-        const treeDefinition = `root {
-            selector {
-                sequence {
-                    condition [EnemyFar]
-                    action [Patrol]
-                }
-                sequence {
-                    condition [EnemyClose]
-                    action [Pursuit]
-                }
-                sequence {
-                    condition [CanAttack]
-                    action [Attack]
-                }
-            }
-        }`;
-
-        const zeusActions = {
-            Patrol: () => {
-                //console.log("Zeus is patrol!");
-                this.zeus.patrol();
-                return State.SUCCEEDED;
-            },
-            Pursuit: () => {
-                //console.log("Zeus is falling!");
-                this.zeus.pursuit(this.player);
-                return State.SUCCEEDED;
-            },
-            Attack: () => {
-                //console.log("Zeus is laughing!");
-                this.zeus.attack(this.lightningGroup);
-                this.zeus.changeState("patrol")
-                return State.SUCCEEDED;
-            },
-            EnemyFar: () => {
-                return this.zeus.state === "patrol";
-            },
-            EnemyClose: () => {
-                return this.zeus.state === "pursuit";
-            },
-            CanAttack: () => {
-                return this.zeus.state === "attack";
-            }
-        };
-
-        this.zeus.behaviourTree = new BehaviourTree(treeDefinition, zeusActions);
 
 
     },
@@ -154,14 +102,13 @@ let StartingScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             //this.zeus.pursuit(this.player);
-            this.zeus.attack(this.lightningGroup);
+            this.zeus.behaviour.Attack();
         }
         //console.log(this.player.x + " " + this.player.y);
         if (this.lightningGroup) {
             this.lightningGroup.update(time); // Call the update method of the lightning group
         }
 
-        this.zeus.behaviourTree.step();
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
