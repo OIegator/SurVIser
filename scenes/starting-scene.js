@@ -15,6 +15,9 @@ import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import {Patrol} from "../src/ai/steerings/patrol";
 import {Wander} from "../src/ai/steerings/wander";
+import {Pursuit} from "../src/ai/steerings/pursuit";
+import {Evade} from "../src/ai/steerings/evade";
+import {BehaviourTree, State} from "mistreevous";
 
 
 let inZone = false;
@@ -50,7 +53,7 @@ let StartingScene = new Phaser.Class({
     },
 
     lowerColl(player, lower) {
-        lower.gotDamage =true;
+        lower.gotDamage = true;
     },
 
     create: function () {
@@ -80,7 +83,8 @@ let StartingScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', 100, 100, {player: true});
+        this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
+        this.player.speed = new Vector2(1);
         this.player.body.setSize(120, 150);
         this.player.body.setOffset(100, 130);
         this.gameObjects.push(this.player);
@@ -88,40 +92,76 @@ let StartingScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.player.setCollideWorldBounds();
 
-        this.zeus = this.characterFactory.buildNonPlayerCharacter("zeus", 850, 580);
-        this.zeus.body.setSize(200, 270);
-        this.zeus.body.setOffset(200, 130);
-        this.physics.add.collider(this.player,  this.zeus);
+        this.zeus = this.characterFactory.buildZeus("zeus", 850, 580);
         this.gameObjects.push(this.zeus);
-
-        const patrolPoints = [
-            new Vector2(880, 520),
-            new Vector2(580, 520),
-        ];
-        this.zeus.setSteerings([
-            new Wander(this.zeus, [this.player], 1)
-            //new Patrol(this.zeus, patrolPoints, 1, this.zeus.maxSpeed)
-        ]);
         this.physics.add.collider(this.zeus, worldLayer);
-
+        this.zeus.patrol();
         this.physics.add.overlap(this.player, this.zeus, function (){
             inZone = true;
         })
 
 
+        const treeDefinition = `root {
+            selector {
+                sequence {
+                    condition [EnemyFar]
+                    action [Patrol]
+                }
+                sequence {
+                    condition [EnemyClose]
+                    action [Pursuit]
+                }
+                sequence {
+                    condition [CanAttack]
+                    action [Attack]
+                }
+            }
+        }`;
+
+        const zeusActions = {
+            Patrol: () => {
+                //console.log("Zeus is patrol!");
+                this.zeus.patrol();
+                return State.SUCCEEDED;
+            },
+            Pursuit: () => {
+                //console.log("Zeus is falling!");
+                this.zeus.pursuit(this.player);
+                return State.SUCCEEDED;
+            },
+            Attack: () => {
+                //console.log("Zeus is laughing!");
+                this.zeus.attack(this.lightningGroup);
+                this.zeus.changeState("patrol")
+                return State.SUCCEEDED;
+            },
+            EnemyFar: () => {
+                return this.zeus.state === "patrol";
+            },
+            EnemyClose: () => {
+                return this.zeus.state === "pursuit";
+            },
+            CanAttack: () => {
+                return this.zeus.state === "attack";
+            }
+        };
+
+        this.zeus.behaviourTree = new BehaviourTree(treeDefinition, zeusActions);
+
+
     },
     update(time) {
 
-        this.checkAndFireLightning()
-
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.lightningGroup.fireLightning(this.zeus.x, this.zeus.y - 60); // Fire the lightning
+            //this.zeus.pursuit(this.player);
+            this.zeus.attack(this.lightningGroup);
         }
-
+        //console.log(this.player.x + " " + this.player.y);
         if (this.lightningGroup) {
             this.lightningGroup.update(time); // Call the update method of the lightning group
         }
 
+        this.zeus.behaviourTree.step();
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
@@ -129,34 +169,6 @@ let StartingScene = new Phaser.Class({
         }
     },
 
-
-    checkAndFireLightning() {
-        // Get the screen size
-        const screenWidth = this.cameras.main.width;
-        const screenHeight = this.cameras.main.height;
-        // Calculate the range zone based on screen size
-        const rangeZone = {
-            x: this.player.x - screenWidth / 2,
-            y: this.player.y - screenHeight / 2,
-            width: screenWidth,
-            height: screenHeight
-        };
-
-        // Check if the player is within the range zone
-        const inRangeZone = Phaser.Geom.Rectangle.ContainsPoint(rangeZone, this.zeus);
-
-        // Fire lightning if the player is in the range zone
-        if (inRangeZone) {
-            //console.log("In zone");
-        }
-
-        // Update game objects with the inRangeZone flag
-        if (this.gameObjects) {
-            this.gameObjects.forEach((element) => {
-                element.update(inRangeZone);
-            });
-        }
-    },
 
 
     tilesToPixels(tileX, tileY) {

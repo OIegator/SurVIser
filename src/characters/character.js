@@ -15,7 +15,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         this.offset = {x: x, y: y};
     }
 
-
     update(collide) {
         const body = this.body;
         this.body.setVelocity(0);

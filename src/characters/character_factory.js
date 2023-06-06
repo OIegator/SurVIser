@@ -7,6 +7,7 @@ import AnimationLoader from "../utils/animation-loader";
 import Character from "./character";
 import Vector2 from 'phaser/src/math/Vector2'
 import Lower from "./lower_mob";
+import Zeus from "./zeus";
 
 
 export default class CharacterFactory {
@@ -86,6 +87,15 @@ export default class CharacterFactory {
 
     buildNonPlayerCharacter(spriteSheetName, x, y, velocity = null) {
         let character = new Character(this.scene, x, y, spriteSheetName, 2, velocity);
+        character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildZeus(spriteSheetName, x, y, velocity = null) {
+        let character = new Zeus(this.scene, x, y, spriteSheetName, 2, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
