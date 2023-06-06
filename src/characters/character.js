@@ -82,9 +82,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
 
 
-
-
-
     setSteerings(steerings) {
         this.steerings = steerings;
     }

@@ -4,7 +4,7 @@ import dungeonRoomJson from '../assets/big_dungeon_room.json'
 import viSpriteSheet from '../assets/sprites/characters/vi.png'
 import zeusSpriteSheet from '../assets/sprites/characters/zeus.png'
 import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
-
+import Vector2 from 'phaser/src/math/Vector2';
 
 //======================Projectiles===========================
 import lightning from '../assets/sprites/projectile/Weapon.png'
@@ -13,6 +13,8 @@ import lightning from '../assets/sprites/projectile/Weapon.png'
 
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
+import {Patrol} from "../src/ai/steerings/patrol";
+import {Wander} from "../src/ai/steerings/wander";
 
 
 let inZone = false;
@@ -91,8 +93,14 @@ let StartingScene = new Phaser.Class({
         this.zeus.body.setOffset(200, 130);
         this.physics.add.collider(this.player,  this.zeus);
         this.gameObjects.push(this.zeus);
+
+        const patrolPoints = [
+            new Vector2(880, 520),
+            new Vector2(580, 520),
+        ];
         this.zeus.setSteerings([
-            //new Wander(this.zeus, [this.player], 1)
+            new Wander(this.zeus, [this.player], 1)
+            //new Patrol(this.zeus, patrolPoints, 1, this.zeus.maxSpeed)
         ]);
         this.physics.add.collider(this.zeus, worldLayer);
 
@@ -103,6 +111,9 @@ let StartingScene = new Phaser.Class({
 
     },
     update(time) {
+
+        this.checkAndFireLightning()
+
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             this.lightningGroup.fireLightning(this.zeus.x, this.zeus.y - 60); // Fire the lightning
         }
@@ -117,6 +128,36 @@ let StartingScene = new Phaser.Class({
             });
         }
     },
+
+
+    checkAndFireLightning() {
+        // Get the screen size
+        const screenWidth = this.cameras.main.width;
+        const screenHeight = this.cameras.main.height;
+        // Calculate the range zone based on screen size
+        const rangeZone = {
+            x: this.player.x - screenWidth / 2,
+            y: this.player.y - screenHeight / 2,
+            width: screenWidth,
+            height: screenHeight
+        };
+
+        // Check if the player is within the range zone
+        const inRangeZone = Phaser.Geom.Rectangle.ContainsPoint(rangeZone, this.zeus);
+
+        // Fire lightning if the player is in the range zone
+        if (inRangeZone) {
+            //console.log("In zone");
+        }
+
+        // Update game objects with the inRangeZone flag
+        if (this.gameObjects) {
+            this.gameObjects.forEach((element) => {
+                element.update(inRangeZone);
+            });
+        }
+    },
+
 
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];
