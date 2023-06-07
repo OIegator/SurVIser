@@ -2,11 +2,11 @@ import Steering from './steering.js';
 import Vector2 from 'phaser/src/math/Vector2'
 
 class Evade extends Steering {
-    constructor(owner, objects, force = 1, ownerSpeed, targetSpeed) {
+    constructor(owner, objects, force = 1, ownerSpeed, targetSpeed, radius = 500) {
         super(owner, objects, force);
         this.ownerSpeed = ownerSpeed;
         this.targetSpeed = targetSpeed;
-        this.radius = 100;
+        this.radius = radius;
     }
 
     calculateImpulse() {

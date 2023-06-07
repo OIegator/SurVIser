@@ -13,7 +13,10 @@ const treeDefinition = `root {
                 }
                 repeat until(IsPlayerDead) {  
                     selector {  
-                        repeat until(CanAttack) {   
+                        repeat until(IsFarEnough) {   
+                            action [Evade]
+                        }
+                        repeat until(IsCloseEnough) {   
                             action [Pursuit]
                         }
                         repeat until(IsOutOfAmmo) {   
@@ -24,8 +27,10 @@ const treeDefinition = `root {
                         }
                         sequence { 
                             wait [1000]
-                            action [Fall]
+                            action [Fell]
                             wait [4000]
+                            action [Rise]
+                            wait [650]
                         }
                     }
                 }
@@ -73,6 +78,13 @@ export default class Zeus extends Character {
             ]);
             return State.SUCCEEDED;
         },
+        Evade: () => {
+            this.changeState("evade");
+            this.setSteerings([
+                new Evade(this, [this.scene.player], 1, this.speed, this.scene.player.speed, 500)
+            ]);
+            return State.SUCCEEDED;
+        },
         Attack: () => {
             this.changeState("attack");
             this.setSteerings([]);
@@ -87,24 +99,35 @@ export default class Zeus extends Character {
 
             return State.SUCCEEDED;
         },
-        Fall: () => {
-            this.changeState("fall");
+        Fell: () => {
+            this.changeState("fell");
             this.isVulnerable = true;
-            this.ammo = 3;
-
-            const deathAnimations = this.animationSets.get('Death');
+            const stanAnimations = this.animationSets.get('Stan');
             const animsController = this.anims;
-            animsController.play(deathAnimations[0], true);
+            animsController.play(stanAnimations[0], true);
+            animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
-        EnemyFar: () => {
-            return this.state === "patrol";
+        Rise: () => {
+            this.changeState("rise");
+            this.isVulnerable = false;
+            this.ammo = 3;
+
+            const stanAnimations = this.animationSets.get('Stan');
+            const animsController = this.anims;
+            animsController.playReverse(stanAnimations[0]);
+            animsController.currentAnim.paused = false;
+
+            return State.SUCCEEDED;
         },
-        EnemyClose: () => {
-            return this.state === "pursuit";
+        IsFarEnough: () => {
+            const screenHeight = this.scene.cameras.main.height;
+            const closeRange = new Phaser.Geom.Circle(this.x, this.y, screenHeight / 4);
+            const playerPos = new Phaser.Geom.Point(this.scene.player.x, this.scene.player.y);
+            return !Phaser.Geom.Circle.ContainsPoint(closeRange, playerPos);
         },
-        CanAttack: () => {
+        IsCloseEnough: () => {
             // Get the screen size
             const screenWidth = this.scene.cameras.main.width;
             const screenHeight = this.scene.cameras.main.height;
@@ -142,6 +165,7 @@ export default class Zeus extends Character {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
+        const deathAnimations = this.animationSets.get('Death');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
@@ -161,8 +185,25 @@ export default class Zeus extends Character {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
+        } else if (this.state === "fell" && this.isVulnerable) {
+            // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
+            //     animsController.play(deathAnimations[0]);
+            //     animsController.pause();
+           // } else
+                if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the death animation
+                animsController.currentAnim.paused = true; // Freeze the animation on the last frame
+            }
+        } else if (this.state === "rise") {
+            // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
+            //     animsController.play(deathAnimations[0]);
+            //     animsController.pause();
+            // } else if (animsController.currentFrame.isFirst) {
+            //     // Reached the first frame of the death animation (playing in reverse)
+            //     animsController.currentAnim.paused = true; // Freeze the animation on the first frame
+            // }
         } else {
-            // Play walk or idle animations if no attack animation is playing
+            // Play walk or idle animations if no attack or death animation is playing
             if (x < 0) {
                 this.setScale(0.5, 0.5);
                 animsController.play(animations[0], true);
@@ -181,6 +222,8 @@ export default class Zeus extends Character {
             }
         }
     }
+
+
 
     // Add a method to change the state of Zeus
     changeState(newState) {
