@@ -80,6 +80,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateAnimation() {
+        console.log(this.animationSets);
         const animations = this.animationSets.get('Walk');
         const animsController = this.anims;
         const x = this.body.velocity.x;
