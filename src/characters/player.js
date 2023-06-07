@@ -4,6 +4,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.5);
         scene.physics.world.enable(this);
         scene.add.existing(this);
+        this.isAttacking = false;
     }
 
     update(collide) {
@@ -26,7 +27,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         body.velocity.normalize().scale(speed);
-        if (collide)
+        if (this.isAttacking)
             this.attack();
         else
             this.updateAnimation();
@@ -36,6 +37,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const animations = this.animationSets.get('Attack');
         const animsController = this.anims;
         animsController.play(animations[0], true);
+
+        const numb = animsController.currentFrame.frame.name;
+        if (numb == 86) {
+            this.isAttacking = false;
+        }
     }
 
     updateAnimation() {
