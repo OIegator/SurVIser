@@ -4,6 +4,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.5);
         scene.physics.world.enable(this);
         scene.add.existing(this);
+        this.powerUps = [];
         this.isAttacking = false;
     }
 
@@ -34,6 +35,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         else
             this.updateAnimation();
     };
+
+    checkPowerUpCollision(powerUpsGroup) {
+        this.scene.physics.overlap(this, powerUpsGroup, this.collectPowerUp, null, this);
+    }
+
+    collectPowerUp(player, powerUp) {
+        // Add the power-up to the power-ups array
+        this.powerUps.push(powerUp);
+
+        // Remove the power-up from the scene
+        powerUp.destroy();
+    }
 
     attack() {
         const animations = this.animationSets.get('Attack');

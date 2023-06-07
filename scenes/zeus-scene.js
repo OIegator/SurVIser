@@ -72,6 +72,8 @@ let ZeusScene = new Phaser.Class({
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
+        this.powerUpsGroup = this.physics.add.group();
+
         this.lightningGroup = new LightningGroup(this);
         const map = this.make.tilemap({key: "map"});
 
@@ -142,9 +144,8 @@ let ZeusScene = new Phaser.Class({
     update(time) {
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.zeus.hp -= 20;
-            this.zeus.setMeterPercentageAnimated(this.zeus.hp / 100);
-            this.zeus.behaviour.Attack();
+            console.log("pew");
+            this.lightningGroup.fireLightning(this.player.x, this.player.y - 60, {x: 300, y: 300});
         }
 
         if (this.lightningGroup) {
@@ -181,6 +182,7 @@ let ZeusScene = new Phaser.Class({
             });
         }
 
+        this.player.checkPowerUpCollision(this.powerUpsGroup);
 
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element, index, object) {

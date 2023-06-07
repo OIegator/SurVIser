@@ -7,16 +7,15 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.stopped = false; // Flag to track if the lightning has stopped
     }
 
-    fire(x, y) {
+    fire(x, y, target) {
         this.body.reset(x, y);
         this.setScale(0.6);
         this.setDepth(10);
         this.setActive(true);
         this.setVisible(true);
         const speed = 700;
-        const player = this.scene.player;
-        const dx = player.x - x;
-        const dy = player.y - y;
+        const dx = target.x - x;
+        const dy = target.y - y;
         const angle = Math.atan2(dy, dx);
         const vx = speed * Math.cos(angle);
         const vy = speed * Math.sin(angle);
@@ -156,11 +155,11 @@ export class LightningGroup extends Phaser.Physics.Arcade.Group {
     }
 
 
-    fireLightning(x, y) {
+    fireLightning(x, y, target) {
         this.scene.time.delayedCall(250, () => {
             const lightning = this.create(0, 0, 'lightning');
             if (lightning) {
-                lightning.fire(x, y);
+                lightning.fire(x, y, target);
             }});
     }
 

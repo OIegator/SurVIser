@@ -1,11 +1,10 @@
-import Character from "./character";
-import { State, BehaviourTree } from "mistreevous";
-import {Patrol} from "../ai/steerings/patrol";
+import Boss from "./boss";
+import {State, BehaviourTree} from "mistreevous";
 import Vector2 from 'phaser/src/math/Vector2';
-import {Wander} from "../ai/steerings/wander";
+import {Patrol} from "../ai/steerings/patrol";
 import {Pursuit} from "../ai/steerings/pursuit";
 import {Evade} from "../ai/steerings/evade";
-import Boss from "./boss";
+import PowerUp from "../power-ups/power-up";
 
 const treeDefinition = `root {
             selector {
@@ -96,7 +95,7 @@ export default class Zeus extends Boss {
         Attack: () => {
             this.changeState("attack");
             this.setSteerings([]);
-            this.scene.lightningGroup.fireLightning(this.x, this.y - 60);
+            this.scene.lightningGroup.fireLightning(this.x, this.y - 60, this.scene.player);
             this.ammo--;
 
             // Play attack animation
@@ -145,6 +144,9 @@ export default class Zeus extends Boss {
             console.log("disappear");
             this.removeHealthBar();
             this.isDead = true;
+
+            this.scene.powerUpsGroup.add(new PowerUp(this, this.x, this.y, 'lightning').setScale(0.5));
+
             return State.SUCCEEDED;
         },
         InitHealthBar: () => {
@@ -220,8 +222,8 @@ export default class Zeus extends Boss {
             // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
             //     animsController.play(deathAnimations[0]);
             //     animsController.pause();
-           // } else
-                if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+            // } else
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true; // Freeze the animation on the last frame
             }
@@ -257,7 +259,6 @@ export default class Zeus extends Boss {
             }
         }
     }
-
 
 
     // Add a method to change the state of Zeus
