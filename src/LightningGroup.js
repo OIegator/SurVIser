@@ -158,10 +158,10 @@ export class LightningGroup extends Phaser.Physics.Arcade.Group {
 
     fireLightning(x, y) {
         this.scene.time.delayedCall(250, () => {
-        const lightning = this.create(0, 0, 'lightning');
-        if (lightning) {
-            lightning.fire(x, y);
-        }});
+            const lightning = this.create(0, 0, 'lightning');
+            if (lightning) {
+                lightning.fire(x, y);
+            }});
     }
 
 

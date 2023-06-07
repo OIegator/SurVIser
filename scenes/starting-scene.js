@@ -13,9 +13,12 @@ import rockSpriteSheet from '../assets/sprites/characters/rock.png'
 import sansSpriteSheet from '../assets/sprites/characters/sans.png'
 import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
+import slash from '../assets/sprites/projectile/Splash.png'
+
 import CharacterFactory from "../src/characters/character_factory"
 import {Wander} from "../src/ai/steerings/wander";
 import Seek from "../src/ai/steerings/seek.js"
+import AutoAttack from "../src/projectiles/AutoAttack.js"
 
 var inZone = false;
 const maxLower = 15;
@@ -60,6 +63,8 @@ let StartingScene = new Phaser.Class({
         this.load.spritesheet('rock', rockSpriteSheet, this.rockFrameConfig);
         this.load.spritesheet('sans', sansSpriteSheet, this.sansFrameConfig);
         this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
+
+        this.load.image('attack', slash);
     },
 
     lowerColl(player, lower) {
@@ -105,6 +110,7 @@ let StartingScene = new Phaser.Class({
         this.camW = this.cameras.main.width;
 
         this.lowers = [];
+        this.attacks = [];
 
 
         let i = 0;
@@ -202,12 +208,38 @@ let StartingScene = new Phaser.Class({
             inZone = true;
         })
 
+        this.timer = this.time.addEvent({
+            delay: 2500,
+            callback: function (args) {
+                args.player.isAttacking = true;
+                args.time.delayedCall(255, () => {
+                   
+                    let add;
+                    if (Math.abs(args.player.body.angle) < 1.5)
+                        add = 100;
+                    else
+                        add = -100;
+                    const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
+                    args.attacks.push(attack);
+                    args.physics.add.collider(attack, args.worldLayer);
+                    if (Math.abs(args.player.body.angle) < 1.5)
+                        attack.flipX = true;
+                    else
+                        attack.flipX = false;
+                    attack.scaleX = 0.8;
+                    attack.scaleY = 0.5;
+                });
+                
+            },
+            callbackContext: this,
+            args: [this],
+            loop: true
+        });
+
 
     },
-    update: function () {
-        this.physics.overlap(this.player, this.lowers, (player, mob) => {
-            this.lowerColl(player, mob);
-        });
+    update(time) {
+        
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element) {
                 element.update(inZone);
@@ -239,6 +271,15 @@ let StartingScene = new Phaser.Class({
                 i++
             }
             currLower = maxLower;
+
+            if (this.attacks) {
+                this.physics.overlap(this.attacks, this.lowers, (attack, mob) => {
+                    this.lowerColl(attack, mob);
+                });
+                this.attacks.forEach(function (element) {
+                    element.update(time);
+                });
+            }
 
             inZone = false;
         }
