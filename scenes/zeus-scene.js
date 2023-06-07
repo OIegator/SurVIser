@@ -8,7 +8,7 @@ import Vector2 from 'phaser/src/math/Vector2';
 
 //======================Projectiles===========================
 import lightning from '../assets/sprites/projectile/Weapon.png'
-
+import slash from '../assets/sprites/projectile/Splash.png'
 //=======================HealthBar============================
 import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
 import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
@@ -19,6 +19,7 @@ import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_r
 //============================================================
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
+import AutoAttack from "../src/projectiles/AutoAttack.js"
 
 
 let inZone = false;
@@ -60,6 +61,7 @@ let ZeusScene = new Phaser.Class({
         this.load.image('right-cap-shadow', barHorizontal_red_right_shadow)
 
         this.load.image('lightning', lightning);
+        this.load.image('attack', slash);
     },
 
     lowerColl(player, lower) {
@@ -107,6 +109,32 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
+        this.attacks = [];
+
+        this.timer = this.time.addEvent({
+            delay: 2000,
+            callback: function (args) {
+                args.player.isAttacking = true;
+                args.time.delayedCall(255, () => {
+
+                    let add;
+                    if (args.player.scaleX < 0)
+                        add = 100;
+                    else
+                        add = -100;
+                    const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
+                    args.attacks.push(attack);
+                    args.physics.add.collider(attack, args.worldLayer);
+                    attack.flipX = args.player.scaleX < 0;
+                    attack.scaleX = 0.8;
+                    attack.scaleY = 0.5;
+                });
+
+            },
+            callbackContext: this,
+            args: [this],
+            loop: true
+        });
     },
 
     update(time) {
@@ -119,6 +147,15 @@ let ZeusScene = new Phaser.Class({
 
         if (this.lightningGroup) {
             this.lightningGroup.update(time); // Call the update method of the lightning group
+        }
+
+        if (this.attacks) {
+            this.physics.overlap(this.attacks, this.lowers, (attack, mob) => {
+                this.lowerColl(attack, mob);
+            });
+            this.attacks.forEach(function (element) {
+                element.update(time);
+            });
         }
 
         if (this.gameObjects) {
