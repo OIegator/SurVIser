@@ -62,10 +62,6 @@ let ZeusScene = new Phaser.Class({
         this.load.image('lightning', lightning);
     },
 
-    init() {
-        this.fullWidth = 500
-    },
-
     lowerColl(player, lower) {
         lower.gotDamage = true;
     },
@@ -106,82 +102,21 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.player.setCollideWorldBounds();
 
-        this.zeus = this.characterFactory.buildZeus("zeus", 850, 580);
+        this.zeus = this.characterFactory.buildZeus("zeus", 850, 580, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
-
-        const y = 850
-        const x = 550
-
-        // background shadow
-        const leftShadowCap = this.add.image(x, y, 'left-cap-shadow')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-
-        const middleShadowCap = this.add.image(leftShadowCap.x + leftShadowCap.width, y, 'middle-shadow')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-        middleShadowCap.displayWidth = this.fullWidth;
-
-        this.add.image(middleShadowCap.x + middleShadowCap.displayWidth, y, 'right-cap-shadow')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-
-        this.leftCap = this.add.image(x, y, 'left-cap')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-
-        this.middle = this.add.image(this.leftCap.x + this.leftCap.width, y, 'middle')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-
-        this.rightCap = this.add.image(this.middle.x + this.middle.displayWidth, y, 'right-cap')
-            .setScale(0.5)
-            .setOrigin(0, 0.5)
-            .setScrollFactor(0);
-
-        this.setMeterPercentage(1);
-
-    },
-
-    setMeterPercentage(percent = 1) {
-        this.middle.displayWidth = this.fullWidth * percent;
-        this.rightCap.x = this.middle.x + this.middle.displayWidth;
-    },
-
-    setMeterPercentageAnimated(percent = 1, duration = 1000) {
-        const width = this.fullWidth * percent;
-
-        this.tweens.add({
-            targets: this.middle,
-            displayWidth: width,
-            duration,
-            ease: Phaser.Math.Easing.Sine.Out,
-            onUpdate: () => {
-                this.rightCap.x = this.middle.x + this.middle.displayWidth;
-
-                this.leftCap.visible = this.middle.displayWidth > 0;
-                this.middle.visible = this.middle.displayWidth > 0;
-                this.rightCap.visible = this.middle.displayWidth > 0;
-            }
-        });
     },
 
     update(time) {
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.zeus.pursuit(this.player);
             this.zeus.hp -= 20;
-            this.setMeterPercentageAnimated(this.zeus.hp / 100);
+            console.log(this.zeus.hp);
+            this.zeus.setMeterPercentageAnimated(this.zeus.hp / 100);
             this.zeus.behaviour.Attack();
         }
-        //console.log(this.player.x + " " + this.player.y);
+
         if (this.lightningGroup) {
             this.lightningGroup.update(time); // Call the update method of the lightning group
         }
@@ -192,7 +127,6 @@ let ZeusScene = new Phaser.Class({
             });
         }
     },
-
 
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];

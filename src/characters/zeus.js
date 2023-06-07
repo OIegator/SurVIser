@@ -5,54 +5,57 @@ import Vector2 from 'phaser/src/math/Vector2';
 import {Wander} from "../ai/steerings/wander";
 import {Pursuit} from "../ai/steerings/pursuit";
 import {Evade} from "../ai/steerings/evade";
+import Boss from "./boss";
 
 const treeDefinition = `root {
             selector {
                 repeat until(IsPlayerSpotted) {
                     action [Patrol]
                 }
-                repeat until(IsPlayerDead) {  
-                    selector {  
-                        repeat until(IsFarEnough) {   
-                            action [Evade]
-                        }
-                        repeat until(IsCloseEnough) {   
-                            action [Pursuit]
-                        }
-                        repeat until(IsOutOfAmmo) {   
-                            sequence { 
-                                action [Attack]
-                                wait [2000]
+                sequence {
+                    action [InitHealthBar]
+                    repeat until(IsPlayerDead) {  
+                        selector {  
+                            repeat until(IsFarEnough) {   
+                                action [Evade]
                             }
-                        }
-                        sequence { 
-                            wait [1000]
-                            action [Fell]
-                            wait [4000]
-                            action [Rise]
-                            wait [650]
+                            repeat until(IsCloseEnough) {   
+                                action [Pursuit]
+                            }
+                            repeat until(IsOutOfAmmo) {   
+                                sequence { 
+                                    action [Attack]
+                                    wait [2000]
+                                }
+                            }
+                            sequence { 
+                                wait [1000]
+                                action [Fell]
+                                wait [4000]
+                                action [Rise]
+                                wait [650]
+                            }
                         }
                     }
                 }
             }
         }`;
 
-export default class Zeus extends Character {
-    constructor(scene, x, y, name, frame, velocity = null) {
-        super(scene, x, y, name, frame, velocity);
+export default class Zeus extends Boss {
+    constructor(scene, x, y, name, frame, maxHP, velocity = null) {
+        super(scene, x, y, name, frame, maxHP, velocity);
         this.body.setSize(200, 270);
         this.body.setOffset(200, 130);
         this.isOffset(200, 130);
         this.state = "idle";
         this.ammo = 3;
-        this.hp = 100;
         this.isVulnerable = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
     update(collide) {
         this.behaviourTree.step();
-        console.log(this.state)
+       // console.log(this.state)
 
         super.update(collide);
         this.updateAnimation();
@@ -120,6 +123,10 @@ export default class Zeus extends Character {
             animsController.playReverse(stanAnimations[0]);
             animsController.currentAnim.paused = false;
 
+            return State.SUCCEEDED;
+        },
+        InitHealthBar: () => {
+            this.initHealthBar(550, 850);
             return State.SUCCEEDED;
         },
         IsFarEnough: () => {

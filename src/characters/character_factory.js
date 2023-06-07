@@ -94,8 +94,8 @@ export default class CharacterFactory {
         return character;
     }
 
-    buildZeus(spriteSheetName, x, y, velocity = null) {
-        let character = new Zeus(this.scene, x, y, spriteSheetName, 2, velocity);
+    buildZeus(spriteSheetName, x, y, maxHP, velocity = null) {
+        let character = new Zeus(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
