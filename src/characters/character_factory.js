@@ -70,7 +70,15 @@ export default class CharacterFactory {
         let character = new Player(this.scene, x, y, spriteSheetName, 2);
         character.maxSpeed = 150;
         character.setCollideWorldBounds(true);
+        this.scene.input.keyboard.createCursorKeys();
+
         character.cursors = this.scene.input.keyboard.createCursorKeys();
+        character.wasd = this.scene.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'down': Phaser.Input.Keyboard.KeyCodes.S,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+        });
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         return character;
 

@@ -67,6 +67,7 @@ let ZeusScene = new Phaser.Class({
     },
 
     create: function () {
+
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
         this.lightningGroup = new LightningGroup(this);
@@ -112,7 +113,6 @@ let ZeusScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             this.zeus.hp -= 20;
-            console.log(this.zeus.hp);
             this.zeus.setMeterPercentageAnimated(this.zeus.hp / 100);
             this.zeus.behaviour.Attack();
         }

@@ -11,17 +11,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setVelocity(0);
         const speed = this.maxSpeed;
         const cursors = this.cursors;
+        const wasd = this.wasd;
 
-        if (cursors.left.isDown) {
+
+        if (cursors.left.isDown || wasd.left.isDown) {
             body.velocity.x -= speed;
-        } else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown || wasd.right.isDown) {
             body.velocity.x += speed;
         }
 
         // Vertical movement
-        if (cursors.up.isDown) {
+        if (cursors.up.isDown || wasd.up.isDown) {
             body.setVelocityY(-speed);
-        } else if (cursors.down.isDown) {
+        } else if (cursors.down.isDown || wasd.down.isDown) {
             body.setVelocityY(speed);
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
