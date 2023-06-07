@@ -9,21 +9,22 @@ import Vector2 from 'phaser/src/math/Vector2';
 //======================Projectiles===========================
 import lightning from '../assets/sprites/projectile/Weapon.png'
 
+//=======================HealthBar============================
+import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
+import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
+import barHorizontal_red_right from '../assets/sprites/ui/BarHorizontal_red_right.png'
+import barHorizontal_red_left_shadow from '../assets/sprites/ui/BarHorizontal_red_left_shadow.png'
+import barHorizontal_red_mid_shadow from '../assets/sprites/ui/BarHorizontal_red_mid_shadow.png'
+import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_red_right_shadow.png'
 //============================================================
-
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
-import {Patrol} from "../src/ai/steerings/patrol";
-import {Wander} from "../src/ai/steerings/wander";
-import {Pursuit} from "../src/ai/steerings/pursuit";
-import {Evade} from "../src/ai/steerings/evade";
-import {BehaviourTree, State} from "mistreevous";
 
 
 let inZone = false;
 
 
-let StartingScene = new Phaser.Class({
+let ZeusScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
 
@@ -49,7 +50,20 @@ let StartingScene = new Phaser.Class({
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
 
+        //loading health bar
+        this.load.image('left-cap', barHorizontal_red_left)
+        this.load.image('middle', barHorizontal_red_mid)
+        this.load.image('right-cap', barHorizontal_red_right)
+
+        this.load.image('left-cap-shadow', barHorizontal_red_left_shadow)
+        this.load.image('middle-shadow', barHorizontal_red_mid_shadow)
+        this.load.image('right-cap-shadow', barHorizontal_red_right_shadow)
+
         this.load.image('lightning', lightning);
+    },
+
+    init() {
+        this.fullWidth = 500
     },
 
     lowerColl(player, lower) {
@@ -97,11 +111,74 @@ let StartingScene = new Phaser.Class({
         this.physics.add.collider(this.zeus, worldLayer);
 
 
+        const y = 850
+        const x = 550
+
+        // background shadow
+        const leftShadowCap = this.add.image(x, y, 'left-cap-shadow')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+
+        const middleShadowCap = this.add.image(leftShadowCap.x + leftShadowCap.width, y, 'middle-shadow')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+        middleShadowCap.displayWidth = this.fullWidth;
+
+        this.add.image(middleShadowCap.x + middleShadowCap.displayWidth, y, 'right-cap-shadow')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+
+        this.leftCap = this.add.image(x, y, 'left-cap')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+
+        this.middle = this.add.image(this.leftCap.x + this.leftCap.width, y, 'middle')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+
+        this.rightCap = this.add.image(this.middle.x + this.middle.displayWidth, y, 'right-cap')
+            .setScale(0.5)
+            .setOrigin(0, 0.5)
+            .setScrollFactor(0);
+
+        this.setMeterPercentage(1);
+
     },
+
+    setMeterPercentage(percent = 1) {
+        this.middle.displayWidth = this.fullWidth * percent;
+        this.rightCap.x = this.middle.x + this.middle.displayWidth;
+    },
+
+    setMeterPercentageAnimated(percent = 1, duration = 1000) {
+        const width = this.fullWidth * percent;
+
+        this.tweens.add({
+            targets: this.middle,
+            displayWidth: width,
+            duration,
+            ease: Phaser.Math.Easing.Sine.Out,
+            onUpdate: () => {
+                this.rightCap.x = this.middle.x + this.middle.displayWidth;
+
+                this.leftCap.visible = this.middle.displayWidth > 0;
+                this.middle.visible = this.middle.displayWidth > 0;
+                this.rightCap.visible = this.middle.displayWidth > 0;
+            }
+        });
+    },
+
     update(time) {
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             //this.zeus.pursuit(this.player);
+            this.zeus.hp -= 20;
+            this.setMeterPercentageAnimated(this.zeus.hp / 100);
             this.zeus.behaviour.Attack();
         }
         //console.log(this.player.x + " " + this.player.y);
@@ -117,10 +194,9 @@ let StartingScene = new Phaser.Class({
     },
 
 
-
     tilesToPixels(tileX, tileY) {
         return [tileX * this.tileSize, tileY * this.tileSize];
     }
 });
 
-export default StartingScene
+export default ZeusScene

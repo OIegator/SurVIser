@@ -45,6 +45,7 @@ export default class Zeus extends Character {
         this.isOffset(200, 130);
         this.state = "idle";
         this.ammo = 3;
+        this.hp = 100;
         this.isVulnerable = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
@@ -52,7 +53,7 @@ export default class Zeus extends Character {
     update(collide) {
         this.behaviourTree.step();
         console.log(this.state)
-        // Call the parent's update method
+
         super.update(collide);
         this.updateAnimation();
     }
