@@ -128,6 +128,16 @@ export default class Zeus extends Boss {
 
             return State.SUCCEEDED;
         },
+        GetHit: (damage) => {
+            this.hp -= damage;
+            this.setMeterPercentageAnimated(this.hp / 100);
+            // Play attack animation
+            const attackAnimations = this.animationSets.get('Hit');
+            const animsController = this.anims;
+            animsController.play(attackAnimations[0], true);
+
+            return State.SUCCEEDED;
+        },
         Die: () => {
             this.changeState("dead");
             this.isVulnerable = false;
@@ -145,7 +155,7 @@ export default class Zeus extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this, this.x, this.y, 'lightning').setScale(0.5));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
 
             return State.SUCCEEDED;
         },

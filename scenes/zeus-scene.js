@@ -112,6 +112,7 @@ let ZeusScene = new Phaser.Class({
         this.physics.add.collider(this.zeus, worldLayer);
 
         this.attacks = [];
+        this.enemies = [];
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -130,6 +131,10 @@ let ZeusScene = new Phaser.Class({
                     attack.flipX = args.player.scaleX < 0;
                     attack.scaleX = 0.8;
                     attack.scaleY = 0.5;
+                    if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
+                        const target = args.player.findNearestEnemy(args.enemies)
+                        args.lightningGroup.fireLightning(args.player.x, args.player.y - 60, target);
+                    }
                 });
 
             },
@@ -145,7 +150,7 @@ let ZeusScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             console.log("pew");
-            this.lightningGroup.fireLightning(this.player.x, this.player.y - 60, {x: 300, y: 300});
+            this.lightningGroup.fireLightning(this.player.x, this.player.y - 60, this.zeus);
         }
 
         if (this.lightningGroup) {
@@ -166,9 +171,7 @@ let ZeusScene = new Phaser.Class({
             this.physics.overlap(this.attacks, this.zeus, (attack, mob) => {
                 if (this.canDamage) {
                     console.log("hit");
-                    this.zeus.hp -= 50;
-                    console.log(this.zeus.hp);
-                    this.zeus.setMeterPercentageAnimated(this.zeus.hp / 100);
+                    this.zeus.behaviour.GetHit(25);
 
                     this.canDamage = false; // Set the flag to false to prevent further damage
                     setTimeout(() => {

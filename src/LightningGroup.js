@@ -4,11 +4,14 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.startTime = 0; // Store the start time of the lightning
         this.duration = 1000; // Duration of the lightning in milliseconds
         this.shockCircle = null;
+        this.target = null;
         this.stopped = false; // Flag to track if the lightning has stopped
     }
 
-    fire(x, y, target) {
+    fire(x, y, target, duration) {
         this.body.reset(x, y);
+        this.duration = duration;
+        this.target = target;
         this.setScale(0.6);
         this.setDepth(10);
         this.setActive(true);
@@ -45,9 +48,14 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
 
     update(time) {
         if (!this.stopped) {
-            // Check for collision with the player
-            const player = this.scene.player;
-            if (player && Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), player.getBounds())) {
+            let targetBounds = null;
+            try {
+                targetBounds = this.target.getBounds();
+            } catch (error) {
+                targetBounds = new Phaser.Geom.Rectangle(this.target.x, this.target.y, 100, 100)
+            }
+            // Check for collision with the target
+            if (this.target && Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), targetBounds)) {
                 // Delay the creation of the shock circle and setting 'stopped' flag
                 this.scene.time.delayedCall(200, () => {
                     if (!this.stopped) {
@@ -155,11 +163,11 @@ export class LightningGroup extends Phaser.Physics.Arcade.Group {
     }
 
 
-    fireLightning(x, y, target) {
+    fireLightning(x, y, target, duration = 1000) {
         this.scene.time.delayedCall(250, () => {
             const lightning = this.create(0, 0, 'lightning');
             if (lightning) {
-                lightning.fire(x, y, target);
+                lightning.fire(x, y, target, duration);
             }});
     }
 

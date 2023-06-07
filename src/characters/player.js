@@ -14,8 +14,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const speed = this.maxSpeed;
         const cursors = this.cursors;
         const wasd = this.wasd;
-
-
         if (cursors.left.isDown || wasd.left.isDown) {
             body.velocity.x -= speed;
         } else if (cursors.right.isDown || wasd.right.isDown) {
@@ -58,6 +56,31 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.isAttacking = false;
         }
     }
+
+    findNearestEnemy(enemies) {
+        if (enemies.length === 0) {
+            const randomX = Phaser.Math.Between(- this.scene.cameras.main.width / 2, this.scene.cameras.main.width / 2);
+            const randomY = Phaser.Math.Between(- this.scene.cameras.main.height / 2, this.scene.cameras.main.height / 2);
+            return new Phaser.Math.Vector2(this.x + randomX, this.y + randomY);
+        }
+
+        let nearestEnemy = null;
+        let nearestDistance = Infinity;
+        const playerPosition = new Phaser.Math.Vector2(this.x, this.y);
+
+        enemies.forEach(enemy => {
+            const enemyPosition = new Phaser.Math.Vector2(enemy.x, enemy.y);
+            const distance = playerPosition.distance(enemyPosition);
+
+            if (distance < nearestDistance) {
+                nearestEnemy = enemy;
+                nearestDistance = distance;
+            }
+        });
+
+        return nearestEnemy;
+    }
+
 
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
