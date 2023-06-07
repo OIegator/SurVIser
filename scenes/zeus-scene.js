@@ -135,6 +135,8 @@ let ZeusScene = new Phaser.Class({
             args: [this],
             loop: true
         });
+
+        this.canDamage = true;
     },
 
     update(time) {
@@ -158,7 +160,35 @@ let ZeusScene = new Phaser.Class({
             });
         }
 
+        if (this.attacks && this.zeus.isVulnerable) {
+
+            this.physics.overlap(this.attacks, this.zeus, (attack, mob) => {
+                if (this.canDamage) {
+                    console.log("hit");
+                    this.zeus.hp -= 50;
+                    console.log(this.zeus.hp);
+                    this.zeus.setMeterPercentageAnimated(this.zeus.hp / 100);
+
+                    this.canDamage = false; // Set the flag to false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+
+            this.attacks.forEach(function (element) {
+                element.update(time);
+            });
+        }
+
+
         if (this.gameObjects) {
+            this.gameObjects.forEach(function (element, index, object) {
+                if (element.isDead) {
+                    element.destroy();
+                    object.splice(index, 1);
+                }
+            });
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
             });

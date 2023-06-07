@@ -14,29 +14,34 @@ const treeDefinition = `root {
                 }
                 sequence {
                     action [InitHealthBar]
-                    repeat until(IsPlayerDead) {  
-                        selector {  
-                            repeat until(IsFarEnough) {   
-                                action [Evade]
-                            }
-                            repeat until(IsCloseEnough) {   
-                                action [Pursuit]
-                            }
-                            repeat until(IsOutOfAmmo) {   
-                                sequence { 
-                                    action [Attack]
-                                    wait [2000]
+                    flip {
+                        repeat until(IsDead) {  
+                            selector {  
+                                repeat until(IsFarEnough) {   
+                                    action [Evade]
                                 }
-                            }
-                            sequence { 
-                                wait [1000]
-                                action [Fell]
-                                wait [4000]
-                                action [Rise]
-                                wait [650]
+                                repeat until(IsCloseEnough) {   
+                                    action [Pursuit]
+                                }
+                                repeat until(IsOutOfAmmo) {   
+                                    sequence { 
+                                        action [Attack]
+                                        wait [2000]
+                                    }
+                                }
+                                sequence { 
+                                    wait [1000]
+                                    action [Fell]
+                                    wait [4000]
+                                    action [Rise]
+                                    wait [650]
+                                }
                             }
                         }
                     }
+                    action [Die] 
+                    wait [2000]
+                    action [Disappear]
                 }
             }
         }`;
@@ -50,14 +55,13 @@ export default class Zeus extends Boss {
         this.state = "idle";
         this.ammo = 3;
         this.isVulnerable = false;
+        this.isDead = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
     update(collide) {
-        this.behaviourTree.step();
-       // console.log(this.state)
-
         super.update(collide);
+        if (!this.isDead) this.behaviourTree.step();
         this.updateAnimation();
     }
 
@@ -125,6 +129,24 @@ export default class Zeus extends Boss {
 
             return State.SUCCEEDED;
         },
+        Die: () => {
+            this.changeState("dead");
+            this.isVulnerable = false;
+            console.log("damn");
+
+            const stanAnimations = this.animationSets.get('Death');
+            const animsController = this.anims;
+            animsController.play(stanAnimations[0]);
+            animsController.currentAnim.paused = false;
+
+            return State.SUCCEEDED;
+        },
+        Disappear: () => {
+            console.log("disappear");
+            this.removeHealthBar();
+            this.isDead = true;
+            return State.SUCCEEDED;
+        },
         InitHealthBar: () => {
             this.initHealthBar(550, 850);
             return State.SUCCEEDED;
@@ -162,8 +184,9 @@ export default class Zeus extends Boss {
 
             return Phaser.Geom.Rectangle.ContainsPoint(rangeZone, this);
         },
-        IsPlayerDead: () => {
-            return false;
+        IsDead: () => {
+            if (this.hp <= 0) this.isVulnerable = false;
+            return this.hp <= 0;
         },
         IsOutOfAmmo: () => {
             return this.ammo === 0;
@@ -202,7 +225,7 @@ export default class Zeus extends Boss {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true; // Freeze the animation on the last frame
             }
-        } else if (this.state === "rise") {
+        } else if (this.state === "dead") {
             // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
             //     animsController.play(deathAnimations[0]);
             //     animsController.pause();
@@ -210,6 +233,10 @@ export default class Zeus extends Boss {
             //     // Reached the first frame of the death animation (playing in reverse)
             //     animsController.currentAnim.paused = true; // Freeze the animation on the first frame
             // }
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the death animation
+                animsController.currentAnim.paused = true;
+            }
         } else {
             // Play walk or idle animations if no attack or death animation is playing
             if (x < 0) {

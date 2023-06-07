@@ -12,21 +12,21 @@ export default class Boss extends Character {
     initHealthBar(x, y) {
 
         // background shadow
-        const leftShadowCap = this.scene.add
+        this.leftShadowCap = this.scene.add
             .image(x, y, 'left-cap-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
             .setScrollFactor(0);
 
-        const middleShadowCap = this.scene.add
-            .image(leftShadowCap.x + leftShadowCap.width, y, 'middle-shadow')
+        this.middleShadowCap = this.scene.add
+            .image(this.leftShadowCap.x + this.leftShadowCap.width, y, 'middle-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
             .setScrollFactor(0);
-        middleShadowCap.displayWidth = this.fullWidth;
+        this.middleShadowCap.displayWidth = this.fullWidth;
 
-        this.scene.add
-            .image(middleShadowCap.x + middleShadowCap.displayWidth, y, 'right-cap-shadow')
+        this.rightShadowCap = this.scene.add
+            .image(this.middleShadowCap.x + this.middleShadowCap.displayWidth, y, 'right-cap-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
             .setScrollFactor(0);
@@ -51,6 +51,15 @@ export default class Boss extends Character {
 
         this.setMeterPercentage(0);
         this.setMeterPercentageAnimated(1);
+    }
+
+    removeHealthBar() {
+        this.leftCap.destroy();
+        this.middle.destroy();
+        this.rightCap.destroy();
+        this.leftShadowCap.destroy();
+        this.middleShadowCap.destroy();
+        this.rightShadowCap.destroy();
     }
 
     setMeterPercentage(percent = 1) {
