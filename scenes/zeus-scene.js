@@ -100,8 +100,9 @@ let ZeusScene = new Phaser.Class({
         // Creating characters
         this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
         this.player.speed = new Vector2(1);
-        this.player.body.setSize(120, 150);
-        this.player.body.setOffset(100, 130);
+        this.player.body.setCircle(70);
+        // this.player.body.setSize(120, 150);
+        this.player.body.setOffset(110, 135);
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
@@ -133,7 +134,7 @@ let ZeusScene = new Phaser.Class({
                     attack.scaleY = 0.5;
                     if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
                         const target = args.player.findNearestEnemy(args.enemies)
-                        args.lightningGroup.fireLightning(args.player.x, args.player.y - 60, target);
+                        args.lightningGroup.fireLightning(args.player.x, args.player.y, target);
                     }
                 });
 
@@ -150,7 +151,7 @@ let ZeusScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             console.log("pew");
-            this.lightningGroup.fireLightning(this.player.x, this.player.y - 60, this.zeus);
+            this.player.GetHit(50);
         }
 
         if (this.lightningGroup) {

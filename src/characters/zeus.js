@@ -109,7 +109,7 @@ export default class Zeus extends Boss {
         Fell: () => {
             this.changeState("fell");
             this.isVulnerable = true;
-            const stanAnimations = this.animationSets.get('Stan');
+            const stanAnimations = this.animationSets.get('Fell');
             const animsController = this.anims;
             animsController.play(stanAnimations[0], true);
             animsController.currentAnim.paused = false;
@@ -121,7 +121,7 @@ export default class Zeus extends Boss {
             this.isVulnerable = false;
             this.ammo = 3;
 
-            const stanAnimations = this.animationSets.get('Stan');
+            const stanAnimations = this.animationSets.get('Fell');
             const animsController = this.anims;
             animsController.playReverse(stanAnimations[0]);
             animsController.currentAnim.paused = false;
@@ -131,10 +131,10 @@ export default class Zeus extends Boss {
         GetHit: (damage) => {
             this.hp -= damage;
             this.setMeterPercentageAnimated(this.hp / 100);
-            // Play attack animation
-            const attackAnimations = this.animationSets.get('Hit');
+            // Play hit animation
+            const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;
-            animsController.play(attackAnimations[0], true);
+            animsController.play(hitAnimations[0], true);
 
             return State.SUCCEEDED;
         },
@@ -208,7 +208,7 @@ export default class Zeus extends Boss {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
-        const deathAnimations = this.animationSets.get('Death');
+        const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
@@ -235,7 +235,8 @@ export default class Zeus extends Boss {
             // } else
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
-                animsController.currentAnim.paused = true; // Freeze the animation on the last frame
+                //animsController.currentAnim.paused = true; // Freeze the animation on the last frame
+                animsController.play(stanAnimations[0]);
             }
         } else if (this.state === "dead") {
             // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {

@@ -1,3 +1,17 @@
+class TargetDummy {
+    constructor(target) {
+        this.target = target;
+    }
+
+    getBounds() {
+        return new Phaser.Geom.Rectangle(this.target.x, this.target.y, 100, 100);
+    }
+
+    GetHit() {
+        console.log("dummy get hit");
+    }
+}
+
 class Lightning extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'lightning');
@@ -5,11 +19,13 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.duration = 1000; // Duration of the lightning in milliseconds
         this.shockCircle = null;
         this.target = null;
+        this.canDamage = true;
         this.stopped = false; // Flag to track if the lightning has stopped
     }
 
     fire(x, y, target, duration) {
         this.body.reset(x, y);
+        this.body.setSize(20, 20);
         this.duration = duration;
         this.target = target;
         this.setScale(0.6);
@@ -38,7 +54,8 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
             'shock_circle',
             this.frameConfig,
             'shock_circle',
-            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            this.target
         );
 
         this.scene.add.existing(shockCircle);
@@ -52,21 +69,42 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
             try {
                 targetBounds = this.target.getBounds();
             } catch (error) {
-                targetBounds = new Phaser.Geom.Rectangle(this.target.x, this.target.y, 100, 100)
+                this.target = new TargetDummy(this.target);
+                targetBounds = this.target.getBounds();
             }
-            // Check for collision with the target
-            if (this.target && Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), targetBounds)) {
+            this.scene.physics.overlap(this, this.target, () => {
+                if (this.canDamage) {
+                    this.target.GetHit(10);
+                    this.canDamage = false;
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
                 // Delay the creation of the shock circle and setting 'stopped' flag
                 this.scene.time.delayedCall(200, () => {
                     if (!this.stopped) {
                         this.createShockCircle();
+                        this.body.setSize(10, 10);
                         this.stopped = true; // Set the stopped flag to true
                     }
                 }, [], this);
-            } else if (time > this.startTime + this.duration) {
+            });
+
+            const sceneWidth = this.scene.width;
+            const sceneHeight = this.scene.height;
+            const padding = 100;
+
+            // Check for collision with the target
+            if (time > this.startTime + this.duration ||
+                this.x <= padding ||
+                this.x >= sceneWidth - padding ||
+                this.y <= padding ||
+                this.y >= sceneHeight - padding) {
                 this.createShockCircle();
+                this.body.setSize(10, 10);
                 this.stopped = true; // Set the stopped flag to true
             }
+
         }
 
         if (this.stopped) {
@@ -75,7 +113,6 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
             this.setVisible(false); // Set the lightning as invisible
         }
     }
-
 
 
     preUpdate(time, delta) {
@@ -88,10 +125,12 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
 }
 
 class ShockCircle extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frameConfig, animationKey, animationFrames) {
+    constructor(scene, x, y, texture, frameConfig, animationKey, animationFrames, target) {
         super(scene, x, y, texture, frameConfig, animationKey, animationFrames);
         this.duration = 1500;
         this.startTime = 0;
+        this.canDamage = true;
+        this.target = target;
         this.lightning = null; // Reference to the parent lightning sprite
         this.tintTransition = null; // Reference to the color tint transition
 
@@ -115,7 +154,7 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         // Create a color tint transition
         this.tintTransition = this.scene.tweens.addCounter({
             from: 0xFFFFFF, // Starting tint color (white)
-            to: 0xFF0000 , // Ending tint color (red)
+            to: 0xFF0000, // Ending tint color (red)
             duration: this.duration, // Duration of the transition
             onUpdate: (tween) => {
                 const color = tween.getValue();
@@ -128,6 +167,21 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(time) {
+        this.lightning.body.setCircle(this.width * 0.57);
+        this.lightning.body.x = this.x - this.width * 0.37;
+        this.lightning.body.y = this.y - this.height * 0.37;
+        if (this.active && time > this.startTime + this.duration * 0.8) {
+
+            this.scene.physics.overlap(this.lightning, this.target, () => {
+                if (this.canDamage) {
+                    this.target.GetHit(10);
+                    this.canDamage = false;
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+        }
         if (this.active && time > this.startTime + this.duration) {
             this.hide();
         }
@@ -168,7 +222,8 @@ export class LightningGroup extends Phaser.Physics.Arcade.Group {
             const lightning = this.create(0, 0, 'lightning');
             if (lightning) {
                 lightning.fire(x, y, target, duration);
-            }});
+            }
+        });
     }
 
 

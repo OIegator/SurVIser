@@ -5,6 +5,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
         scene.add.existing(this);
         this.powerUps = [];
+        this.hp = 100;
         this.isAttacking = false;
     }
 
@@ -38,6 +39,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.overlap(this, powerUpsGroup, this.collectPowerUp, null, this);
     }
 
+    GetHit(damage) {
+        this.hp -= damage;
+        console.log(this.hp);
+
+        const hitAnimations = this.animationSets.get('Hit');
+        const animsController = this.anims;
+        animsController.play(hitAnimations[0], true);
+
+        this.state = "damaged"
+
+    }
+
     collectPowerUp(player, powerUp) {
         // Add the power-up to the power-ups array
         this.powerUps.push(powerUp);
@@ -50,7 +63,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const animations = this.animationSets.get('Attack');
         const animsController = this.anims;
         animsController.play(animations[0], true);
-
+        this.state = "attack"
         const numb = animsController.currentFrame.frame.name;
         if (numb == 86) {
             this.isAttacking = false;
@@ -88,26 +101,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
 
-        if (x < 0) {
+        if (this.state === "damaged") {
+            const hitAnimations = this.animationSets.get('Hit');
+            animsController.play(hitAnimations[0], true);
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                this.state = "";
+            }
+        } else if (x < 0) {
             this.setScale(0.5, 0.5);
-            this.body.setOffset(100, 120);
+            this.body.setOffset(110, 135);
             animsController.play(animations[0], true);
         } else if (x > 0) {
             this.setScale(-0.5, 0.5);
             animsController.play(animations[1], true);
-            this.body.setOffset(220, 120);
+            this.body.setOffset(240, 135);
         } else if (y < 0) {
             animsController.play(animations[2], true);
         } else if (y > 0) {
             animsController.play(animations[3], true);
         } else {
             const idle = this.animationSets.get('Idle');
-            // const currentAnimation = animsController.currentAnim;
-            // if (currentAnimation) {
-            //     const frame = currentAnimation.getLastFrame();
-            //     this.setTexture(frame.textureKey, frame.textureFrame);
-            // }
             animsController.play(idle[0], true);
         }
     }
+
 }
