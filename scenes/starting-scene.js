@@ -13,12 +13,22 @@ import rockSpriteSheet from '../assets/sprites/characters/rock.png'
 import sansSpriteSheet from '../assets/sprites/characters/sans.png'
 import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
+import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
+import barsSh from '../assets/bars/barHorizontal_shadow.png'
+import barPix from '../assets/bars/pixel_barHorizontalShadow.png'
+import barParts from '../assets/bars/barhorizontalparts.png'
+
+
 import slash from '../assets/sprites/projectile/Splash.png'
 
 import CharacterFactory from "../src/characters/character_factory"
 import {Wander} from "../src/ai/steerings/wander";
 import Seek from "../src/ai/steerings/seek.js"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
+
+import ProgressBar from "../src/UI-Bar/ProgressBar";
+import HealthBar from "../src/UI-Bar/HealthBar";
+
 
 var inZone = false;
 const maxLower = 15;
@@ -65,6 +75,28 @@ let StartingScene = new Phaser.Class({
         this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
 
         this.load.image('attack', slash);
+
+        this.load.spritesheet('cap-shadow', barsSh, {
+            frameWidth: 6,
+            frameHeight: 26
+        });
+
+        this.load.spritesheet(
+            'pixel-cap-shadow',
+            barPix,
+            {
+                frameWidth: 3,
+                frameHeight: 12
+            }
+        );
+
+        this.load.atlas(
+            'caps',
+            barParts,
+            barsjs
+        );
+
+
     },
 
     lowerColl(player, lower) {
@@ -236,17 +268,43 @@ let StartingScene = new Phaser.Class({
             loop: true
         });
 
+        var fullWidth = 1500;
+        this.expBar = new HealthBar({
+            scene: this,
+            max: 500,
+            current: 100,
+            animate: true,
+            damageColor: false,
+            displayData: {
+                fullWidth: fullWidth,
+                x: 10,
+                y: 50,
+                color: "blue",
+                isPixel: true
+            }
+        });
 
     },
+
+    damage() {
+        this.expBar.takeDamage(25);
+    },
+
+    health() {
+        this.expBar.resiveHealing(2);
+    },
+
     update(time) {
         
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element) {
                 element.update(inZone);
             });
+            var self = this;
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.constructor.name == "Lower")
                     if (element.isDead) {
+                        self.health();
                         element.destroy();
                         object.splice(index, 1);
                     }

@@ -1,5 +1,5 @@
 import Boss from "./boss";
-import {State, BehaviourTree} from "mistreevous";
+import { State, BehaviourTree } from "mistreevous";
 import Vector2 from 'phaser/src/math/Vector2';
 import {Patrol} from "../ai/steerings/patrol";
 import {Pursuit} from "../ai/steerings/pursuit";

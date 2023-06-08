@@ -15,7 +15,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.steerings = [];
         this.gotDamage = false;
         this.isDying = false;
-        this.hp = 3;
+        this.hp = 0;
         this.isDead = false;
     }
 

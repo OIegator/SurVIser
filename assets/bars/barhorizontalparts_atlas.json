@@ -1,0 +1,398 @@
+{
+    "frames": [
+        {
+            "filename": "barhorizontal_green_left",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_green_mid",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 6,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_green_right",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 12,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_blue_left",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 18,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_blue_mid",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 24,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_blue_right",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 0,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_red_left",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 6,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_red_mid",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 12,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_red_right",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 18,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_white_left",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 24,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_white_right",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 30,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_white_mid",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 30,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_yellow_left",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 36,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_yellow_right",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 36,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "barhorizontal_yellow_mid",
+            "frame": {
+                "w": 6,
+                "h": 26,
+                "x": 42,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_green_left",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 42,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_green_right",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 45,
+                "y": 26
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_green_mid",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 42,
+                "y": 38
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_blue_left",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 45,
+                "y": 38
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_blue_mid",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 48,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_blue_right",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 48,
+                "y": 12
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_red_left",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 48,
+                "y": 24
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_red_right",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 48,
+                "y": 36
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_red_mid",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 51,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_white_left",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 51,
+                "y": 12
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_white_mid",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 51,
+                "y": 24
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_white_right",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 51,
+                "y": 36
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_yellow_left",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 0,
+                "y": 52
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_yellow_mid",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 3,
+                "y": 52
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pixel_barhorizontal_yellow_right",
+            "frame": {
+                "w": 3,
+                "h": 12,
+                "x": 6,
+                "y": 52
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
