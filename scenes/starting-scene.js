@@ -129,13 +129,10 @@ let StartingScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', 100, 100, {player: true});
-        this.player.body.setSize(120, 150);
-        this.player.body.setOffset(100, 130);
+        this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
-        this.player.setCollideWorldBounds();
 
         this.centX = this.cameras.main.centerX;
         this.centY = this.cameras.main.centerY;
@@ -147,7 +144,9 @@ let StartingScene = new Phaser.Class({
 
         let i = 0;
         while (i < currLower){
-            const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+            const lowerMob = this.characterFactory.buildLowerCharacter("pinky", this.centX, this.centY, this.camW);
+            lowerMob.setCircle(75);
+            lowerMob.setOffset(125, 210);
             this.gameObjects.push(lowerMob);
             lowerMob.setSteerings([
                 new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
@@ -178,14 +177,14 @@ let StartingScene = new Phaser.Class({
         this.physics.add.collider(this.player, pinky);
         this.gameObjects.push(pinky);
         pinky.setSteerings([
-            new Wander(pinky, [this.player], 1)
+            //new Wander(pinky, [this.player], 1)
         ]);
         this.physics.add.collider(pinky, worldLayer);
 
         const clyde = this.characterFactory.buildNonPlayerCharacter("clyde", 300, 200);
         this.gameObjects.push(clyde);
         clyde.setSteerings([
-            //  new Wander(clyde, [this.player], 1)
+           //  new Wander(clyde, [this.player], 1)
         ]);
         this.physics.add.collider(clyde, worldLayer);
 
@@ -213,7 +212,7 @@ let StartingScene = new Phaser.Class({
         const rock = this.characterFactory.buildNonPlayerCharacter("rock", 850, 140);
         this.gameObjects.push(rock);
         rock.setSteerings([
-            new Wander(rock, [this.player], 1)
+           // new Wander(rock, [this.player], 1)
         ]);
         this.physics.add.collider(rock, worldLayer);
 
@@ -247,14 +246,14 @@ let StartingScene = new Phaser.Class({
                 args.time.delayedCall(255, () => {
                    
                     let add;
-                    if (Math.abs(args.player.body.angle) < 1.5)
+                    if (args.player.sprite.scaleX < 0)
                         add = 100;
                     else
                         add = -100;
                     const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
                     args.attacks.push(attack);
                     args.physics.add.collider(attack, args.worldLayer);
-                    if (Math.abs(args.player.body.angle) < 1.5)
+                    if (args.player.sprite.scaleX < 0)
                         attack.flipX = true;
                     else
                         attack.flipX = false;
@@ -319,7 +318,9 @@ let StartingScene = new Phaser.Class({
 
             let i = currLower;
             while (i < maxLower) {
-                const lowerMob = this.characterFactory.buildLowerCharacter("clyde", this.centX, this.centY, this.camW)
+                const lowerMob = this.characterFactory.buildLowerCharacter("pinky", this.centX, this.centY, this.camW)
+                lowerMob.setCircle(75);
+                lowerMob.setOffset(125, 210);
                 this.gameObjects.push(lowerMob);
                 lowerMob.setSteerings([
                     new Seek(lowerMob, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)

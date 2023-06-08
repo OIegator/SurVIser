@@ -17,6 +17,12 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.isDying = false;
         this.hp = 0;
         this.isDead = false;
+        this.offset = {x: centX, y: 0};
+    }
+
+    setOffset(x, y) {
+        super.setOffset(x, y);
+        this.offset = {x: x, y: y};
     }
 
   
@@ -87,9 +93,11 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         if (x < 0) {
             this.setScale(0.5, 0.5);
             animsController.play(animations[0], true);
+            this.body.setOffset(this.offset.x, this.offset.y);
         } else if (x > 0) {
             this.setScale(-0.5, 0.5);
             animsController.play(animations[1], true);
+            this.body.setOffset(2 * this.offset.x, this.offset.y);
         } else if (y < 0) {
             animsController.play(animations[2], true);
         } else if (y > 0) {

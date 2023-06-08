@@ -9,7 +9,7 @@ const config = {
   height: 880,
   pixelArt: false,
   zoom: 1.0,
-  scene: ZeusScene,
+  scene: StartingScene,
   physics: {
     default: "arcade",
     arcade: {
