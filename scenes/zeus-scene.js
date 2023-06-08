@@ -20,6 +20,7 @@ import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_r
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
+import HealthBar from "../src/ui/healthbar";
 
 
 let inZone = false;
@@ -72,9 +73,10 @@ let ZeusScene = new Phaser.Class({
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
-        this.powerUpsGroup = this.physics.add.group();
 
+        this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
+
         const map = this.make.tilemap({key: "map"});
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
@@ -99,14 +101,15 @@ let ZeusScene = new Phaser.Class({
 
         // Creating characters
         this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
+
         this.player.speed = new Vector2(1);
-        this.player.body.setCircle(70);
+        this.player.body.setCircle(35);
         // this.player.body.setSize(120, 150);
-        this.player.body.setOffset(110, 135);
+        this.player.body.setOffset(-22, -9);
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
-        this.player.setCollideWorldBounds();
+        //this.player.setCollideWorldBounds();
 
         this.zeus = this.characterFactory.buildZeus("zeus", 850, 580, 100);
         this.gameObjects.push(this.zeus);
@@ -122,14 +125,14 @@ let ZeusScene = new Phaser.Class({
                 args.time.delayedCall(255, () => {
 
                     let add;
-                    if (args.player.scaleX < 0)
+                    if (args.player.sprite.scaleX < 0)
                         add = 100;
                     else
                         add = -100;
                     const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
                     args.attacks.push(attack);
                     args.physics.add.collider(attack, args.worldLayer);
-                    attack.flipX = args.player.scaleX < 0;
+                    attack.flipX = args.player.sprite.scaleX < 0;
                     attack.scaleX = 0.8;
                     attack.scaleY = 0.5;
                     if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
