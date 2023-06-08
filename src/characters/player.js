@@ -18,6 +18,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 this.container.state = "";
             }
+        } else if (!this.container.isAlive) {
+            const deathAnimations = this.animationSets.get('Death');
+            animsController.play(deathAnimations[0], true);
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the death animation
+                animsController.currentAnim.paused = true;
+            }
         } else if (x < 0) {
             this.setScale(0.5, 0.5);
             this.container.body.setOffset(-22, -9);

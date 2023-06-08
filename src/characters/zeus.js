@@ -141,17 +141,15 @@ export default class Zeus extends Boss {
         Die: () => {
             this.changeState("dead");
             this.isVulnerable = false;
-            console.log("damn");
 
-            const stanAnimations = this.animationSets.get('Death');
+            const deathAnimations = this.animationSets.get('Death');
             const animsController = this.anims;
-            animsController.play(stanAnimations[0]);
+            animsController.play(deathAnimations[0]);
             animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
         Disappear: () => {
-            console.log("disappear");
             this.removeHealthBar();
             this.isDead = true;
 
