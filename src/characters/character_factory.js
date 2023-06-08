@@ -17,6 +17,7 @@ import Character from "./character";
 import Vector2 from 'phaser/src/math/Vector2'
 import Lower from "./lower_mob";
 import Zeus from "./zeus";
+import PlayerContainer from "./player_container";
 
 
 export default class CharacterFactory {
@@ -76,9 +77,10 @@ export default class CharacterFactory {
     }
 
     buildPlayerCharacter(spriteSheetName, x, y) {
-        let character = new Player(this.scene, x, y, spriteSheetName, 2);
+       // let character = new Player(this.scene, x, y, spriteSheetName, 2);
+        let character = new PlayerContainer(this.scene, x, y, spriteSheetName, 2);
         character.maxSpeed = 150;
-        character.setCollideWorldBounds(true);
+        character.body.setCollideWorldBounds(true);
         this.scene.input.keyboard.createCursorKeys();
 
         character.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -88,7 +90,7 @@ export default class CharacterFactory {
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
         });
-        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.sprite.animationSets = this.animationLibrary.get(spriteSheetName);
         return character;
 
     }

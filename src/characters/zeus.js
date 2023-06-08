@@ -109,7 +109,7 @@ export default class Zeus extends Boss {
         Fell: () => {
             this.changeState("fell");
             this.isVulnerable = true;
-            const stanAnimations = this.animationSets.get('Stan');
+            const stanAnimations = this.animationSets.get('Fell');
             const animsController = this.anims;
             animsController.play(stanAnimations[0], true);
             animsController.currentAnim.paused = false;
@@ -121,31 +121,39 @@ export default class Zeus extends Boss {
             this.isVulnerable = false;
             this.ammo = 3;
 
-            const stanAnimations = this.animationSets.get('Stan');
+            const stanAnimations = this.animationSets.get('Fell');
             const animsController = this.anims;
             animsController.playReverse(stanAnimations[0]);
             animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
+        GetHit: (damage) => {
+            this.hp -= damage;
+            this.setMeterPercentageAnimated(this.hp / 100);
+            // Play hit animation
+            const hitAnimations = this.animationSets.get('Hit');
+            const animsController = this.anims;
+            animsController.play(hitAnimations[0], true);
+
+            return State.SUCCEEDED;
+        },
         Die: () => {
             this.changeState("dead");
             this.isVulnerable = false;
-            console.log("damn");
 
-            const stanAnimations = this.animationSets.get('Death');
+            const deathAnimations = this.animationSets.get('Death');
             const animsController = this.anims;
-            animsController.play(stanAnimations[0]);
+            animsController.play(deathAnimations[0]);
             animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
         Disappear: () => {
-            console.log("disappear");
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this, this.x, this.y, 'lightning').setScale(0.5));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
 
             return State.SUCCEEDED;
         },
@@ -198,7 +206,7 @@ export default class Zeus extends Boss {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
-        const deathAnimations = this.animationSets.get('Death');
+        const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
@@ -225,7 +233,8 @@ export default class Zeus extends Boss {
             // } else
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
-                animsController.currentAnim.paused = true; // Freeze the animation on the last frame
+                //animsController.currentAnim.paused = true; // Freeze the animation on the last frame
+                animsController.play(stanAnimations[0]);
             }
         } else if (this.state === "dead") {
             // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
