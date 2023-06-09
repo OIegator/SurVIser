@@ -1,52 +1,10 @@
-import cursor from "../assets/sprites/ui/cursor.png";
-import lvl_up_background from "../assets/sprites/ui/background_powerup.png";
-import lvl_up_item_background from "../assets/sprites/ui/item_background_powerup.png";
-import sword_power_up from "../assets/sprites/ui/sword_powerup.png";
-import map_power_up from "../assets/sprites/ui/map_powerup.png";
-import lvl_up_icon_background from "../assets/sprites/ui/icon_background_powerup.png";
-import armor_power_up from "../assets/sprites/ui/armor_powerup.png";
-import critical_power_up from "../assets/sprites/ui/critical_powerup.png";
-import attack_speed_power_up from "../assets/sprites/ui/attackSpeed_powerup.png";
-import critical_rate_power_up from "../assets/sprites/ui/criticalRate_powerup.png";
-import dodge_rate_power_up from "../assets/sprites/ui/dodgeRate_powerup.png";
-import attack_range_power_up from "../assets/sprites/ui/attackRange_powerup.png";
-import stats_background from "../assets/sprites/ui/stats_background.png";
-import vi_icon from "../assets/sprites/ui/vi_icon.png";
-import star from "../assets/sprites/ui/star3.png";
+
 
 export default class LvlUpScene extends Phaser.Scene {
     constructor() {
         super('lvl-up');
     }
 
-    init() {
-        let element = document.createElement('style');
-
-        document.head.appendChild(element);
-
-        element.sheet.insertRule('@font-face { font-family: "grobold"; src: url("assets/fonts/GROBOLD.ttf) format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("assets/fonts/PassionOne-Regular.ttf) format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("assets/fonts/SquadaOne-Regular.ttf) format("truetype"); }', 0);
-    }
-
-
-    preload() {
-        this.load.image('cursor', cursor);
-        this.load.image('lvl_up_background', lvl_up_background);
-        this.load.image('lvl_up_item_background', lvl_up_item_background);
-        this.load.image('sword_power_up', sword_power_up);
-        this.load.image('map_power_up', map_power_up);
-        this.load.image('armor_power_up', armor_power_up);
-        this.load.image('critical_power_up', critical_power_up);
-        this.load.image('critical_rate_power_up', critical_rate_power_up);
-        this.load.image('dodge_rate_power_up', dodge_rate_power_up);
-        this.load.image('attack_range_power_up', attack_range_power_up);
-        this.load.image('attack_speed_power_up', attack_speed_power_up);
-        this.load.image('lvl_up_icon_background', lvl_up_icon_background);
-        this.load.image('stats_background', stats_background);
-        this.load.image('vi_icon', vi_icon);
-        this.load.image('star', star);
-    }
 
     resume() {
         const zeus_scene = this.scene.get('zeus');

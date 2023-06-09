@@ -1,29 +1,3 @@
-import tilemapPng from '../assets/tileset/Dungeon_Tileset.png'
-import dungeonRoomJson from '../assets/big_dungeon_room.json'
-
-import viSpriteSheet from '../assets/sprites/characters/vi.png'
-import zeusSpriteSheet from '../assets/sprites/characters/zeus.png'
-import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
-
-//======================Projectiles===========================
-import lightning from '../assets/sprites/projectile/Weapon.png'
-import slash from '../assets/sprites/projectile/Splash.png'
-//========================UI==============================
-//=======================BossHealthBar========================
-import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
-import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
-import barHorizontal_red_right from '../assets/sprites/ui/BarHorizontal_red_right.png'
-import barHorizontal_red_left_shadow from '../assets/sprites/ui/BarHorizontal_red_left_shadow.png'
-import barHorizontal_red_mid_shadow from '../assets/sprites/ui/BarHorizontal_red_mid_shadow.png'
-import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_red_right_shadow.png'
-//========================LVL=UP====================================
-import cursor from '../assets/sprites/ui/cursor.png'
-import lvl_up_background from '../assets/sprites/ui/background_powerup.png'
-import lvl_up_item_background from '../assets/sprites/ui/item_background_powerup.png'
-import sword_power_up from '../assets/sprites/ui/sword_powerup.png'
-import map_power_up from '../assets/sprites/ui/map_powerup.png'
-import armor_power_up from '../assets/sprites/ui/armor_powerup.png'
-//============================================================
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
@@ -32,7 +6,6 @@ import PixelatedFX from '../assets/pipelines/PixelatedFX.js';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
 
 let inZone = false;
-
 
 let ZeusScene = new Phaser.Class({
 
@@ -43,41 +16,6 @@ let ZeusScene = new Phaser.Class({
         Phaser.Scene.call(this, {key: 'zeus'});
     },
 
-    characterFrameConfig: {frameWidth: 31, frameHeight: 31},
-    slimeFrameConfig: {frameWidth: 32, frameHeight: 32},
-    viFrameConfig: {frameWidth: 305, frameHeight: 305},
-    zeusFrameConfig: {frameWidth: 683, frameHeight: 500},
-
-
-    preload: function () {
-
-        //loading map tiles and json with positions
-        this.load.image("tiles", tilemapPng);
-        this.load.tilemapTiledJSON("map", dungeonRoomJson);
-
-        //loading spritesheets
-        this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
-        this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
-        this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
-
-        //loading health bar
-        this.load.image('left-cap', barHorizontal_red_left)
-        this.load.image('middle', barHorizontal_red_mid)
-        this.load.image('right-cap', barHorizontal_red_right)
-        this.load.image('left-cap-shadow', barHorizontal_red_left_shadow)
-        this.load.image('middle-shadow', barHorizontal_red_mid_shadow)
-        this.load.image('right-cap-shadow', barHorizontal_red_right_shadow)
-
-        //loading projectiles
-        this.load.image('lightning', lightning);
-        this.load.image('attack', slash);
-        this.load.image('cursor', cursor);
-        this.load.image('lvl_up_background', lvl_up_background);
-        this.load.image('lvl_up_item_background', lvl_up_item_background);
-        this.load.image('sword_power_up', sword_power_up);
-        this.load.image('map_power_up', map_power_up);
-        this.load.image('armor_power_up', armor_power_up);
-    },
 
     lowerColl(player, lower) {
         lower.gotDamage = true;
@@ -88,7 +26,7 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_SPACE', this.lvlUP);
         this.scene.pause();
-        this.scene.launch('lvl-up');
+        this.scene.launch('gameover');
     },
 
     onResume() {
