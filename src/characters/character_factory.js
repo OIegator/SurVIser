@@ -17,6 +17,7 @@ import Character from "./character";
 import Vector2 from 'phaser/src/math/Vector2'
 import Lower from "./lower_mob";
 import Zeus from "./zeus";
+import Bers from "./berserk";
 import PlayerContainer from "./player_container";
 
 
@@ -52,7 +53,7 @@ export default class CharacterFactory {
         animationLibrary.set(this.blinkySpriteSheet,
             new AnimationLoader(scene, this.blinkySpriteSheet, blinkyConfigJson, this.blinkySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.berserkSpriteSheet,
-            new AnimationLoader(scene, this.berserkSpriteSheet, berserkConfigJson, this.berserkSpriteSheet, 40).createAnimations());
+            new AnimationLoader(scene, this.berserkSpriteSheet, berserkConfigJson, this.berserkSpriteSheet, 28).createAnimations());
         animationLibrary.set(this.garySpriteSheet,
             new AnimationLoader(scene, this.garySpriteSheet, garyConfigJson, this.garySpriteSheet, 40).createAnimations());
         animationLibrary.set(this.rockSpriteSheet,
@@ -117,6 +118,16 @@ export default class CharacterFactory {
         let character = new Zeus(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildBers(spriteSheetName, x, y, maxHP, velocity = null) {
+        let character = new Bers(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
+        character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
+        console.log(spriteSheetName);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         character.speed = new Vector2(0.5, 0.5);
         return character;
