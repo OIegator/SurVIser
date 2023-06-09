@@ -100,7 +100,7 @@ let StartingScene = new Phaser.Class({
     },
 
     lowerColl(player, lower) {
-        lower.gotDamage =true;
+        lower.gotDamage = true;
         //console.log("coll");
     },
 
@@ -143,7 +143,7 @@ let StartingScene = new Phaser.Class({
 
 
         let i = 0;
-        while (i < currLower){
+        while (i < currLower) {
             const lowerMob = this.characterFactory.buildLowerCharacter("pinky", this.centX, this.centY, this.camW);
             lowerMob.setCircle(75);
             lowerMob.setOffset(125, 210);
@@ -184,7 +184,7 @@ let StartingScene = new Phaser.Class({
         const clyde = this.characterFactory.buildNonPlayerCharacter("clyde", 300, 200);
         this.gameObjects.push(clyde);
         clyde.setSteerings([
-           //  new Wander(clyde, [this.player], 1)
+            //  new Wander(clyde, [this.player], 1)
         ]);
         this.physics.add.collider(clyde, worldLayer);
 
@@ -212,7 +212,7 @@ let StartingScene = new Phaser.Class({
         const rock = this.characterFactory.buildNonPlayerCharacter("rock", 850, 140);
         this.gameObjects.push(rock);
         rock.setSteerings([
-           // new Wander(rock, [this.player], 1)
+            // new Wander(rock, [this.player], 1)
         ]);
         this.physics.add.collider(rock, worldLayer);
 
@@ -235,7 +235,7 @@ let StartingScene = new Phaser.Class({
             this.physics.world.createDebugGraphic();
         });
 
-        this.physics.add.overlap(this.player, zeus, function (){
+        this.physics.add.overlap(this.player, zeus, function () {
             inZone = true;
         })
 
@@ -244,7 +244,7 @@ let StartingScene = new Phaser.Class({
             callback: function (args) {
                 args.player.isAttacking = true;
                 args.time.delayedCall(255, () => {
-                   
+
                     let add;
                     if (args.player.sprite.scaleX < 0)
                         add = 100;
@@ -260,7 +260,7 @@ let StartingScene = new Phaser.Class({
                     attack.scaleX = 0.8;
                     attack.scaleY = 0.5;
                 });
-                
+
             },
             callbackContext: this,
             args: [this],
@@ -294,7 +294,7 @@ let StartingScene = new Phaser.Class({
     },
 
     update(time) {
-        
+
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element) {
                 element.update(inZone);

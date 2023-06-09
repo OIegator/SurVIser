@@ -21,6 +21,18 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
         this.add(this.sprite);
         this.add(this.healthBar);
+        this.isConfig = {
+            maxHP: this.maxHp,
+            strength: 20,
+            moveSpeed: this.speed,
+            attackSpeed: 2,
+            attackRange: 0,
+            critical: 1.4,
+            criticalRate: 0.1,
+            dodgeRate: 0.1,
+            powerUps: this.powerUps,
+            lvl: 1
+        }
     }
 
     update(collide) {
@@ -72,6 +84,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.state = "damaged"
 
     }
+
 
     Die() {
         this.body.setVelocity(0);

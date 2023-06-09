@@ -8,6 +8,7 @@ import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
 //======================Projectiles===========================
 import lightning from '../assets/sprites/projectile/Weapon.png'
 import slash from '../assets/sprites/projectile/Splash.png'
+//========================UI==============================
 //=======================BossHealthBar========================
 import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
 import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
@@ -15,10 +16,20 @@ import barHorizontal_red_right from '../assets/sprites/ui/BarHorizontal_red_righ
 import barHorizontal_red_left_shadow from '../assets/sprites/ui/BarHorizontal_red_left_shadow.png'
 import barHorizontal_red_mid_shadow from '../assets/sprites/ui/BarHorizontal_red_mid_shadow.png'
 import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_red_right_shadow.png'
+//========================LVL=UP====================================
+import cursor from '../assets/sprites/ui/cursor.png'
+import lvl_up_background from '../assets/sprites/ui/background_powerup.png'
+import lvl_up_item_background from '../assets/sprites/ui/item_background_powerup.png'
+import sword_power_up from '../assets/sprites/ui/sword_powerup.png'
+import map_power_up from '../assets/sprites/ui/map_powerup.png'
+import armor_power_up from '../assets/sprites/ui/armor_powerup.png'
 //============================================================
 import {LightningGroup} from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
+//======================FX===============
+import PixelatedFX from '../assets/pipelines/PixelatedFX.js';
+import BlurFX from '../assets/pipelines/BlurPostFX.js';
 
 let inZone = false;
 
@@ -29,7 +40,7 @@ let ZeusScene = new Phaser.Class({
 
 
     initialize: function StartingScene() {
-        Phaser.Scene.call(this, {key: 'StartingScene'});
+        Phaser.Scene.call(this, {key: 'zeus'});
     },
 
     characterFrameConfig: {frameWidth: 31, frameHeight: 31},
@@ -60,17 +71,35 @@ let ZeusScene = new Phaser.Class({
         //loading projectiles
         this.load.image('lightning', lightning);
         this.load.image('attack', slash);
+        this.load.image('cursor', cursor);
+        this.load.image('lvl_up_background', lvl_up_background);
+        this.load.image('lvl_up_item_background', lvl_up_item_background);
+        this.load.image('sword_power_up', sword_power_up);
+        this.load.image('map_power_up', map_power_up);
+        this.load.image('armor_power_up', armor_power_up);
     },
 
     lowerColl(player, lower) {
         lower.gotDamage = true;
     },
 
+    lvlUP ()
+    {
+        this.cameras.main.setPostPipeline(BlurFX);
+        this.input.keyboard.off('keydown_SPACE', this.lvlUP);
+        this.scene.pause();
+        this.scene.launch('lvl-up');
+    },
+
+    onResume() {
+        this.cameras.main.resetPostPipeline();
+        console.log(this.registry.get('player_config'));
+    },
+
     create: function () {
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
-
         this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
 
@@ -101,6 +130,7 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
+        this.registry.set('player_config', this.player.isConfig);
 
         this.zeus = this.characterFactory.buildZeus("zeus", 850, 580, 100);
         this.gameObjects.push(this.zeus);
@@ -142,11 +172,12 @@ let ZeusScene = new Phaser.Class({
         this.canDamage = true;
     },
 
+
     update(time) {
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             console.log("pew");
-            this.player.GetHit(50);
+            this.lvlUP();
         }
 
         if (this.lightningGroup) {
