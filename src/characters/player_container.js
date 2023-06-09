@@ -24,7 +24,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.isConfig = {
             maxHP: this.maxHp,
             strength: 20,
-            moveSpeed: this.speed,
+            moveSpeed: 1,
             attackSpeed: 2,
             attackRange: 0,
             critical: 1.4,

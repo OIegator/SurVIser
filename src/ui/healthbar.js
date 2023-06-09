@@ -6,9 +6,9 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.height = h;
         this.currentSize = owner.hp / owner.maxHp * w;
         this.owner = owner;
-        this.lowColor = 0xff0000; // Red color
-        this.mediumColor = 0xffa500; // Orange color
-        this.highColor = 0x00ff00; // Green color
+        this.lowColor = 0xfa5b57; // Red color
+        this.mediumColor = 0xfab957; // Orange color
+        this.highColor = 0x9cfa57; // Green color
 
         // Create the black background rectangle
         const bgRect = new Phaser.GameObjects.Graphics(scene);
