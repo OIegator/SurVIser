@@ -1,9 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\assets",
+    "\\assets\\animations",
+    "\\assets\\bars",
+    "\\assets\\sprites",
+    "\\assets\\sprites\\characters",
     "\\scenes",
-    "\\src"
+    "\\src",
+    "\\src\\characters",
+    "\\src\\projectiles"
   ],
-  "SelectedNode": "\\scenes\\starting-scene.js",
+  "SelectedNode": "\\src\\projectiles\\EnemyAttack.js",
   "PreviewInSolutionExplorer": false
 }
