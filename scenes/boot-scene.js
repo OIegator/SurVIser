@@ -33,6 +33,7 @@ import character_selection_background from "../assets/sprites/ui/character_selec
 import character_background from "../assets/sprites/ui/character_background.png";
 import character_selected_background from "../assets/sprites/ui/character_selected_background.png";
 import todo_character from "../assets/sprites/ui/todo_character.png";
+import grobold from  "url:../assets/fonts/GROBOLD.ttf";
 
 export default class Boot extends Phaser.Scene {
 
@@ -47,9 +48,9 @@ export default class Boot extends Phaser.Scene {
 
         document.head.appendChild(element);
 
-        element.sheet.insertRule('@font-face { font-family: "grobold"; src: url("assets/fonts/GROBOLD.ttf) format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("assets/fonts/PassionOne-Regular.ttf) format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("assets/fonts/SquadaOne-Regular.ttf) format("truetype"); }', 0);
+        element.sheet.insertRule('@font-face { font-family: "grobold"; src:'+ grobold +' format("truetype"); }', 0);
+        element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("../assets/fonts/PassionOne-Regular.ttf") format("truetype"); }', 0);
+        element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("../assets/fonts/SquadaOne-Regular.ttf") format("truetype"); }', 0);
     }
 
 
