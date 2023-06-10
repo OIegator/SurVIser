@@ -21,12 +21,19 @@ let ZeusScene = new Phaser.Class({
         lower.gotDamage = true;
     },
 
+    gameover() {
+        setTimeout(() => {
+            this.scene.start('gameover');
+        }, 2000);
+    },
+
+
     lvlUP ()
     {
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_SPACE', this.lvlUP);
         this.scene.pause();
-        this.scene.launch('gameover');
+        this.scene.launch('lvl-up');
     },
 
     onResume() {
@@ -113,9 +120,14 @@ let ZeusScene = new Phaser.Class({
 
     update(time) {
 
+        if (!this.player.isAlive) {
+            this.gameover();
+        }
+
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             console.log("pew");
-            this.lvlUP();
+            this.player.GetHit(100);
+            //this.lvlUP();
         }
 
         if (this.lightningGroup) {

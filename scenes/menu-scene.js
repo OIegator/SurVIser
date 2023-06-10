@@ -1,25 +1,6 @@
-import menu_background from "../assets/sprites/ui/menu_background.png";
-import green_btn from "../assets/sprites/ui/green_btn.png";
-import red_btn from "../assets/sprites/ui/red_btn.png";
-import character_selection_background from "../assets/sprites/ui/character_selection_background.png";
-import character_background from "../assets/sprites/ui/character_background.png";
-import character_selected_background from "../assets/sprites/ui/character_selected_background.png";
-import todo_character from "../assets/sprites/ui/todo_character.png";
-
-
 export default class MenuScene extends Phaser.Scene {
     constructor() {
         super('menu');
-    }
-
-    preload() {
-        this.load.image('menu_background', menu_background);
-        this.load.image('green_btn', green_btn);
-        this.load.image('red_btn', red_btn);
-        this.load.image('character_selection_background', character_selection_background);
-        this.load.image('character_background', character_background);
-        this.load.image('character_selected_background', character_selected_background);
-        this.load.image('todo_character', todo_character);
     }
 
     create() {
@@ -41,7 +22,18 @@ export default class MenuScene extends Phaser.Scene {
         const characterBackground1_selected = this.add.image(600, 280, 'character_selected_background').setVisible(false);
         const characterBackground2 = this.add.image(795, 280, 'character_background').setVisible(false);
         const todoCharacter = this.add.image(795, 280, 'todo_character').setVisible(false);
-        const viCharacter = this.add.image(600, 280, 'vi').setVisible(false);
+        const todoLabel = this.add.text(755, 338, '???', {
+            color: 'white',
+            fontSize: '40px',
+            fontFamily: 'grobold'
+        }).setVisible(false);
+        const viCharacter = this.add.image(590, 220, 'vi').setVisible(false);
+        viCharacter.setScale(0.85);
+        const viLabel = this.add.text(580, 338, 'Vi', {
+            color: 'white',
+            fontSize: '40px',
+            fontFamily: 'grobold'
+        }).setVisible(false);
 
         // Container for the start button
         const start_btn_container = this.add.container(795, 770);
@@ -87,6 +79,8 @@ export default class MenuScene extends Phaser.Scene {
             characterBackground2.setVisible(true);
             todoCharacter.setVisible(true);
             viCharacter.setVisible(true);
+            viLabel.setVisible(true);
+            todoLabel.setVisible(true);
         };
 
         // Function to hide the hero selection objects
@@ -97,51 +91,86 @@ export default class MenuScene extends Phaser.Scene {
             characterBackground2.setVisible(false);
             todoCharacter.setVisible(false);
             viCharacter.setVisible(false);
+            viLabel.setVisible(false);
+            todoLabel.setVisible(false);
             characterBackground1_selected.setVisible(false);
         };
 
         let isHeroSelectionVisible = false;
 
         // Show hero selection when the start button is clicked
-        // Show hero selection when the start button is clicked
-        start_btn_container.setInteractive().on('pointerdown', () => {
-            isHeroSelectionVisible = true;
-            showHeroSelection();
-            start_btn_container.setVisible(false);
-            back_btn_container.setVisible(true);
-            confirm_btn_container.setVisible(false);
-        });
+        start_btn_container.setInteractive()
+            .on('pointerover', () => {
+                start_btn.setTint(0x7DCEA0); // Apply darker tint
+            })
+            .on('pointerout', () => {
+                start_btn.clearTint(); // Remove tint
+            })
+            .on('pointerdown', () => {
+                isHeroSelectionVisible = true;
+                showHeroSelection();
+                start_btn_container.setVisible(false);
+                back_btn_container.setVisible(true);
+                confirm_btn_container.setVisible(false);
+            });
 
         // Show start button when the back button is clicked
-        back_btn_container.setInteractive().on('pointerdown', () => {
-            isHeroSelectionVisible = false;
-            hideHeroSelection();
-            start_btn_container.setVisible(true);
-            back_btn_container.setVisible(false);
-            confirm_btn_container.setVisible(false);
-        });
+        back_btn_container.setInteractive()
+            .on('pointerover', () => {
+                back_btn.setTint(0xF1948A); // Apply darker tint
+            })
+            .on('pointerout', () => {
+                back_btn.clearTint(); // Remove tint
+            })
+            .on('pointerdown', () => {
+                isHeroSelectionVisible = false;
+                hideHeroSelection();
+                start_btn_container.setVisible(true);
+                back_btn_container.setVisible(false);
+                confirm_btn_container.setVisible(false);
+            });
 
-        // Go to the 'zeus' scene when the confirm button is clicked
-        confirm_btn_container.setInteractive().on('pointerdown', () => {
-            this.scene.start('zeus');
-        });
+        // Go to the next scene when the confirm button is clicked
+        confirm_btn_container.setInteractive()
+            .on('pointerover', () => {
+                confirm_btn.setTint(0x7DCEA0); // Apply darker tint
+            })
+            .on('pointerout', () => {
+                confirm_btn.clearTint(); // Remove tint
+            })
+            .on('pointerdown', () => {
+                this.scene.start('zeus');
+            });
 
         // Toggle visibility of characterBackground1_selected
-        characterBackground1.setInteractive().on('pointerdown', () => {
-            characterBackground1_selected.setVisible(!characterBackground1_selected.visible);
-            confirm_btn_container.setVisible(characterBackground1_selected.visible);
-        });
+        characterBackground1.setInteractive()
+            .on('pointerover', () => {
+                characterBackground1.setTint(0xE59866); // Apply darker tint
+            })
+            .on('pointerout', () => {
+                characterBackground1.clearTint(); // Remove tint
+            })
+            .on('pointerdown', () => {
+                characterBackground1_selected.setVisible(!characterBackground1_selected.visible);
+                confirm_btn_container.setVisible(characterBackground1_selected.visible);
+            });
 
         // Hide characterBackground1_selected when clicked
-        characterBackground1_selected.setInteractive().on('pointerdown', () => {
-            characterBackground1_selected.setVisible(false);
-            confirm_btn_container.setVisible(false);
-        });
+        characterBackground1_selected.setInteractive()
+            .on('pointerover', () => {
+                characterBackground1_selected.setTint(0x85C1E9); // Apply darker tint
+            })
+            .on('pointerout', () => {
+                characterBackground1_selected.clearTint(); // Remove tint
+            })
+            .on('pointerdown', () => {
+                characterBackground1_selected.setVisible(false);
+                confirm_btn_container.setVisible(false);
+            });
 
         // Hide hero selection initially
         hideHeroSelection();
     }
-
 
 
 }
