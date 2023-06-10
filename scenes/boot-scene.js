@@ -118,6 +118,7 @@ export default class Boot extends Phaser.Scene {
 
     create ()
     {
+        this.input.setDefaultCursor('url(' + cursor + '), pointer');
         this.scene.start('menu');
     }
 
