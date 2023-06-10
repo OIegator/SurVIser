@@ -31,7 +31,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             criticalRate: 0.1,
             dodgeRate: 0.1,
             powerUps: this.powerUps,
-            lvl: 1
+            lvl: 1,
+            time: '00:00'
         }
     }
 

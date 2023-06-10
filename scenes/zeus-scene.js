@@ -4,8 +4,13 @@ import AutoAttack from "../src/projectiles/AutoAttack.js"
 //======================FX===============
 import PixelatedFX from '../assets/pipelines/PixelatedFX.js';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
+import Seek from "../src/ai/steerings/seek";
+import HealthBar from "../src/UI-Bar/HealthBar";
+import PowerUp from "../src/power-ups/power-up";
 
 let inZone = false;
+const maxLower = 15;
+let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
 
@@ -27,22 +32,29 @@ let ZeusScene = new Phaser.Class({
         }, 2000);
     },
 
+    pauseTimer() {
+        this.isTimerPaused = true;
+    },
 
-    lvlUP ()
-    {
+    resumeTimer() {
+        this.isTimerPaused = false;
+    },
+
+    lvlUP() {
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_SPACE', this.lvlUP);
+        this.pauseTimer();
         this.scene.pause();
         this.scene.launch('lvl-up');
     },
 
     onResume() {
+        this.resumeTimer();
         this.cameras.main.resetPostPipeline();
         console.log(this.registry.get('player_config'));
     },
 
     create: function () {
-
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
         this.powerUpsGroup = this.physics.add.group();
@@ -81,8 +93,15 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
+        this.centX = this.cameras.main.centerX;
+        this.centY = this.cameras.main.centerY;
+        this.camW = this.cameras.main.width;
+
         this.attacks = [];
         this.enemies = [];
+        this.player
+        let i = 0;
+
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -114,9 +133,71 @@ let ZeusScene = new Phaser.Class({
             loop: true
         });
 
+        const fullWidth = 1540;
+        this.expBar = new HealthBar({
+            scene: this,
+            max: 500,
+            current: 100,
+            animate: true,
+            damageColor: false,
+            displayData: {
+                fullWidth: fullWidth,
+                x: 25,
+                y: 15,
+                color: "blue",
+                isPixel: true
+            }
+        });
+
         this.canDamage = true;
+
+        this.elapsedTime = 0;
+        this.isTimerPaused = false;
+
+        this.timerText = this.add.text(800, 20, '0:00', {font: '32pt Squada One', fill: '#ffffff'});
+        this.timerText.setScrollFactor(0);
+        this.timerText.setDepth(11);
+
+        this.timer = this.time.addEvent({
+            delay: 1000,
+            callback: this.updateTimer,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Pause the timer when the scene is paused
+        this.events.on('pause', this.pauseTimer, this);
+
+        // Resume the timer when the scene is resumed
+        this.events.on('resume', this.resumeTimer, this);
+
+        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning'));
     },
 
+    health() {
+        this.expBar.resiveHealing(2);
+    },
+
+
+    updateTimer() {
+        if (!this.isTimerPaused) {
+            this.elapsedTime += 1;
+
+            const minutes = Math.floor(this.elapsedTime / 60);
+            const seconds = this.elapsedTime % 60;
+
+            let formattedTime = '';
+
+            if (minutes > 9) {
+                formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            this.timerText.setText('' + formattedTime);
+            this.player.isConfig.time = formattedTime;
+        }
+    },
 
     update(time) {
 
@@ -126,8 +207,8 @@ let ZeusScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             console.log("pew");
-            this.player.GetHit(100);
-            //this.lvlUP();
+            //this.player.GetHit(100);
+            this.lvlUP();
         }
 
         if (this.lightningGroup) {
@@ -163,15 +244,50 @@ let ZeusScene = new Phaser.Class({
 
 
         if (this.gameObjects) {
-            this.gameObjects.forEach(function (element, index, object) {
-                if (element.isDead) {
-                    element.destroy();
-                    object.splice(index, 1);
-                }
-            });
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
             });
+            const self = this;
+            this.gameObjects.forEach(function (element, index, object) {
+                if (element.constructor.name === "Lower") {
+                    if (element.isDead) {
+                        self.health();
+                        element.destroy();
+                        object.splice(index, 1);
+                        currLower--;
+                    }
+                } else {
+                    if (element.isDead) {
+                        element.destroy();
+                        object.splice(index, 1);
+                    }
+                }
+            });
+
+            let i = currLower;
+            while (i < maxLower) {
+                const inky = this.characterFactory.buildLowerCharacter("inky", this.centX, this.centY, this.camW)
+                inky.setCircle(40);
+                inky.setOffset(200, 210);
+                this.gameObjects.push(inky);
+                inky.setSteerings([
+                    new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+                ]);
+                this.physics.add.collider(
+                    inky,
+                    this.player,
+                    () => {
+                        // Delay the attack function by 1 second
+                        this.time.delayedCall(100, inky.Attack, [], inky);
+                    },
+                    null,
+                    this
+                );
+                this.physics.add.collider(inky, this.worldLayer);
+                this.enemies.push(inky);
+                i++
+            }
+            currLower = maxLower;
         }
     },
 

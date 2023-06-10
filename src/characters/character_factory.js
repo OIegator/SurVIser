@@ -82,6 +82,7 @@ export default class CharacterFactory {
         let character = new PlayerContainer(this.scene, x, y, spriteSheetName, 2);
         character.maxSpeed = 150;
         character.body.setCollideWorldBounds(true);
+        character.body.setImmovable();
         this.scene.input.keyboard.createCursorKeys();
 
         character.cursors = this.scene.input.keyboard.createCursorKeys();

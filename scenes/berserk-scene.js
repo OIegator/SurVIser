@@ -28,7 +28,7 @@ let BerserkScene = new Phaser.Class({
 
 
     initialize: function StartingScene() {
-        Phaser.Scene.call(this, { key: 'StartingScene' });
+        Phaser.Scene.call(this, { key: 'berserk' });
     },
 
     characterFrameConfig: { frameWidth: 31, frameHeight: 31 },

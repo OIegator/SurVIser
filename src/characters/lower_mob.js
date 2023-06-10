@@ -4,11 +4,27 @@ const eps = 20;
 export default class Lower extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, centX, centY, camW, name, frame, velocity) {
         let ang = Math.random() * 2 * Math.PI,
-            adj = Math.cos(ang) * camW/2,
-            opp = Math.sin(ang) * camW/2
-        
-        super(scene, centX+adj, centY + opp, name, frame);
-        this.setScale(0.5);
+            adj = Math.cos(ang) * camW,
+            opp = Math.sin(ang) * camW;
+
+        let spawnX = centX + adj;
+        let spawnY = centY + opp;
+
+        // Define the padding for the scene bounds
+        let padding = 50;
+
+        // Get the scene bounds with padding
+        let minX = scene.physics.world.bounds.x + padding;
+        let maxX = scene.physics.world.bounds.right - padding;
+        let minY = scene.physics.world.bounds.y + padding;
+        let maxY = scene.physics.world.bounds.bottom - padding;
+
+        // Adjust the spawn position if it falls outside the area
+        spawnX = Phaser.Math.Clamp(spawnX, minX, maxX);
+        spawnY = Phaser.Math.Clamp(spawnY, minY, maxY);
+
+        super(scene, spawnX, spawnY, name, frame);
+        this.setScale(0.4);
         scene.physics.world.enable(this);
         scene.add.existing(this);
         this.velocity = velocity;
@@ -17,7 +33,8 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.isDying = false;
         this.hp = 0;
         this.isDead = false;
-        this.offset = {x: centX, y: 0};
+        this.lastAttackTime = 0;
+        this.offset = {x: 200, y: 0};
     }
 
     setOffset(x, y) {
@@ -25,7 +42,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.offset = {x: x, y: y};
     }
 
-  
+
     update(collide) {
         const body = this.body;
         this.body.setVelocity(0);
@@ -40,49 +57,61 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         let target = velocity.multiply(this.speed);
 
 
-
         const speed = this.maxSpeed;
         // Normalize and scale the velocity so that player can't move faster along a diagonal
-        if (!this.isDying) { 
-        body.velocity.normalize().scale(speed);
-        this.body.velocity.add(target);
-        }
-        else
-           return this.Die();
+        if (!this.isDying) {
+            body.velocity.normalize().scale(speed);
+            this.body.velocity.add(target);
+        } else
+            return this.Die();
         if (this.gotDamage)
-            this.getDamage();
-        else  
-         this.updateAnimation();
+            this.getHit();
+        else
+            this.updateAnimation();
     }
 
-    getDamage() {
+
+    GetHit() {
         if (this.hp < 0)
             this.isDying = true;
-            
+
         const animations = this.animationSets.get('Hit');
-        
-      //const numb = this.animations.currentAnim.frame;
-      
+
+        //const numb = this.animations.currentAnim.frame;
+
         const animsController = this.anims;
-        
+
         animsController.play(animations[0], true);
-        
+
         const numb = animsController.currentFrame.frame.name;
         if (numb == 69) {
             this.hp--;
             this.gotDamage = false;
         }
-      
+
+    }
+
+    Attack() {
+        const currentTime = this.scene.time.now;
+
+        // Calculate the elapsed time since the last attack
+        const elapsedTime = currentTime - this.lastAttackTime;
+
+        // Check if the elapsed time is greater than or equal to 1 second (1000 milliseconds)
+        if (elapsedTime >= 1000 && this.scene.player.isAlive) {
+            this.scene.player.GetHit(5);
+            this.lastAttackTime = currentTime; // Update the last attack time
+        }
     }
 
     Die() {
-        
-      const animations = this.animationSets.get('Death');
-      const animsController = this.anims;
+
+        const animations = this.animationSets.get('Death');
+        const animsController = this.anims;
         animsController.play(animations[0], true);
         const numb = animsController.currentFrame.frame.name;
-      if (numb == 54)
-        this.isDead = true;
+        if (numb == 54)
+            this.isDead = true;
     }
 
     updateAnimation() {
@@ -97,7 +126,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         } else if (x > 0) {
             this.setScale(-0.5, 0.5);
             animsController.play(animations[1], true);
-            this.body.setOffset(2 * this.offset.x, this.offset.y);
+            this.body.setOffset(this.offset.x + 90, this.offset.y);
         } else if (y < 0) {
             animsController.play(animations[2], true);
         } else if (y > 0) {

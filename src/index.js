@@ -7,6 +7,8 @@ import Boot from "../scenes/boot-scene";
 import MenuScene from "../scenes/menu-scene";
 import GameOverScene from "../scenes/gameover-scene";
 import BerserkScene from '../scenes/berserk-scene';
+import BlurFX from '../assets/pipelines/BlurPostFX.js';
+
 
 const config = {
     type: Phaser.AUTO,
@@ -14,7 +16,7 @@ const config = {
     height: 880,
     pixelArt: false,
     zoom: 1.0,
-    scene: [Boot, MenuScene, BerserkScene, LvlUpScene, GameOverScene],
+    scene: [Boot, MenuScene, ZeusScene, LvlUpScene, GameOverScene],
     physics: {
         default: "arcade",
         arcade: {

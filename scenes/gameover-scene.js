@@ -30,7 +30,8 @@ export default class GameOverScene extends Phaser.Scene {
             {field: 'attackRange', name: 'Attack Range'},
             {field: 'critical', name: 'Critical'},
             {field: 'criticalRate', name: 'Critical Rate'},
-            {field: 'dodgeRate', name: 'Dodge Rate'}
+            {field: 'dodgeRate', name: 'Dodge Rate'},
+            {field: 'time', name: 'Total time'}
         ];
 
         player_stats.forEach((stat, index) => {
