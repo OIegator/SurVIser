@@ -12,6 +12,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         // Create the black background rectangle
         const bgRect = new Phaser.GameObjects.Graphics(scene);
+        bgRect.setDepth(12);
         bgRect.fillStyle(0x000000); // Black color
         bgRect.fillRect(0, 0, w, h); // Adjust the size as needed
         this.add(bgRect);
@@ -21,7 +22,6 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.healthBar.fillStyle(0x00ff00); // Green color
         this.healthBar.fillRect(0, 0, w, h);
         this.add(this.healthBar);
-
     }
 
     updateBar() {

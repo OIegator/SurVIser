@@ -1,7 +1,7 @@
 import ProgressBar from "./ProgressBar";
 
 export default class HealthBar extends ProgressBar {
-    constructor({ scene, max, current, animate, damageColor, displayData }) {
+    constructor({scene, max, current, animate, damageColor, displayData}) {
         super({
             scene,
             ...displayData,
@@ -17,7 +17,7 @@ export default class HealthBar extends ProgressBar {
     }
 
     takeDamage(damage) {
-        var { max, current } = this;
+        var {max, current} = this;
         if (max >= current && 0 < current) {
             var newCurrent = current - damage;
 
@@ -31,17 +31,24 @@ export default class HealthBar extends ProgressBar {
     }
 
     resiveHealing(health) {
-        var { max, current } = this;
+        const {max, current} = this;
         if (max > current && 0 < current) {
             var newCurrent = current + health;
 
-            if (max >= newCurrent) {
+            if (max > newCurrent) {
                 this.current = newCurrent;
             } else {
                 this.current = max;
+
             }
             this._displayCurrent();
         }
+    }
+
+    _reset() {
+        this.current = 1;
+        this.max = this.max + 100 * this.scene.player.isConfig.lvl;
+        this._displayCurrent();
     }
 
     _displayCurrent() {
@@ -50,5 +57,13 @@ export default class HealthBar extends ProgressBar {
         else this.setMeterPercentage(percent);
 
         if (this.damageColor) this.setDamageColorChange(percent);
+        if (percent >= 0.99 && percent <= 1.01) {
+            setTimeout(() => {
+                this.scene.player.isConfig.lvl++;
+                this.scene.lvlUP();
+            }, 1000);
+        }
     }
+
+
 }

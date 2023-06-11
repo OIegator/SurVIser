@@ -93,15 +93,17 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
     }
 
     Attack() {
-        const currentTime = this.scene.time.now;
+        if(!this.isDying || !this.isDead) {
+            const currentTime = this.scene.time.now;
 
-        // Calculate the elapsed time since the last attack
-        const elapsedTime = currentTime - this.lastAttackTime;
+            // Calculate the elapsed time since the last attack
+            const elapsedTime = currentTime - this.lastAttackTime;
 
-        // Check if the elapsed time is greater than or equal to 1 second (1000 milliseconds)
-        if (elapsedTime >= 1000 && this.scene.player.isAlive) {
-            this.scene.player.GetHit(5);
-            this.lastAttackTime = currentTime; // Update the last attack time
+            // Check if the elapsed time is greater than or equal to 1 second (1000 milliseconds)
+            if (elapsedTime >= 1000 && this.scene.player.isAlive) {
+                this.scene.player.GetHit(5);
+                this.lastAttackTime = currentTime; // Update the last attack time
+            }
         }
     }
 

@@ -77,11 +77,11 @@ export default class CharacterFactory {
     }
 
     buildPlayerCharacter(spriteSheetName, x, y) {
-       // let character = new Player(this.scene, x, y, spriteSheetName, 2);
         let character = new PlayerContainer(this.scene, x, y, spriteSheetName, 2);
         character.maxSpeed = 150;
+        character.body.pushable = false;
+        character.body.setImmovable(true);
         character.body.setCollideWorldBounds(true);
-        character.body.setImmovable();
         this.scene.input.keyboard.createCursorKeys();
 
         character.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -127,6 +127,7 @@ export default class CharacterFactory {
             ];
             character.hp = character.data.list.hp;
             character.setCollideWorldBounds(true);
+            character.body.pushable = false;
             character.animationSets = this.animationLibrary.get(spriteSheetName);
             character.speed = new Vector2(0.5, 0.5);
         });

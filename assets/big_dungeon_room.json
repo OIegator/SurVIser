@@ -28,7 +28,7 @@
                         {
                          "name":"hp",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -46,7 +46,7 @@
                         {
                          "name":"hp",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -64,7 +64,7 @@
                         {
                          "name":"hp",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",

@@ -7,6 +7,7 @@ export default class Boss extends Character {
         this.maxHp = maxHP;
         this.hp = this.maxHp;
         this.fullWidth = 500;
+        this.setDepth(11);
     }
 
     initHealthBar(x, y) {
@@ -16,12 +17,14 @@ export default class Boss extends Character {
             .image(x, y, 'left-cap-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
 
         this.middleShadowCap = this.scene.add
             .image(this.leftShadowCap.x + this.leftShadowCap.width, y, 'middle-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
         this.middleShadowCap.displayWidth = this.fullWidth;
 
@@ -29,24 +32,28 @@ export default class Boss extends Character {
             .image(this.middleShadowCap.x + this.middleShadowCap.displayWidth, y, 'right-cap-shadow')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
 
         this.leftCap = this.scene.add
             .image(x, y, 'left-cap')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
 
         this.middle = this.scene.add
             .image(this.leftCap.x + this.leftCap.width, y, 'middle')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
 
         this.rightCap = this.scene.add
             .image(this.middle.x + this.middle.displayWidth, y, 'right-cap')
             .setScale(0.5)
             .setOrigin(0, 0.5)
+            .setDepth(11)
             .setScrollFactor(0);
 
         this.setMeterPercentage(0);

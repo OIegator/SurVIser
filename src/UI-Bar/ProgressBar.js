@@ -24,6 +24,12 @@ export default class ProgressBar {
     this.leftShadowCap = this._createImage(shadowTexture, 0);
     this.middleShadowCap = this._createImage(shadowTexture, 1);
     this.rightShadowCap = this._createImage(shadowTexture, 2);
+    this.leftShadowCap.setScale(2);
+    this.middleShadowCap.setScale(2);
+    this.rightShadowCap.setScale(2);
+    this.leftShadowCap.setDepth(11);
+    this.middleShadowCap.setDepth(11);
+    this.rightShadowCap.setDepth(11);
 
     this._midFullWidth =
       fullWidth -
@@ -39,7 +45,12 @@ export default class ProgressBar {
     this.leftCap = this._createImage(capTexture, `${frame}_left`);
     this.middleCap = this._createImage(capTexture, `${frame}_mid`);
     this.rightCap = this._createImage(capTexture, `${frame}_right`);
-    
+    this.leftCap.setScale(2);
+    this.middleCap.setScale(2);
+    this.rightCap.setScale(2);
+    this.leftCap.setDepth(11);
+    this.middleCap.setDepth(11);
+    this.rightCap.setDepth(11);
   }
 
   _createImage(name, frame) {

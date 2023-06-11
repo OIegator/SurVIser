@@ -51,6 +51,7 @@ let ZeusScene = new Phaser.Class({
 
     onResume() {
         this.resumeTimer();
+        this.expBar._reset();
         this.cameras.main.resetPostPipeline();
         console.log(this.registry.get('player_config'));
     },
@@ -99,6 +100,7 @@ let ZeusScene = new Phaser.Class({
         const pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
             this.gameObjects.push(pinky);
+
             this.physics.add.collider(
                 pinky,
                 this.player,
@@ -109,7 +111,14 @@ let ZeusScene = new Phaser.Class({
                 null,
                 this
             );
+
             this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
             this.enemies.push(pinky);
         });
 
@@ -168,9 +177,20 @@ let ZeusScene = new Phaser.Class({
         this.elapsedTime = 0;
         this.isTimerPaused = false;
 
-        this.timerText = this.add.text(800, 20, '0:00', {font: '32pt Squada One', fill: '#ffffff'});
+        this.timerText = this.add.text(800, 30, '0:00', {
+            color: 'white',
+            fontSize: '32pt',
+            fontFamily: 'Squada One'
+        });
         this.timerText.setScrollFactor(0);
         this.timerText.setDepth(11);
+        this.lvlText = this.add.text(1500, 5, this.player.isConfig.lvl + " LVL", {
+            color: 'white',
+            fontSize: '16pt',
+            fontFamily: 'Squada One'
+        });
+        this.lvlText.setScrollFactor(0);
+        this.lvlText.setDepth(11);
 
         this.timer = this.time.addEvent({
             delay: 1000,
@@ -188,8 +208,8 @@ let ZeusScene = new Phaser.Class({
         this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning'));
     },
 
-    health() {
-        this.expBar.resiveHealing(2);
+    expUP(xp) {
+        this.expBar.resiveHealing(xp);
     },
 
 
@@ -214,13 +234,18 @@ let ZeusScene = new Phaser.Class({
     },
 
     update(time) {
+        this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
+        this.lvlText.setStyle({
+            color: 'white',
+            fontSize: '16pt',
+            fontFamily: 'Squada One'
+        });
 
         if (!this.player.isAlive) {
             this.gameover();
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            console.log("pew");
             //this.player.GetHit(100);
             this.lvlUP();
         }
@@ -231,7 +256,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                //this.lowerColl(attack, mob);
+                this.lowerColl(attack, mob);
                 mob.gotDamage = true;
             });
             this.attacks.forEach(function (element) {
@@ -258,7 +283,6 @@ let ZeusScene = new Phaser.Class({
         }
 
 
-
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
@@ -267,14 +291,14 @@ let ZeusScene = new Phaser.Class({
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.constructor.name === "Lower") {
                     if (element.isDead) {
-                        self.health();
+                        self.expUP(50);
                         element.destroy();
                         object.splice(index, 1);
                         currLower--;
                     }
                 } else if (element.constructor.name === "Ordinary") {
                     if (element.isDead) {
-                        self.health();
+                        self.expUP(210);
                         element.destroy();
                         object.splice(index, 1);
                     }
@@ -286,30 +310,40 @@ let ZeusScene = new Phaser.Class({
                 }
             });
 
-            // let i = currLower;
-            // while (i < maxLower) {
-            //     const inky = this.characterFactory.buildLowerCharacter(this,"inky", this.centX, this.centY, this.camW)
-            //     inky.setCircle(40);
-            //     inky.setOffset(200, 210);
-            //     this.gameObjects.push(inky);
-            //     inky.setSteerings([
-            //         new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
-            //     ]);
-            //     this.physics.add.collider(
-            //         inky,
-            //         this.player,
-            //         () => {
-            //             // Delay the attack function by 1 second
-            //             this.time.delayedCall(100, inky.Attack, [], inky);
-            //         },
-            //         null,
-            //         this
-            //     );
-            //     this.physics.add.collider(inky, this.worldLayer);
-            //     this.enemies.push(inky);
-            //     i++
-            // }
-            // currLower = maxLower;
+            let i = currLower;
+            while (i < maxLower) {
+                const inky = this.characterFactory.buildLowerCharacter(this, "inky", this.centX, this.centY, this.camW);
+                inky.setCircle(40);
+                inky.setOffset(200, 210);
+                this.gameObjects.push(inky);
+
+                inky.setSteerings([
+                    new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+                ]);
+
+                this.physics.add.collider(
+                    inky.body,
+                    this.player.body,
+                    () => {
+                        // Delay the attack function by 1 second
+                        this.time.delayedCall(1000, inky.Attack, [], inky);
+                    },
+                    null,
+                    this
+                );
+
+                this.physics.add.collider(inky, this.worldLayer);
+
+                // Add collision between each enemy
+                this.enemies.forEach((enemy) => {
+                    this.physics.add.collider(inky, enemy);
+                });
+
+                this.enemies.push(inky);
+                i++;
+            }
+
+            currLower = maxLower;
         }
     },
 
