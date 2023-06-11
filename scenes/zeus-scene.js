@@ -7,6 +7,7 @@ import BlurFX from '../assets/pipelines/BlurPostFX.js';
 import Seek from "../src/ai/steerings/seek";
 import HealthBar from "../src/UI-Bar/HealthBar";
 import PowerUp from "../src/power-ups/power-up";
+import Ordinary from "../src/characters/ordinary_mob";
 
 let inZone = false;
 const maxLower = 15;
@@ -62,26 +63,26 @@ let ZeusScene = new Phaser.Class({
         this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
 
-        const map = this.make.tilemap({key: "map"});
+        this.map = this.make.tilemap({key: "map"});
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
         // Phaser's cache (i.e. the name you used in preload)
-        const tileset = map.addTilesetImage("Dungeon_Tileset", "tiles");
+        const tileset = this.map.addTilesetImage("Dungeon_Tileset", "tiles");
 
         // Parameters: layer name (or index) from Tiled, tileset, x, y
-        map.createLayer("Floor", tileset, 0, 0);
-        const worldLayer = map.createLayer("Walls", tileset, 0, 0);
+        this.map.createLayer("Floor", tileset, 0, 0);
+        const worldLayer = this.map.createLayer("Walls", tileset, 0, 0);
         this.worldLayer = worldLayer;
-        const aboveLayer = map.createLayer("Upper", tileset, 0, 0);
+        const aboveLayer = this.map.createLayer("Upper", tileset, 0, 0);
         this.tileSize = 32;
 
         // Setup for collisions
         worldLayer.setCollisionBetween(1, 500);
         aboveLayer.setDepth(10);
 
-        this.physics.world.bounds.width = map.widthInPixels;
-        this.physics.world.bounds.height = map.heightInPixels;
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.bounds.width = this.map.widthInPixels;
+        this.physics.world.bounds.height = this.map.heightInPixels;
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
@@ -95,20 +96,23 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
-        const pinky = this.characterFactory.buildOrdinary("pinky", 850, 1180, 60);
-        this.gameObjects.push(pinky);
-        this.physics.add.collider(
-            pinky,
-            this.player,
-            () => {
-                // Delay the attack function by 1 second
-                this.time.delayedCall(100, pinky.Attack, [], pinky);
-            },
-            null,
-            this
-        );
-        this.physics.add.collider(pinky, worldLayer);
-        this.enemies.push(pinky);
+        const pinkies = this.characterFactory.buildOrdinaries('pinky');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+            this.physics.add.collider(pinky, worldLayer);
+            this.enemies.push(pinky);
+        });
+
 
         this.centX = this.cameras.main.centerX;
         this.centY = this.cameras.main.centerY;

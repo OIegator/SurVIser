@@ -10,17 +10,14 @@ export default class Ordinary extends Character {
         this.body.setOffset(120, 210);
         this.isOffset(120, 210);
         this.hp = 0;
-        this.maxSpeed = maxSpeed;
+        this.maxSpeed = 50;
         this.lastAttackTime = 0;
         this.state = "idle";
         this.isDead = false;
         this.isDying = false;
         this.gotDamage = false;
-        this.patrolPoints = [
-            new Vector2(x - 300, y),
-            new Vector2(x + 300, y),
-        ];
     }
+
 
     update(collide) {
         if (!this.isDead) {
@@ -64,14 +61,12 @@ export default class Ordinary extends Character {
 
     GetHit() {
         if(!this.isDying || !this.isDead) {
-            console.log(this.hp);
+
             if (this.hp < 0)
                 this.isDying = true;
 
             const animations = this.animationSets.get('Hit');
-
             const animsController = this.anims;
-
             animsController.play(animations[0], true);
 
             const numb = animsController.currentFrame.frame.name;
