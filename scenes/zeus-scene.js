@@ -17,7 +17,7 @@ let ZeusScene = new Phaser.Class({
     Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
 
 
-    initialize: function StartingScene() {
+    initialize: function ZeusScene() {
         Phaser.Scene.call(this, {key: 'zeus'});
     },
 
@@ -99,9 +99,6 @@ let ZeusScene = new Phaser.Class({
 
         this.attacks = [];
         this.enemies = [];
-        this.player
-        let i = 0;
-
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -122,8 +119,7 @@ let ZeusScene = new Phaser.Class({
                         attack.scaleX = 0.8;
                         attack.scaleY = 0.5;
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
-                            const target = args.player.findNearestEnemy(args.enemies)
-                            args.lightningGroup.fireLightning(args.player.x, args.player.y, target);
+                            args.lightningGroup.fireLightning(args.player.x, args.player.y, args.enemies);
                         }
                     });
                 }
@@ -216,7 +212,7 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (this.attacks) {
-            this.physics.overlap(this.attacks, this.lowers, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
                 this.lowerColl(attack, mob);
             });
             this.attacks.forEach(function (element) {
@@ -266,7 +262,7 @@ let ZeusScene = new Phaser.Class({
 
             let i = currLower;
             while (i < maxLower) {
-                const inky = this.characterFactory.buildLowerCharacter("inky", this.centX, this.centY, this.camW)
+                const inky = this.characterFactory.buildLowerCharacter(this,"inky", this.centX, this.centY, this.camW)
                 inky.setCircle(40);
                 inky.setOffset(200, 210);
                 this.gameObjects.push(inky);

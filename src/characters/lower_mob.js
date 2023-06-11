@@ -31,7 +31,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.steerings = [];
         this.gotDamage = false;
         this.isDying = false;
-        this.hp = 0;
+        this.hp = -1;
         this.isDead = false;
         this.lastAttackTime = 0;
         this.offset = {x: 200, y: 0};
@@ -65,30 +65,31 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         } else
             return this.Die();
         if (this.gotDamage)
-            this.getHit();
+            this.GetHit();
         else
             this.updateAnimation();
     }
 
 
     GetHit() {
-        if (this.hp < 0)
-            this.isDying = true;
+        if(!this.isDying || !this.isDead) {
+            if (this.hp < 0)
+                this.isDying = true;
 
-        const animations = this.animationSets.get('Hit');
+            const animations = this.animationSets.get('Hit');
 
-        //const numb = this.animations.currentAnim.frame;
+            //const numb = this.animations.currentAnim.frame;
 
-        const animsController = this.anims;
+            const animsController = this.anims;
 
-        animsController.play(animations[0], true);
+            animsController.play(animations[0], true);
 
-        const numb = animsController.currentFrame.frame.name;
-        if (numb == 69) {
-            this.hp--;
-            this.gotDamage = false;
+            const numb = animsController.currentFrame.frame.name;
+            if (numb == 69) {
+                this.hp--;
+                this.gotDamage = false;
+            }
         }
-
     }
 
     Attack() {

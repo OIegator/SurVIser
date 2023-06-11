@@ -28,6 +28,9 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(20, 20);
         this.duration = duration;
         this.target = target;
+        if (Array.isArray(target)) {
+            target = this.findNearestEnemy(target);
+        }
         this.setScale(0.6);
         this.setDepth(10);
         this.setActive(true);
@@ -47,13 +50,16 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
 
 
     createShockCircle() {
+        const timestamp = Date.now(); // Get the current timestamp
+        const animationKey = `shock_circle_${timestamp}`; // Append the timestamp to the animation key
+
         const shockCircle = new ShockCircle(
             this.scene,
             this.x,
             this.y,
             'shock_circle',
             this.frameConfig,
-            'shock_circle',
+            animationKey, // Use the unique animation key
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             this.target
         );
@@ -63,32 +69,88 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.shockCircle = shockCircle; // Set the reference to the associated ShockCircle
     }
 
+    findNearestEnemy(enemies) {
+        if (enemies.length === 0) {
+            const randomX = Phaser.Math.Between(-this.scene.cameras.main.width / 2, this.scene.cameras.main.width / 2);
+            const randomY = Phaser.Math.Between(-this.scene.cameras.main.height / 2, this.scene.cameras.main.height / 2);
+            console.log(randomX + " " + randomY)
+            return new Phaser.Math.Vector2(this.x + randomX, this.y + randomY);
+        }
+
+        let nearestEnemy = null;
+        let nearestDistance = Infinity;
+        const playerPosition = new Phaser.Math.Vector2(this.x, this.y);
+
+        enemies.forEach(enemy => {
+            const enemyPosition = new Phaser.Math.Vector2(enemy.x, enemy.y);
+            const distance = playerPosition.distance(enemyPosition);
+
+            if (distance < nearestDistance) {
+                nearestEnemy = enemy;
+                nearestDistance = distance;
+            }
+        });
+        console.log(nearestEnemy)
+        return nearestEnemy;
+    }
+
     update(time) {
         if (!this.stopped) {
             let targetBounds = null;
             try {
-                targetBounds = this.target.getBounds();
+                if (Array.isArray(this.target)) {
+                    targetBounds = this.target[0].getBounds(); // Get bounds of the first target
+                } else {
+                    targetBounds = this.target.getBounds();
+                }
             } catch (error) {
                 this.target = new TargetDummy(this.target);
-                targetBounds = this.target.getBounds();
-            }
-            this.scene.physics.overlap(this, this.target, () => {
-                if (this.canDamage) {
-                    this.target.GetHit(10);
-                    this.canDamage = false;
-                    setTimeout(() => {
-                        this.canDamage = true; // Set the flag to true after the delay
-                    }, 1500); // 1.5 seconds delay
+                if (Array.isArray(this.target)) {
+                    targetBounds = this.target[0].getBounds(); // Get bounds of the first target
+                } else {
+                    targetBounds = this.target.getBounds();
                 }
-                // Delay the creation of the shock circle and setting 'stopped' flag
-                this.scene.time.delayedCall(200, () => {
-                    if (!this.stopped) {
-                        this.createShockCircle();
-                        this.body.setSize(10, 10);
-                        this.stopped = true; // Set the stopped flag to true
+            }
+
+            if (Array.isArray(this.target)) {
+                for (const target of this.scene.enemies) {
+                    this.scene.physics.overlap(this, target, () => {
+                        if (this.canDamage) {
+                            target.GetHit(10);
+                            this.canDamage = false;
+
+                            setTimeout(() => {
+                                this.canDamage = true; // Set the flag to true after the delay
+                            }, 100); // 1.5 seconds delay
+                            setTimeout(() => {
+                                if (!this.stopped) {
+                                    this.createShockCircle();
+                                    this.body.setSize(10, 10);
+                                    this.stopped = true; // Set the stopped flag to true
+                                }
+                            }, 50);
+                        }
+                    });
+                }
+            } else {
+                this.scene.physics.overlap(this, this.target, () => {
+                    if (this.canDamage) {
+                        this.target.GetHit(10);
+                        this.canDamage = false;
+
+                        setTimeout(() => {
+                            this.canDamage = true; // Set the flag to true after the delay
+                        }, 1500); // 1.5 seconds delay
+                        setTimeout(() => {
+                            if (!this.stopped) {
+                                this.createShockCircle();
+                                this.body.setSize(10, 10);
+                                this.stopped = true; // Set the stopped flag to true
+                            }
+                        }, 50);
                     }
-                }, [], this);
-            });
+                });
+            }
 
             const sceneWidth = this.scene.width;
             const sceneHeight = this.scene.height;
@@ -171,17 +233,31 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         this.lightning.body.x = this.x - this.width * 0.37;
         this.lightning.body.y = this.y - this.height * 0.37;
         if (this.active && time > this.startTime + this.duration * 0.8) {
-
-            this.scene.physics.overlap(this.lightning, this.target, () => {
-                if (this.canDamage) {
-                    this.target.GetHit(10);
-                    this.canDamage = false;
-                    setTimeout(() => {
-                        this.canDamage = true; // Set the flag to true after the delay
-                    }, 1500); // 1.5 seconds delay
+            if (Array.isArray(this.target)) {
+                for (const target of this.scene.enemies) {
+                    this.scene.physics.overlap(this.lightning, target, () => {
+                        if (this.canDamage) {
+                            target.GetHit(10);
+                            this.canDamage = false;
+                            setTimeout(() => {
+                                this.canDamage = true; // Set the flag to true after the delay
+                            }, 100); // 1.5 seconds delay
+                        }
+                    });
                 }
-            });
+            } else {
+                this.scene.physics.overlap(this.lightning, this.target, () => {
+                    if (this.canDamage) {
+                        this.target.GetHit(10);
+                        this.canDamage = false;
+                        setTimeout(() => {
+                            this.canDamage = true; // Set the flag to true after the delay
+                        }, 1500); // 1.5 seconds delay
+                    }
+                });
+            }
         }
+
         if (this.active && time > this.startTime + this.duration) {
             this.hide();
         }
@@ -219,7 +295,10 @@ export class LightningGroup extends Phaser.Physics.Arcade.Group {
 
     fireLightning(x, y, target, duration = 1000) {
         this.scene.time.delayedCall(250, () => {
-            const lightning = this.create(0, 0, 'lightning');
+            const timestamp = Date.now(); // Get the current timestamp
+            const animationKey = `lightning_${timestamp}`; // Append the timestamp to the animation key
+            const lightning = this.create(0, 0, animationKey); // Use the unique animation key
+
             if (lightning) {
                 lightning.fire(x, y, target, duration);
             }

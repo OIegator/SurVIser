@@ -97,8 +97,8 @@ export default class CharacterFactory {
 
     }
 
-    buildLowerCharacter(spriteSheetName, centX, centY, camW, velocity = null){
-        let lower = new Lower(this.scene, centX, centY, camW, spriteSheetName, 2, velocity);
+    buildLowerCharacter(scene, spriteSheetName, centX, centY, camW, velocity = null){
+        let lower = new Lower(scene, centX, centY, camW, spriteSheetName, 2, velocity);
         lower.maxSpeed = 100;
         lower.setCollideWorldBounds(true);
         lower.animationSets = this.animationLibrary.get(spriteSheetName);
