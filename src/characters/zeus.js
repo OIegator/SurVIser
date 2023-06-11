@@ -49,7 +49,7 @@ export default class Zeus extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
         this.body.setSize(200, 270);
-        this.body.setOffset(200, 130);
+        this.setOffset(200, 130);
         this.isOffset(200, 130);
         this.state = "idle";
         this.ammo = 3;

@@ -19,11 +19,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         const body = this.body;
         this.body.setVelocity(0);
         let velocity = new Vector2();
-        if (this.velocity) {
-            velocity.add(this.velocity);
-            let target = velocity.multiply(this.speed);
-            this.body.velocity.add(target);
-        }
+        // if (this.velocity) {
+        //     velocity.add(this.velocity);
+        //     let target = velocity.multiply(this.speed);
+        //     this.body.velocity.add(target);
+        // }
 
         this.steerings.forEach(steering => velocity.add(steering.calculateImpulse()));
         let target = velocity.multiply(this.speed);
@@ -67,7 +67,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
             } else if (x > 0) {
                 this.setScale(-0.5, 0.5);
                 animsController.play(animations[1], true);
-                this.body.setOffset(2 * this.offset.x, this.offset.y);
+                this.body.setOffset(2.2 * this.offset.x, this.offset.y);
             } else if (y < 0) {
                 animsController.play(animations[2], true);
             } else if (y > 0) {

@@ -33,22 +33,21 @@ import character_selection_background from "../assets/sprites/ui/character_selec
 import character_background from "../assets/sprites/ui/character_background.png";
 import character_selected_background from "../assets/sprites/ui/character_selected_background.png";
 import todo_character from "../assets/sprites/ui/todo_character.png";
-import grobold from  "url:../assets/fonts/GROBOLD.ttf";
+import grobold from "url:../assets/fonts/GROBOLD.ttf";
 import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
 import barsSh from '../assets/bars/barHorizontal_shadow.png'
 import barPix from '../assets/bars/pixel_barHorizontalShadow.png'
 import barParts from '../assets/bars/barhorizontalparts.png'
 import inkySpriteSheet from "../assets/sprites/characters/inky.png";
+import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 
 export default class Boot extends Phaser.Scene {
 
-    constructor ()
-    {
+    constructor() {
         super('boot');
     }
 
-    init ()
-    {
+    init() {
         let element = document.createElement('style');
 
         document.head.appendChild(element);
@@ -59,12 +58,12 @@ export default class Boot extends Phaser.Scene {
     }
 
 
-    preload ()
-    {
+    preload() {
 
         this.viFrameConfig = {frameWidth: 305, frameHeight: 305};
         this.zeusFrameConfig = {frameWidth: 683, frameHeight: 500};
-        this.inkyFrameConfig= {frameWidth: 476, frameHeight: 476};
+        this.inkyFrameConfig = {frameWidth: 476, frameHeight: 476};
+        this.pinkyFrameConfig = {frameWidth: 403, frameHeight: 403};
         //loading map tiles and json with positions
         this.load.image("tiles", tilemapPng);
         this.load.tilemapTiledJSON("map", dungeonRoomJson);
@@ -73,6 +72,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
         this.load.spritesheet('inky', inkySpriteSheet, this.inkyFrameConfig);
+        this.load.spritesheet('pinky', pinkySpriteSheet, this.pinkyFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
 
         //loading health bar
@@ -144,10 +144,9 @@ export default class Boot extends Phaser.Scene {
 
     }
 
-    create ()
-    {
+    create() {
         this.input.setDefaultCursor('url(' + cursor + '), pointer');
-        this.scene.start('menu');
+        this.scene.start('zeus');
     }
 
 }

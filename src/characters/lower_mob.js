@@ -34,7 +34,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.hp = -1;
         this.isDead = false;
         this.lastAttackTime = 0;
-        this.offset = {x: 200, y: 0};
+        //this.offset = {x: 200, y: 0};
     }
 
     setOffset(x, y) {

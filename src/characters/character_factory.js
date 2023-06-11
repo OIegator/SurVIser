@@ -1,5 +1,3 @@
-import Player from "./player";
-
 import viConfigJson from "../../assets/animations/vi.json";
 import zeusConfigJson from "../../assets/animations/zeus.json";
 import inkyConfigJson from "../../assets/animations/inky.json";
@@ -19,6 +17,7 @@ import Lower from "./lower_mob";
 import Zeus from "./zeus";
 import Bers from "./berserk";
 import PlayerContainer from "./player_container";
+import Ordinary from "./ordinary_mob";
 
 
 export default class CharacterFactory {
@@ -45,7 +44,7 @@ export default class CharacterFactory {
         animationLibrary.set(this.zeusSpriteSheet,
             new AnimationLoader(scene, this.zeusSpriteSheet, zeusConfigJson, this.zeusSpriteSheet, 30).createAnimations());
         animationLibrary.set(this.inkySpriteSheet,
-            new AnimationLoader(scene, this.inkySpriteSheet, inkyConfigJson, this.inkySpriteSheet, 40).createAnimations());
+            new AnimationLoader(scene, this.inkySpriteSheet, inkyConfigJson, this.inkySpriteSheet, 26).createAnimations());
         animationLibrary.set(this.pinkySpriteSheet,
             new AnimationLoader(scene, this.pinkySpriteSheet, pinkyConfigJson, this.pinkySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.clydeSpriteSheet,
@@ -109,6 +108,14 @@ export default class CharacterFactory {
     buildNonPlayerCharacter(spriteSheetName, x, y, velocity = null) {
         let character = new Character(this.scene, x, y, spriteSheetName, 2, velocity);
         character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildOrdinary(spriteSheetName, x, y, maxSpeed, velocity = null) {
+        let character = new Ordinary(this.scene, x, y, spriteSheetName, 2, maxSpeed, velocity);
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         character.speed = new Vector2(0.5, 0.5);

@@ -55,6 +55,8 @@ let ZeusScene = new Phaser.Class({
     },
 
     create: function () {
+        this.attacks = [];
+        this.enemies = [];
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
         this.powerUpsGroup = this.physics.add.group();
@@ -93,12 +95,24 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
+        const pinky = this.characterFactory.buildOrdinary("pinky", 850, 1180, 60);
+        this.gameObjects.push(pinky);
+        this.physics.add.collider(
+            pinky,
+            this.player,
+            () => {
+                // Delay the attack function by 1 second
+                this.time.delayedCall(100, pinky.Attack, [], pinky);
+            },
+            null,
+            this
+        );
+        this.physics.add.collider(pinky, worldLayer);
+        this.enemies.push(pinky);
+
         this.centX = this.cameras.main.centerX;
         this.centY = this.cameras.main.centerY;
         this.camW = this.cameras.main.width;
-
-        this.attacks = [];
-        this.enemies = [];
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -213,7 +227,8 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                this.lowerColl(attack, mob);
+                //this.lowerColl(attack, mob);
+                mob.gotDamage = true;
             });
             this.attacks.forEach(function (element) {
                 element.update(time);
@@ -239,6 +254,7 @@ let ZeusScene = new Phaser.Class({
         }
 
 
+
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
                 element.update(inZone);
@@ -252,6 +268,12 @@ let ZeusScene = new Phaser.Class({
                         object.splice(index, 1);
                         currLower--;
                     }
+                } else if (element.constructor.name === "Ordinary") {
+                    if (element.isDead) {
+                        self.health();
+                        element.destroy();
+                        object.splice(index, 1);
+                    }
                 } else {
                     if (element.isDead) {
                         element.destroy();
@@ -260,30 +282,30 @@ let ZeusScene = new Phaser.Class({
                 }
             });
 
-            let i = currLower;
-            while (i < maxLower) {
-                const inky = this.characterFactory.buildLowerCharacter(this,"inky", this.centX, this.centY, this.camW)
-                inky.setCircle(40);
-                inky.setOffset(200, 210);
-                this.gameObjects.push(inky);
-                inky.setSteerings([
-                    new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
-                ]);
-                this.physics.add.collider(
-                    inky,
-                    this.player,
-                    () => {
-                        // Delay the attack function by 1 second
-                        this.time.delayedCall(100, inky.Attack, [], inky);
-                    },
-                    null,
-                    this
-                );
-                this.physics.add.collider(inky, this.worldLayer);
-                this.enemies.push(inky);
-                i++
-            }
-            currLower = maxLower;
+            // let i = currLower;
+            // while (i < maxLower) {
+            //     const inky = this.characterFactory.buildLowerCharacter(this,"inky", this.centX, this.centY, this.camW)
+            //     inky.setCircle(40);
+            //     inky.setOffset(200, 210);
+            //     this.gameObjects.push(inky);
+            //     inky.setSteerings([
+            //         new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
+            //     ]);
+            //     this.physics.add.collider(
+            //         inky,
+            //         this.player,
+            //         () => {
+            //             // Delay the attack function by 1 second
+            //             this.time.delayedCall(100, inky.Attack, [], inky);
+            //         },
+            //         null,
+            //         this
+            //     );
+            //     this.physics.add.collider(inky, this.worldLayer);
+            //     this.enemies.push(inky);
+            //     i++
+            // }
+            // currLower = maxLower;
         }
     },
 

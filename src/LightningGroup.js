@@ -73,7 +73,6 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         if (enemies.length === 0) {
             const randomX = Phaser.Math.Between(-this.scene.cameras.main.width / 2, this.scene.cameras.main.width / 2);
             const randomY = Phaser.Math.Between(-this.scene.cameras.main.height / 2, this.scene.cameras.main.height / 2);
-            console.log(randomX + " " + randomY)
             return new Phaser.Math.Vector2(this.x + randomX, this.y + randomY);
         }
 
@@ -90,7 +89,6 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
                 nearestDistance = distance;
             }
         });
-        console.log(nearestEnemy)
         return nearestEnemy;
     }
 
@@ -116,9 +114,9 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
                 for (const target of this.scene.enemies) {
                     this.scene.physics.overlap(this, target, () => {
                         if (this.canDamage) {
+                            target.gotDamage = true;
                             target.GetHit(10);
                             this.canDamage = false;
-
                             setTimeout(() => {
                                 this.canDamage = true; // Set the flag to true after the delay
                             }, 100); // 1.5 seconds delay
