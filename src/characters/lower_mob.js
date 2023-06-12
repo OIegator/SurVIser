@@ -71,6 +71,23 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         if(!this.isDying || !this.isDead) {
             if (this.hp <= 0)
                 this.isDying = true;
+            let dmg = 0;
+            const strength = this.scene.player.isConfig.strength;
+            const criticalRate = this.scene.player.isConfig.criticalRate;
+            const criticalMultiplier = this.scene.player.isConfig.critical;
+
+            if (Math.random() < criticalRate) {
+                // Critical hit
+                console.log("crit")
+                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
+                dmg = (damage ? damage : strength) * criticalMultiplier;
+            } else {
+                // Regular hit
+                console.log("not crit")
+                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
+                dmg = damage ? damage : strength;
+            }
+
 
             const animations = this.animationSets.get('Hit');
             const animsController = this.anims;
@@ -78,22 +95,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
 
             const numb = animsController.currentFrame.frame.name;
             if (numb == 69) {
-                const strength = this.scene.player.isConfig.strength;
-                const criticalRate = this.scene.player.isConfig.criticalRate;
-                const criticalMultiplier = this.scene.player.isConfig.critical;
-
-                if (Math.random() < criticalRate) {
-                    // Critical hit
-                    console.log("crit")
-                    this.scene.showDamageNumbers(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
-                    this.hp -= (damage ? damage : strength) * criticalMultiplier;
-                } else {
-                    // Regular hit
-                    console.log("not crit")
-                    this.scene.showDamageNumbers(this.x, this.y, (damage ? damage : strength), '#000000');
-                    this.hp -= damage ? damage : strength;
-                }
-
+                this.hp -= dmg;
                 this.gotDamage = false;
             }
         }

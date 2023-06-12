@@ -21,7 +21,7 @@ export default class Ordinary extends Character {
 
     update(collide) {
         if (!this.isDead) {
-            if(this.state !== 'patrol' && !this.IsPlayerInRange()) {
+            if (this.state !== 'patrol' && !this.IsPlayerInRange()) {
                 this.setSteerings([
                         new Patrol(this, this.patrolPoints, 1, this.maxSpeed),
                     ]
@@ -29,7 +29,7 @@ export default class Ordinary extends Character {
                 this.state = 'patrol';
             } else if (this.state !== 'seek' && this.IsPlayerInRange()) {
                 this.setSteerings([
-                    new Seek(this, [this.scene.player], 1, this.maxSpeed, this.scene.player.maxSpeed),
+                        new Seek(this, [this.scene.player], 1, this.maxSpeed, this.scene.player.maxSpeed),
                     ]
                 )
                 this.state = 'seek';
@@ -60,7 +60,7 @@ export default class Ordinary extends Character {
     }
 
     GetHit(damage = null) {
-        if(!this.isDying || !this.isDead) {
+        if (!this.isDying || !this.isDead) {
 
             if (this.hp < 0)
                 this.isDying = true;
@@ -93,7 +93,7 @@ export default class Ordinary extends Character {
     }
 
     Attack() {
-        if(!this.isDead && !this.gotDamage) {
+        if (!this.isDead && !this.gotDamage) {
             const currentTime = this.scene.time.now;
             // Calculate the elapsed time since the last attack
             const elapsedTime = currentTime - this.lastAttackTime;
