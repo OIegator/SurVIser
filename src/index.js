@@ -8,6 +8,7 @@ import MenuScene from "../scenes/menu-scene";
 import GameOverScene from "../scenes/gameover-scene";
 import BerserkScene from '../scenes/berserk-scene';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
+import GolemScene from "../scenes/golem-scene";
 
 
 const config = {

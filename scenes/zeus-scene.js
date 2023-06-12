@@ -241,7 +241,8 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning', 'shock_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning', 'lightning', 'shock_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 500, 1000, 'armor', 'armor', 'armor_icon'));
 
         this.iconDictionary = {};
 

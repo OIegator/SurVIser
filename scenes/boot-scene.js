@@ -34,6 +34,8 @@ import character_background from "../assets/sprites/ui/character_background.png"
 import character_selected_background from "../assets/sprites/ui/character_selected_background.png";
 import todo_character from "../assets/sprites/ui/todo_character.png";
 import shock_icon from "../assets/sprites/ui/shock_icon.png";
+import armor from "../assets/sprites/ui/armor.png";
+import armor_icon from "../assets/sprites/ui/armor_icon.png";
 import grobold from "url:../assets/fonts/GROBOLD.ttf";
 import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
 import barsSh from '../assets/bars/barHorizontal_shadow.png'
@@ -101,6 +103,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('attack_speed_power_up', attack_speed_power_up);
         this.load.image('lvl_up_icon_background', lvl_up_icon_background);
         this.load.image('shock_icon', shock_icon);
+        this.load.image('armor_icon', shock_icon);
+        this.load.image('armor', armor);
         this.load.image('stats_background', stats_background);
         this.load.image('vi_icon', vi_icon);
         this.load.image('star', star);

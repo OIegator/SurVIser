@@ -121,7 +121,7 @@ export default class Golem extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'armor', 'armor_icon'));
 
             return State.SUCCEEDED;
         },

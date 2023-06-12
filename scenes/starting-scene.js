@@ -163,6 +163,7 @@ let StartingScene = new Phaser.Class({
         ]);
         this.physics.add.collider(zeus, worldLayer);
 
+
         const inky = this.characterFactory.buildNonPlayerCharacter("inky", 500, 200);
         this.gameObjects.push(inky);
         inky.setSteerings([

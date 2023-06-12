@@ -29,7 +29,7 @@ let GolemScene = new Phaser.Class({
 
 
     initialize: function StartingScene() {
-        Phaser.Scene.call(this, { key: 'StartingScene' });
+        Phaser.Scene.call(this, { key: 'golem' });
     },
 
     characterFrameConfig: { frameWidth: 31, frameHeight: 31 },
@@ -112,7 +112,7 @@ let GolemScene = new Phaser.Class({
         this.enAttacks = [];
         this.enemies = [];
 
-        this.timer = this.time.addEvent({
+        this.attack_timer = this.time.addEvent({
             delay: 2000,
             callback: function (args) {
 
