@@ -11,6 +11,6 @@
     "\\src\\characters",
     "\\src\\projectiles"
   ],
-  "SelectedNode": "\\src\\projectiles\\EnemyAttack.js",
+  "SelectedNode": "\\src\\characters\\character.js",
   "PreviewInSolutionExplorer": false
 }

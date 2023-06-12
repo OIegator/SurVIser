@@ -1,9 +1,9 @@
 import Boss from "./boss";
 import { State, BehaviourTree } from "mistreevous";
 import Vector2 from 'phaser/src/math/Vector2';
-import {Patrol} from "../ai/steerings/patrol";
-import {Pursuit} from "../ai/steerings/pursuit";
-import {Evade} from "../ai/steerings/evade";
+import { Patrol } from "../ai/steerings/patrol";
+import { Pursuit } from "../ai/steerings/pursuit";
+import { Evade } from "../ai/steerings/evade";
 import PowerUp from "../power-ups/power-up";
 
 const treeDefinition = `root {
@@ -21,11 +21,7 @@ const treeDefinition = `root {
                                 }
                                     sequence { 
                                         action [Attack]
-                                        wait[700]
-                                        action [Attack]
-                                        wait[700]
-                                        action [Attack]
-                                        wait[1000]
+                                        wait[1800]
                                     }
                             }
                         }
@@ -37,15 +33,14 @@ const treeDefinition = `root {
             }
         }`;
 
-export default class Berserk extends Boss {
+export default class Golem extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
-        this.body.setSize(200, 250);
-        this.body.setOffset(200, 180);
-        this.isOffset(200, 180);
+        this.body.setSize(330, 330);
+        this.body.setOffset(350, 240);
+        this.isOffset(350, 240);
         this.state = "idle";
         this.isDead = false;
-        this.gotHit = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
@@ -89,20 +84,19 @@ export default class Berserk extends Boss {
         Attack: () => {
             this.changeState("attack");
             this.setSteerings([]);
-            
+
             // Play attack animation
             const attackAnimations = this.animationSets.get('Attack');
             const animsController = this.anims;
-            
+
             animsController.play(attackAnimations[0]);
-            animsController.msPerFrame = 19;
+            animsController.msPerFrame = 45;
             this.attackAnimationEnded = false;
-            this.scene.EnemyAttack(this.x, this.y + 30, this, 100, 80, 255);
+            this.scene.EnemyAttack(this.x, this.y + 30, this, 180, 100, 385);
             return State.SUCCEEDED;
         },
-       
+
         GetHit: (damage) => {
-            this.gotHit = true;
             this.hp -= damage;
             this.setMeterPercentageAnimated(this.hp / 100);
             // Play hit animation
@@ -148,10 +142,10 @@ export default class Berserk extends Boss {
             // Calculate the range zone based on screen size
 
             const attackZone = {
-                x: this.scene.player.x-100,
-                y: this.scene.player.y-100,
-              width: 200,
-              height: 200
+                x: this.scene.player.x - 100,
+                y: this.scene.player.y - 100,
+                width: 210,
+                height: 210
             };
             return Phaser.Geom.Rectangle.ContainsPoint(attackZone, this);
         },
@@ -182,7 +176,7 @@ export default class Berserk extends Boss {
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
-      
+
         if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
             // Play attack animation if the SPACE key is pressed
             animsController.play(attackAnimations[0]);
@@ -199,7 +193,7 @@ export default class Berserk extends Boss {
                 animsController.play(idle[0]); // Play the idle animation
             }
         } else if (this.state === "dead") {
-           
+
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;

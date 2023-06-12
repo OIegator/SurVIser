@@ -2,11 +2,12 @@ import tilemapPng from '../assets/tileset/Dungeon_Tileset.png'
 import dungeonRoomJson from '../assets/big_dungeon_room.json'
 
 import viSpriteSheet from '../assets/sprites/characters/vi.png'
-import bersSpriteSheet from '../assets/sprites/characters/berserk.png'
+import golemSpriteSheet from '../assets/sprites/characters/rock.png'
 import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
 
 //======================Projectiles===========================
 import slash from '../assets/sprites/projectile/Splash.png'
+import smash from '../assets/sprites/projectile/Sm05.png'
 //=======================BossHealthBar========================
 import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
 import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
@@ -22,7 +23,7 @@ import AutoAttack from "../src/projectiles/AutoAttack.js"
 let inZone = false;
 
 
-let BerserkScene = new Phaser.Class({
+let GolemScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
 
@@ -35,6 +36,7 @@ let BerserkScene = new Phaser.Class({
     slimeFrameConfig: { frameWidth: 32, frameHeight: 32 },
     viFrameConfig: { frameWidth: 305, frameHeight: 305 },
     bersFrameConfig: { frameWidth: 500, frameHeight: 500 },
+    golemFrameConfig: { frameWidth: 996, frameHeight: 709},
 
 
     preload: function () {
@@ -45,7 +47,7 @@ let BerserkScene = new Phaser.Class({
 
         //loading spritesheets
         this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
-        this.load.spritesheet('berserk', bersSpriteSheet, this.bersFrameConfig);
+        this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, { frameWidth: 240, frameHeight: 240 });
 
         //loading health bar
@@ -59,6 +61,7 @@ let BerserkScene = new Phaser.Class({
         //loading projectiles
         //this.load.image('lightning', lightning);
         this.load.image('attack', slash);
+        this.load.image('smash', smash);
     },
 
     lowerColl(player, lower) {
@@ -101,9 +104,9 @@ let BerserkScene = new Phaser.Class({
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
 
-        this.bers = this.characterFactory.buildBers("berserk", 650, 190, 100);
-        this.gameObjects.push(this.bers);
-        this.physics.add.collider(this.bers, worldLayer);
+        this.golem = this.characterFactory.buildGolem("golem", 650, 190, 100);
+        this.gameObjects.push(this.golem);
+        this.physics.add.collider(this.golem, worldLayer);
 
         this.attacks = [];
         this.enAttacks = [];
@@ -112,8 +115,9 @@ let BerserkScene = new Phaser.Class({
         this.timer = this.time.addEvent({
             delay: 2000,
             callback: function (args) {
-                args.player.isAttacking = true;
-                if (args.player.isAlive) {
+
+                if (args.player.isAlive && (args.player.IsTossed == false)) {
+                    args.player.isAttacking = true;
                     args.time.delayedCall(255, () => {
 
                         let add;
@@ -127,7 +131,7 @@ let BerserkScene = new Phaser.Class({
                         attack.flipX = args.player.sprite.scaleX < 0;
                         attack.scaleX = 0.8;
                         attack.scaleY = 0.5;
-                        
+
                     });
                 }
             },
@@ -147,12 +151,12 @@ let BerserkScene = new Phaser.Class({
                 add = offset;
             else
                 add = -offset;
-            const attack = new AutoAttack(this, x + add, y);
+            const attack = new AutoAttack(this, x + add, y, 'smash');
             attack.body.setSize(size, size);
             this.enAttacks.push(attack);
             this.physics.add.collider(attack, this.worldLayer);
         });
-        
+
     },
 
     update(time) {
@@ -168,7 +172,7 @@ let BerserkScene = new Phaser.Class({
 
         if (this.enAttacks) {
             this.physics.overlap(this.enAttacks, this.player, (attack, mob) => {
-                this.player.GetHit(2);
+                this.player.GetTossed(2, attack.x, attack.y)
             });
             this.enAttacks.forEach(function (element) {
                 element.update(time);
@@ -177,9 +181,9 @@ let BerserkScene = new Phaser.Class({
 
         if (this.attacks) {
 
-            this.physics.overlap(this.attacks, this.bers, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.golem, (attack, mob) => {
                 if (this.canDamage) {
-                    this.bers.behaviour.GetHit(25);
+                    this.golem.behaviour.GetHit(25);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -212,4 +216,4 @@ let BerserkScene = new Phaser.Class({
     }
 });
 
-export default BerserkScene
+export default GolemScene
