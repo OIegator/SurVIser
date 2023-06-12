@@ -129,7 +129,17 @@ export default class Zeus extends Boss {
             return State.SUCCEEDED;
         },
         GetHit: (damage) => {
-            this.hp -= damage;
+            const strength = this.scene.player.isConfig.strength;
+            const criticalRate = this.scene.player.isConfig.criticalRate;
+            const criticalMultiplier = this.scene.player.isConfig.critical;
+
+            if (Math.random() < criticalRate) {
+                // Critical hit
+                this.hp -= damage ? damage * criticalMultiplier : strength * criticalMultiplier ;
+            } else {
+                // Regular hit
+                this.hp -= damage ? damage : strength;
+            }
             this.setMeterPercentageAnimated(this.hp / 100);
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');

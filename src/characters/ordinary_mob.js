@@ -59,7 +59,7 @@ export default class Ordinary extends Character {
             this.updateAnimation();
     }
 
-    GetHit() {
+    GetHit(damage = null) {
         if(!this.isDying || !this.isDead) {
 
             if (this.hp < 0)
@@ -71,7 +71,18 @@ export default class Ordinary extends Character {
 
             const numb = animsController.currentFrame.frame.name;
             if (numb == 70) {
-                this.hp--;
+                const strength = this.scene.player.isConfig.strength;
+                const criticalRate = this.scene.player.isConfig.criticalRate;
+                const criticalMultiplier = this.scene.player.isConfig.critical;
+
+                if (Math.random() < criticalRate) {
+                    // Critical hit
+                    this.hp -= damage ? damage * criticalMultiplier : strength * criticalMultiplier ;
+                } else {
+                    // Regular hit
+                    this.hp -= damage ? damage : strength;
+                }
+
                 this.gotDamage = false;
             }
         }
@@ -90,7 +101,6 @@ export default class Ordinary extends Character {
             const numb = animsController.currentFrame.frame.name;
             if (numb == 82) {
                 if (elapsedTime >= 500 && this.scene.player.isAlive) {
-                    console.log("hit");
                     this.scene.player.GetHit(15);
                     this.lastAttackTime = currentTime;
                 }

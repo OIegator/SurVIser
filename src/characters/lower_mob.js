@@ -1,6 +1,5 @@
 import Vector2 from 'phaser/src/math/Vector2'
 
-const eps = 20;
 export default class Lower extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, centX, centY, camW, name, frame, velocity) {
         let ang = Math.random() * 2 * Math.PI,
@@ -11,7 +10,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         let spawnY = centY + opp;
 
         // Define the padding for the scene bounds
-        let padding = 50;
+        let padding = 100;
 
         // Get the scene bounds with padding
         let minX = scene.physics.world.bounds.x + padding;
@@ -34,14 +33,12 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.hp = -1;
         this.isDead = false;
         this.lastAttackTime = 0;
-        //this.offset = {x: 200, y: 0};
     }
 
     setOffset(x, y) {
         super.setOffset(x, y);
         this.offset = {x: x, y: y};
     }
-
 
     update(collide) {
         const body = this.body;
@@ -70,23 +67,29 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
             this.updateAnimation();
     }
 
-
-    GetHit() {
+    GetHit(damage = null) {
         if(!this.isDying || !this.isDead) {
-            if (this.hp < 0)
+            if (this.hp <= 0)
                 this.isDying = true;
 
             const animations = this.animationSets.get('Hit');
-
-            //const numb = this.animations.currentAnim.frame;
-
             const animsController = this.anims;
-
             animsController.play(animations[0], true);
 
             const numb = animsController.currentFrame.frame.name;
             if (numb == 69) {
-                this.hp--;
+                const strength = this.scene.player.isConfig.strength;
+                const criticalRate = this.scene.player.isConfig.criticalRate;
+                const criticalMultiplier = this.scene.player.isConfig.critical;
+
+                if (Math.random() < criticalRate) {
+                    // Critical hit
+                    this.hp -= damage ? damage * criticalMultiplier : strength * criticalMultiplier ;
+                } else {
+                    // Regular hit
+                    this.hp -= damage ? damage : strength;
+                }
+
                 this.gotDamage = false;
             }
         }
@@ -108,7 +111,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
     }
 
     Die() {
-
+        this.setSteerings([]);
         const animations = this.animationSets.get('Death');
         const animsController = this.anims;
         animsController.play(animations[0], true);
@@ -136,14 +139,8 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
             animsController.play(animations[3], true);
         } else {
             const idle = this.animationSets.get('Idle');
-            // const currentAnimation = animsController.currentAnim;
-            // if (currentAnimation) {
-            //     const frame = currentAnimation.getLastFrame();
-            //     this.setTexture(frame.textureKey, frame.textureFrame);
-            // }
             animsController.play(idle[0], true);
         }
-
     }
 
     setSteerings(steerings) {

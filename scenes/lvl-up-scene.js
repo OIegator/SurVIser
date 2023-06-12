@@ -32,13 +32,13 @@ export default class LvlUpScene extends Phaser.Scene {
                 name: 'Accursed Blade',
                 desc: 'Increases the character\'s\nattack speed.',
                 texture: {key: 'attack_speed_power_up'},
-                effect: {stat: 'attackSpeed', action: -0.5}
+                effect: {stat: 'attackSpeed', action: 1}
             },
             {
                 name: 'Wizard\'s map',
                 desc: 'Increases the character\'s\nspeed.',
                 texture: {key: 'map_power_up'},
-                effect: {stat: 'speed', action: 3}
+                effect: {stat: 'moveSpeed', action: 1}
             },
             {
                 name: 'Critsight',
@@ -62,7 +62,7 @@ export default class LvlUpScene extends Phaser.Scene {
                 name: 'Mighty Blade',
                 desc: 'Increases the character\'s\nattack range.',
                 texture: {key: 'attack_range_power_up'},
-                effect: {stat: 'attackRange', action: 2}
+                effect: {stat: 'attackRange', action: 1}
             },
         ];
 
@@ -127,7 +127,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
         const powerUpsChoice = Phaser.Utils.Array.Shuffle(powerUpsPool).slice(0, 3); // Randomly select 3 power-ups from the dummy array
 
-        const buttonContainer = [];
+        this.buttonContainer = [];
 
         powerUpsChoice.forEach((item, index) => {
             const x = 800;
@@ -148,9 +148,8 @@ export default class LvlUpScene extends Phaser.Scene {
                 fontSize: '24px',
                 fontFamily: 'Squada One'
             });
-            const cursorImage = this.add.image(200, 50, 'cursor').setVisible(false); // Create the cursor image and set it invisible
 
-            container.add([background, icon_bg, icon, nameLabel, descLabel, cursorImage]);
+            container.add([background, icon_bg, icon, nameLabel, descLabel]);
 
             container.setSize(background.width, background.height);
 
@@ -158,25 +157,23 @@ export default class LvlUpScene extends Phaser.Scene {
 
             container.setInteractive()
                 .on('pointerover', () => {
-                    background.setTint(0x808080); // Устанавливаем темный оттенок при наведении курсора
-                    cursorImage.setVisible(true);
+                    background.setTint(0xE59866); // Устанавливаем темный оттенок при наведении курсора
                 })
                 .on('pointerout', () => {
-                    background.clearTint(); // Очищаем оттенок при отведении курсора
-                    cursorImage.setVisible(false);
+                    background.clearTint(); // Очищаем оттенок при отведении курсора;
                 })
                 .on('pointerdown', () => {
                     player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
                     player_config.powerUps.push(container.powerUp);
                     this.registry.set('player_config', player_config);
-                    console.log(container.powerUp.name);
                     this.resume();
                 });
 
 
-            buttonContainer.push(container);
+            this.buttonContainer.push(container);
         });
 
-        console.log(buttonContainer); // Displays all button containers in the console
+        console.log(this.buttonContainer); // Displays all button containers in the console
     }
+
 }

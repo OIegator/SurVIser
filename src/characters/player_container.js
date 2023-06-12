@@ -10,6 +10,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         scene.physics.world.enable(this);
         scene.add.existing(this);
         this.speed = new Vector2(1);
+        this.maxSpeed = 150;
         this.body.setCircle(35);
         this.body.setOffset(-22, -9);
         this.powerUps = [];
@@ -25,8 +26,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             maxHP: this.maxHp,
             strength: 20,
             moveSpeed: 1,
-            attackSpeed: 2,
-            attackRange: 0,
+            attackSpeed: 1,
+            attackRange: 1,
             critical: 1.4,
             criticalRate: 0.1,
             dodgeRate: 0.1,
@@ -40,7 +41,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         if (this.isAlive) {
             const body = this.body;
             this.body.setVelocity(0);
-            const speed = this.maxSpeed;
+            this.scene.attack_timer.delay = 2000 * (1 - (this.isConfig.attackSpeed - 1) * 0.1)
+            const speed = this.maxSpeed + 25 * (this.isConfig.moveSpeed - 1) ;
             const cursors = this.cursors;
             const wasd = this.wasd;
             if (cursors.left.isDown || wasd.left.isDown) {
@@ -76,6 +78,15 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
 
     GetHit(damage) {
+        const dodgeRate = this.scene.player.isConfig.dodgeRate;
+        if (Math.random() < dodgeRate) {
+            // Dodge
+            console.log("Dodge!")
+            this.hp -= 0 ;
+        } else {
+            // Regular hit
+            this.hp -= damage;
+        }
         this.hp -= damage;
         this.healthBar.updateBar();
         const hitAnimations = this.sprite.animationSets.get('Hit');

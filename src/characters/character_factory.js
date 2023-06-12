@@ -78,7 +78,6 @@ export default class CharacterFactory {
 
     buildPlayerCharacter(spriteSheetName, x, y) {
         let character = new PlayerContainer(this.scene, x, y, spriteSheetName, 2);
-        character.maxSpeed = 150;
         character.body.pushable = false;
         character.body.setImmovable(true);
         character.body.setCollideWorldBounds(true);

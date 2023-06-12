@@ -127,7 +127,7 @@ let ZeusScene = new Phaser.Class({
         this.centY = this.cameras.main.centerY;
         this.camW = this.cameras.main.width;
 
-        this.timer = this.time.addEvent({
+        this.attack_timer = this.time.addEvent({
             delay: 2000,
             callback: function (args) {
                 args.player.isAttacking = true;
@@ -143,8 +143,8 @@ let ZeusScene = new Phaser.Class({
                         args.attacks.push(attack);
                         args.physics.add.collider(attack, args.worldLayer);
                         attack.flipX = args.player.sprite.scaleX < 0;
-                        attack.scaleX = 0.8;
-                        attack.scaleY = 0.5;
+                        attack.scaleX = 0.8 + 0.025 * args.player.isConfig.attackRange;
+                        attack.scaleY = 0.5 + 0.025 * args.player.isConfig.attackRange;
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
                             args.lightningGroup.fireLightning(args.player.x, args.player.y, args.enemies);
                         }
@@ -248,6 +248,8 @@ let ZeusScene = new Phaser.Class({
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             //this.player.GetHit(100);
             this.lvlUP();
+            //this.attack_timer.delay *= 0.5
+            //this.player.maxSpeed += 50;
         }
 
         if (this.lightningGroup) {
