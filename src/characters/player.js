@@ -11,12 +11,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const animsController = this.anims;
         const x = this.container.body.velocity.x;
         const y = this.container.body.velocity.y;
-
         if (this.container.state === "damaged") {
             const hitAnimations = this.animationSets.get('Hit');
             animsController.play(hitAnimations[0], true);
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 this.container.state = "";
+                this.container.IsTossed = false;
             }
         } else if (!this.container.isAlive) {
             const deathAnimations = this.animationSets.get('Death');

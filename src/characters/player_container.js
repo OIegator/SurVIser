@@ -18,6 +18,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.hp = 100;
         this.isAttacking = false;
         this.isAlive = true;
+        this.IsTossed = false;
+        this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
         this.add(this.sprite);
@@ -45,19 +47,24 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             const speed = this.maxSpeed + 25 * (this.isConfig.moveSpeed - 1) ;
             const cursors = this.cursors;
             const wasd = this.wasd;
-            if (cursors.left.isDown || wasd.left.isDown) {
-                body.velocity.x -= speed;
-                this.healthBar.updateBar();
-            } else if (cursors.right.isDown || wasd.right.isDown) {
-                body.velocity.x += speed;
-                this.healthBar.updateBar();
-            }
+            if (this.IsTossed == false) {
+                if (cursors.left.isDown || wasd.left.isDown) {
+                    body.velocity.x -= speed;
+                    this.healthBar.updateBar();
+                } else if (cursors.right.isDown || wasd.right.isDown) {
+                    body.velocity.x += speed;
+                    this.healthBar.updateBar();
+                }
 
-            // Vertical movement
-            if (cursors.up.isDown || wasd.up.isDown) {
-                body.setVelocityY(-speed);
-            } else if (cursors.down.isDown || wasd.down.isDown) {
-                body.setVelocityY(speed);
+                // Vertical movement
+                if (cursors.up.isDown || wasd.up.isDown) {
+                    body.setVelocityY(-speed);
+                } else if (cursors.down.isDown || wasd.down.isDown) {
+                    body.setVelocityY(speed);
+                }
+            }
+            else {
+                body.velocity.add(this.tossedVector);
             }
 
             this.checkPowerUpCollision(this.scene.powerUpsGroup);
@@ -86,7 +93,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             // Regular hit
             this.hp -= damage;
         }
-        this.hp -= damage;
+        this.isAttacking = false;
         this.healthBar.updateBar();
         const hitAnimations = this.sprite.animationSets.get('Hit');
         const animsController = this.sprite.anims;
@@ -96,6 +103,19 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
     }
 
+    GetTossed(damage, x, y) {
+        this.isAttacking = false;
+        this.IsTossed = true;
+        this.hp -= damage;
+        this.healthBar.updateBar();
+        const hitAnimations = this.sprite.animationSets.get('Hit');
+        const animsController = this.sprite.anims;
+        animsController.play(hitAnimations[0], true);
+
+        const desired = new Vector2(this.x - x, this.y - y);
+        this.tossedVector = new Vector2(desired.x*50.5, desired.y*50.5);
+        this.state = "damaged"
+    }
 
     Die() {
         this.body.setVelocity(0);
@@ -111,6 +131,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
 
     attack() {
+        this.IsTossed = false;
         const animations = this.sprite.animationSets.get('Attack');
         const animsController = this.sprite.anims;
         animsController.play(animations[0], true);

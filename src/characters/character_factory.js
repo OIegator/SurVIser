@@ -16,6 +16,7 @@ import Vector2 from 'phaser/src/math/Vector2'
 import Lower from "./lower_mob";
 import Zeus from "./zeus";
 import Bers from "./berserk";
+import Golem from "./golem.js"
 import PlayerContainer from "./player_container";
 import Ordinary from "./ordinary_mob";
 
@@ -33,7 +34,7 @@ export default class CharacterFactory {
         this.blinkySpriteSheet = 'blinky';
         this.berserkSpriteSheet = 'berserk';
         this.garySpriteSheet = 'gary';
-        this.rockSpriteSheet = 'rock';
+        this.rockSpriteSheet = 'golem';
         this.sansSpriteSheet = 'sans';
         this.wizardSpriteSheet = 'wizard';
 
@@ -148,7 +149,15 @@ export default class CharacterFactory {
         let character = new Bers(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
-        console.log(spriteSheetName);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildGolem(spriteSheetName, x, y, maxHP, velocity = null) {
+        let character = new Golem(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
+        character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         character.speed = new Vector2(0.5, 0.5);
         return character;
