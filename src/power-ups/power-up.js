@@ -3,7 +3,9 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, name, frame);
         const dict = {
             lightning: 0.4,
-            armor: 0.7,
+            armor: 0.3,
+            dd: 1,
+            magic: 0.5,
         };
         this.name = name;
         this.setScale(dict[name]);

@@ -243,6 +243,8 @@ let ZeusScene = new Phaser.Class({
 
         this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning', 'lightning', 'shock_icon'));
         this.powerUpsGroup.add(new PowerUp(this, 500, 1000, 'armor', 'armor', 'armor_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 600, 1000, 'dd', 'dd', 'dd_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 700, 1000, 'magic', 'magic', 'magic_icon'));
 
         this.iconDictionary = {};
 

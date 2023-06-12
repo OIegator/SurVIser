@@ -35,6 +35,10 @@ import character_selected_background from "../assets/sprites/ui/character_select
 import todo_character from "../assets/sprites/ui/todo_character.png";
 import shock_icon from "../assets/sprites/ui/shock_icon.png";
 import armor from "../assets/sprites/ui/armor.png";
+import magic from "../assets/sprites/ui/magic.png";
+import dd from "../assets/sprites/ui/dd.png";
+import dd_icon from "../assets/sprites/ui/dd_icon.png";
+import magic_icon from "../assets/sprites/ui/magic_icon.png";
 import armor_icon from "../assets/sprites/ui/armor_icon.png";
 import grobold from "url:../assets/fonts/GROBOLD.ttf";
 import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
@@ -103,7 +107,11 @@ export default class Boot extends Phaser.Scene {
         this.load.image('attack_speed_power_up', attack_speed_power_up);
         this.load.image('lvl_up_icon_background', lvl_up_icon_background);
         this.load.image('shock_icon', shock_icon);
-        this.load.image('armor_icon', shock_icon);
+        this.load.image('armor_icon', armor_icon);
+        this.load.image('magic_icon', magic_icon);
+        this.load.image('magic', magic);
+        this.load.image('dd_icon', dd_icon);
+        this.load.image('dd', dd);
         this.load.image('armor', armor);
         this.load.image('stats_background', stats_background);
         this.load.image('vi_icon', vi_icon);
