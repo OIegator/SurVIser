@@ -135,6 +135,8 @@ export default class LvlUpScene extends Phaser.Scene {
 
             const container = this.add.container(x, y);
 
+            item.key = item.texture.key;
+
             const background = this.add.image(0, 0, 'lvl_up_item_background');
             const icon_bg = this.add.image(-146, -5, 'lvl_up_icon_background')
             const icon = this.add.image(-146, -5, item.texture.key);

@@ -163,7 +163,7 @@ export default class Zeus extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning', 'shock_icon'));
 
             return State.SUCCEEDED;
         },

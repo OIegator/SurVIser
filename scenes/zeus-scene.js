@@ -51,7 +51,7 @@ let ZeusScene = new Phaser.Class({
 
     showDamageNumber(x, y, damage, color, scale = '24') {
         const damageNumber = this.add.text(x, y, damage.toString(), {font: scale + 'px Squada One', fill: color});
-        damageNumber.setStroke('#ffffff', 2)
+        damageNumber.setStroke('#ffffff', 2);
         this.damageNumbers.add(damageNumber);
 
         this.tweens.add({
@@ -84,6 +84,7 @@ let ZeusScene = new Phaser.Class({
     },
 
     onResume() {
+        this.displayPowerUps();
         this.resumeTimer();
         this.expBar._reset();
         this.cameras.main.resetPostPipeline();
@@ -240,7 +241,9 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning'));
+        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning', 'shock_icon'));
+
+        this.iconDictionary = {};
 
     },
 
@@ -270,6 +273,56 @@ let ZeusScene = new Phaser.Class({
         }
     },
 
+    displayPowerUps() {
+        // Reset the count for each element in the dictionary
+        for (const name in this.iconDictionary) {
+            this.iconDictionary[name].count = 0;
+        }
+
+        this.player.isConfig.powerUps.forEach(function (powerUp, index) {
+            const name = powerUp.name;
+
+            // Increment the count if the icon already exists
+            if (this.iconDictionary.hasOwnProperty(name)) {
+                this.iconDictionary[name].count++;
+
+                // Update the countText if count is greater than 1
+                const count = this.iconDictionary[name].count;
+                if (count > 1) {
+                    this.iconDictionary[name].countText.setText(count.toString());
+                } else {
+                    this.iconDictionary[name].countText.setText('');
+                }
+            } else {
+                // Create a new icon if it doesn't exist
+                const key = powerUp.key;
+                const x = 50 + Object.keys(this.iconDictionary).length * 50; // Calculate x position
+                const y = 50;
+                const icon = this.add.image(x, y, key).setScale(0.6).setScrollFactor(0).setDepth(11); // Set depth to 11
+
+                // Create a text object to display the count
+                const countText = this.add.text(x + 10, y + 10, '', {
+                    font: '12px Squada One',
+                    fill: '#000000'
+                }).setStroke('#ffffff', 2).setScrollFactor(0).setDepth(11); // Set depth to 11
+
+                // Add the icon and countText to a group or container for easy management
+                const group = this.add.group();
+                group.add(icon);
+                group.add(countText);
+
+                // Store the icon and count in the dictionary
+                this.iconDictionary[name] = {
+                    key: key,
+                    icon: group,
+                    count: 1,
+                    countText: countText
+                };
+            }
+        }, this);
+    },
+
+
     update(time) {
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
@@ -283,8 +336,7 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.lvlUP();
-            this.showDamageNumber(800, 1000, 30, '#000000')
+            this.lvlUP();
         }
 
         if (this.lightningGroup) {

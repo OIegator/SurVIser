@@ -80,8 +80,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     GetHit(damage) {
         const dodgeRate = this.scene.player.isConfig.dodgeRate;
         if (Math.random() < dodgeRate) {
-            // Dodge
-            console.log("Dodge!")
+            this.scene.showDamageNumber(this.x, this.y, 'Dodge!', '#000000', 36);
             this.hp -= 0 ;
         } else {
             // Regular hit
@@ -106,7 +105,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     collectPowerUp(player, powerUp) {
         // Add the power-up to the power-ups array
         this.powerUps.push(powerUp);
-
+        this.scene.displayPowerUps();
         // Remove the power-up from the scene
         powerUp.destroy();
     }

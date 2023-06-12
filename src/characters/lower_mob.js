@@ -78,12 +78,10 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
 
             if (Math.random() < criticalRate) {
                 // Critical hit
-                console.log("crit")
                 this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
                 dmg = (damage ? damage : strength) * criticalMultiplier;
             } else {
                 // Regular hit
-                console.log("not crit")
                 this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
                 dmg = damage ? damage : strength;
             }
