@@ -77,9 +77,13 @@ export default class Ordinary extends Character {
 
                 if (Math.random() < criticalRate) {
                     // Critical hit
-                    this.hp -= damage ? damage * criticalMultiplier : strength * criticalMultiplier ;
+                    console.log("crit")
+                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
+                    this.hp -= (damage ? damage : strength) * criticalMultiplier;
                 } else {
                     // Regular hit
+                    console.log("not crit")
+                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
                     this.hp -= damage ? damage : strength;
                 }
 

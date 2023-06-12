@@ -49,6 +49,40 @@ let ZeusScene = new Phaser.Class({
         this.scene.launch('lvl-up');
     },
 
+    showDamageNumber(x, y, damage, color, scale = '24') {
+        const damageNumber = this.add.text(x, y, damage.toString(), {font: scale + 'px Squada One', fill: color});
+        damageNumber.setStroke('#ffffff', 2)
+        this.damageNumbers.add(damageNumber);
+
+        this.tweens.add({
+            targets: damageNumber,
+            alpha: {start: 1, to: 0},
+            ease: 'sine.in',
+            duration: 1000
+        });
+        this.tweens.add({
+            targets: damageNumber,
+            y: {start: y, to: y + 50},
+            ease: 'sine.out',
+            duration: 1000
+        });
+        this.tweens.add({
+            targets: damageNumber,
+            scale: {start: 1, to: 1.5},
+            ease: 'sine.out',
+            yoyo: true,
+            duration: 500
+        });
+
+        this.time.addEvent({
+            delay: 1000,
+            callback: function () {
+                damageNumber.destroy();
+            },
+            callbackContext: this,
+        });
+    },
+
     onResume() {
         this.resumeTimer();
         this.expBar._reset();
@@ -61,6 +95,7 @@ let ZeusScene = new Phaser.Class({
         this.enemies = [];
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.gameObjects = [];
+        this.damageNumbers = this.add.group();
         this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
 
@@ -206,7 +241,9 @@ let ZeusScene = new Phaser.Class({
         this.events.on('resume', this.resumeTimer, this);
 
         this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning'));
+
     },
+
 
     expUP(xp) {
         this.expBar.resiveHealing(xp);
@@ -246,10 +283,8 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.player.GetHit(100);
-            this.lvlUP();
-            //this.attack_timer.delay *= 0.5
-            //this.player.maxSpeed += 50;
+            //this.lvlUP();
+            this.showDamageNumber(800, 1000, 30, '#000000')
         }
 
         if (this.lightningGroup) {
