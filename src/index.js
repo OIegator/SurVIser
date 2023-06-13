@@ -9,6 +9,7 @@ import GameOverScene from "../scenes/gameover-scene";
 import BerserkScene from '../scenes/berserk-scene';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
 import GolemScene from "../scenes/golem-scene";
+import PauseScene from "../scenes/pause-scene";
 
 
 const config = {
@@ -17,7 +18,7 @@ const config = {
     height: 880,
     pixelArt: false,
     zoom: 1.0,
-    scene: [Boot, ZeusScene, LvlUpScene, GameOverScene],
+    scene: [Boot, ZeusScene, LvlUpScene, PauseScene, GameOverScene],
     physics: {
         default: "arcade",
         arcade: {

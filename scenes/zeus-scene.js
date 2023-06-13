@@ -49,6 +49,14 @@ let ZeusScene = new Phaser.Class({
         this.scene.launch('lvl-up');
     },
 
+    esc() {
+        this.cameras.main.setPostPipeline(BlurFX);
+        this.input.keyboard.off('keydown_ESC', this.esc);
+        this.pauseTimer();
+        this.scene.pause();
+        this.scene.launch('pause');
+    },
+
     showDamageNumber(x, y, damage, color, scale = '24') {
         const damageNumber = this.add.text(x, y, damage.toString(), {font: scale + 'px Squada One', fill: color});
         damageNumber.setStroke('#ffffff', 2);
@@ -86,15 +94,14 @@ let ZeusScene = new Phaser.Class({
     onResume() {
         this.displayPowerUps();
         this.resumeTimer();
-        this.expBar._reset();
         this.cameras.main.resetPostPipeline();
-        console.log(this.registry.get('player_config'));
     },
 
     create: function () {
         this.attacks = [];
         this.enemies = [];
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.gameObjects = [];
         this.damageNumbers = this.add.group();
         this.powerUpsGroup = this.physics.add.group();
@@ -213,7 +220,7 @@ let ZeusScene = new Phaser.Class({
         this.elapsedTime = 0;
         this.isTimerPaused = false;
 
-        this.timerText = this.add.text(800, 30, '0:00', {
+        this.timerText = this.add.text(760, 30, '0:00', {
             color: 'white',
             fontSize: '32pt',
             fontFamily: 'Squada One'
@@ -241,10 +248,10 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        this.powerUpsGroup.add(new PowerUp(this, 300, 1000, 'lightning', 'lightning', 'shock_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 500, 1000, 'armor', 'armor', 'armor_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 600, 1000, 'dd', 'dd', 'dd_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 700, 1000, 'magic', 'magic', 'magic_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
         this.iconDictionary = {};
 
@@ -340,6 +347,10 @@ let ZeusScene = new Phaser.Class({
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             this.lvlUP();
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+            this.esc();
         }
 
         if (this.lightningGroup) {

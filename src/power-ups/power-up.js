@@ -1,6 +1,6 @@
 export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, name, frame, key) {
-        super(scene, x, y, name, frame);
+    constructor(scene, x, y, name, key) {
+        super(scene, x, y, name);
         const dict = {
             lightning: 0.4,
             armor: 0.25,

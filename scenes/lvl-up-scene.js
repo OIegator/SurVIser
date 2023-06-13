@@ -8,6 +8,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
     resume() {
         const zeus_scene = this.scene.get('zeus');
+        zeus_scene.expBar._reset();
         zeus_scene.onResume();
         this.scene.resume('zeus');
         this.scene.stop('lvl-up');
