@@ -13,8 +13,10 @@ import lvl_up_icon_background from "../assets/sprites/ui/icon_background_powerup
 import stats_background from "../assets/sprites/ui/stats_background.png";
 import vi_icon from "../assets/sprites/ui/vi_icon.png";
 import star from "../assets/sprites/ui/star3.png";
-import tilemapPng from "../assets/tileset/Dungeon_Tileset.png";
-import dungeonRoomJson from "../assets/big_dungeon_room.json";
+
+import tilemapPng from "../assets/tileset/Tileset_Grass.png";
+import dungeonRoomJson from "../assets/boletaria.json";
+
 import viSpriteSheet from "../assets/sprites/characters/vi.png";
 import zeusSpriteSheet from "../assets/sprites/characters/zeus.png";
 import shockCircleSpriteSheet from "../assets/sprites/projectile/shock.png";

@@ -104,7 +104,7 @@ let ZeusScene = new Phaser.Class({
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
         // Phaser's cache (i.e. the name you used in preload)
-        const tileset = this.map.addTilesetImage("Dungeon_Tileset", "tiles");
+        const tileset = this.map.addTilesetImage("Tileset_Grass", "tiles");
 
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         this.map.createLayer("Floor", tileset, 0, 0);
@@ -123,7 +123,7 @@ let ZeusScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', 140, 1100, {player: true});
+        this.player = this.characterFactory.buildCharacter('vi', 8014, 8014, {player: true});
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
