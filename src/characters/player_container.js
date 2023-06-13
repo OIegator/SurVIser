@@ -44,10 +44,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             const body = this.body;
             this.body.setVelocity(0);
             this.scene.attack_timer.delay = 2000 * (1 - (this.isConfig.attackSpeed - 1) * 0.1)
-            const speed = this.maxSpeed + 25 * (this.isConfig.moveSpeed - 1) ;
+            const speed = this.maxSpeed + 25 * (this.isConfig.moveSpeed - 1);
             const cursors = this.cursors;
             const wasd = this.wasd;
-            if (this.IsTossed == false) {
+            if (this.IsTossed === false) {
                 if (cursors.left.isDown || wasd.left.isDown) {
                     body.velocity.x -= speed;
                     this.healthBar.updateBar();
@@ -62,8 +62,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
                 } else if (cursors.down.isDown || wasd.down.isDown) {
                     body.setVelocityY(speed);
                 }
-            }
-            else {
+            } else {
                 body.velocity.add(this.tossedVector);
             }
 
@@ -76,8 +75,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         }
         if (this.isAttacking && this.isAlive)
             this.attack();
-        else
-            this.sprite.updateAnimation();
+
+        this.sprite.updateAnimation();
     };
 
     checkPowerUpCollision(powerUpsGroup) {
@@ -88,7 +87,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         const dodgeRate = this.scene.player.isConfig.dodgeRate;
         if (Math.random() < dodgeRate) {
             this.scene.showDamageNumber(this.x, this.y, 'Dodge!', '#000000', 36);
-            this.hp -= 0 ;
+            this.hp -= 0;
         } else {
             // Regular hit
             this.hp -= damage;
@@ -113,7 +112,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         animsController.play(hitAnimations[0], true);
 
         const desired = new Vector2(this.x - x, this.y - y);
-        this.tossedVector = new Vector2(desired.x*50.5, desired.y*50.5);
+        this.tossedVector = new Vector2(desired.x * 50.5, desired.y * 50.5);
         this.state = "damaged"
     }
 
@@ -136,10 +135,6 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         const animsController = this.sprite.anims;
         animsController.play(animations[0], true);
         this.state = "attack"
-        const numb = animsController.currentFrame.frame.name;
-        if (numb == 86) {
-            this.isAttacking = false;
-        }
     }
 
 }

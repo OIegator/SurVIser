@@ -168,7 +168,7 @@ let ZeusScene = new Phaser.Class({
             callback: function (args) {
                 args.player.isAttacking = true;
                 if (args.player.isAlive) {
-                    args.time.delayedCall(255, () => {
+                    args.time.delayedCall(260, () => {
 
                         let add;
                         if (args.player.sprite.scaleX < 0)

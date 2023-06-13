@@ -11,9 +11,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const animsController = this.anims;
         const x = this.container.body.velocity.x;
         const y = this.container.body.velocity.y;
-        if (this.container.state === "damaged") {
+        if (this.container.state === "attack") {
+            const attackAnimations = this.animationSets.get('Attack');
+            if (x < 0) {
+                this.setScale(0.5, 0.5);
+                this.container.body.setOffset(-22, -9);
+                animsController.play(attackAnimations[0], true);
+            } else if (x > 0) {
+                this.setScale(-0.5, 0.5);
+                animsController.play(attackAnimations[0], true);
+                this.container.body.setOffset(-44, -9);
+            }
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                this.container.state = "";
+                this.container.isAttacking = false;
+                this.container.IsTossed = false;
+            }
+        } else if (this.container.state === "damaged") {
             const hitAnimations = this.animationSets.get('Hit');
-            animsController.play(hitAnimations[0], true);
+            if (x < 0) {
+                this.setScale(0.5, 0.5);
+                this.container.body.setOffset(-22, -9);
+                animsController.play(hitAnimations[0], true);
+            } else if (x > 0) {
+                this.setScale(-0.5, 0.5);
+                animsController.play(hitAnimations[0], true);
+                this.container.body.setOffset(-44, -9);
+            }
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 this.container.state = "";
                 this.container.IsTossed = false;
