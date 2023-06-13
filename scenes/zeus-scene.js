@@ -404,21 +404,15 @@ let ZeusScene = new Phaser.Class({
 
             let i = currLower;
             while (i < maxLower) {
-                const inky = this.characterFactory.buildLowerCharacter(this, "inky", this.centX, this.centY, this.camW);
-                inky.setCircle(40);
-                inky.setOffset(200, 210);
+                const inky = this.characterFactory.buildLowerCharacter(this, "inky", this.player.x, this.player.y, this.cameras.main.width);
                 this.gameObjects.push(inky);
-
-                inky.setSteerings([
-                    new Seek(inky, [this.player], 1, this.player.maxSpeed, this.player.maxSpeed)
-                ]);
 
                 this.physics.add.collider(
                     inky.body,
                     this.player.body,
                     () => {
                         // Delay the attack function by 1 second
-                        this.time.delayedCall(1000, inky.Attack, [], inky);
+                        this.time.delayedCall(100, inky.Attack, [], inky);
                     },
                     null,
                     this
@@ -436,6 +430,12 @@ let ZeusScene = new Phaser.Class({
             }
 
             currLower = maxLower;
+
+            this.gameObjects.forEach(function (element, index, object) {
+                if (element.constructor.name === "Lower") {
+                    element.outsideCameraCheck(self);
+                }
+            });
         }
     },
 

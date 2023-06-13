@@ -1,13 +1,18 @@
 import Vector2 from 'phaser/src/math/Vector2'
 
 export default class Lower extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, centX, centY, camW, name, frame, velocity) {
-        let ang = Math.random() * 2 * Math.PI,
-            adj = Math.cos(ang) * camW,
-            opp = Math.sin(ang) * camW;
+    constructor(scene, centX, centY, camW, name, frame, rand, velocity) {
+        let ang, adj, opp;
+        let spawnX = centX;
+        let spawnY = centY;
+        if (rand) {
+            ang = Math.random() * 2 * Math.PI;
+            adj = Math.cos(ang) * camW / 1.5;
+            opp = Math.sin(ang) * camW / 1.5;
 
-        let spawnX = centX + adj;
-        let spawnY = centY + opp;
+            spawnX = centX + adj;
+            spawnY = centY + opp;
+        }
 
         // Define the padding for the scene bounds
         let padding = 100;
@@ -23,6 +28,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         spawnY = Phaser.Math.Clamp(spawnY, minY, maxY);
 
         super(scene, spawnX, spawnY, name, frame);
+        this.scene = scene;
         this.setScale(0.4);
         scene.physics.world.enable(this);
         scene.add.existing(this);
@@ -33,6 +39,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         this.hp = -1;
         this.isDead = false;
         this.lastAttackTime = 0;
+        this.timer = null;
     }
 
     setOffset(x, y) {
@@ -67,8 +74,46 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
             this.updateAnimation();
     }
 
+
+    // Update function that runs on each frame
+    outsideCameraCheck(scene) {
+        if (!scene.cameras.main.worldView.contains(this.x, this.y)) {
+            if (!this.timer) {
+                this.timer = scene.time.now + 8000; // Set the timer to the current time plus 3 seconds
+            } else if (scene.time.now > this.timer) {
+                this.repositionGameObject(scene);
+                this.timer = scene.time.now + 8000; // Reset the timer to the current time plus 3 seconds
+            }
+        } else {
+            this.timer = null; // Reset the timer if the game object is back within the camera bounds
+        }
+    }
+
+    repositionGameObject(scene) {
+        let newX, newY;
+
+        if (this.x < scene.cameras.main.worldView.left) {
+            newX = scene.cameras.main.worldView.right + (this.width / 2);
+            newY = Phaser.Math.Between(scene.cameras.main.worldView.top, scene.cameras.main.worldView.bottom);
+        } else if (this.y < scene.cameras.main.worldView.top) {
+            newX = Phaser.Math.Between(scene.cameras.main.worldView.left, scene.cameras.main.worldView.right);
+            newY = scene.cameras.main.worldView.bottom + (this.height / 2);
+        } else if (this.x > scene.cameras.main.worldView.right) {
+            newX = scene.cameras.main.worldView.left - (this.width / 2);
+            newY = Phaser.Math.Between(scene.cameras.main.worldView.top, scene.cameras.main.worldView.bottom);
+        } else if (this.y > scene.cameras.main.worldView.bottom) {
+            newX = Phaser.Math.Between(scene.cameras.main.worldView.left, scene.cameras.main.worldView.right);
+            newY = scene.cameras.main.worldView.top - (this.height / 2);
+        }
+
+        this.x = newX;
+        this.y = newY;
+    }
+
+
+
     GetHit(damage = null) {
-        if(!this.isDying || !this.isDead) {
+        if (!this.isDying || !this.isDead) {
             if (this.hp <= 0)
                 this.isDying = true;
             let dmg = 0;
@@ -100,7 +145,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
     }
 
     Attack() {
-        if(!this.isDying || !this.isDead) {
+        if (!this.isDying || !this.isDead) {
             const currentTime = this.scene.time.now;
 
             // Calculate the elapsed time since the last attack

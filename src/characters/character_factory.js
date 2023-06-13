@@ -19,6 +19,7 @@ import Bers from "./berserk";
 import Golem from "./golem.js"
 import PlayerContainer from "./player_container";
 import Ordinary from "./ordinary_mob";
+import Seek from "../ai/steerings/seek";
 
 
 export default class CharacterFactory {
@@ -96,10 +97,15 @@ export default class CharacterFactory {
 
     }
 
-    buildLowerCharacter(scene, spriteSheetName, centX, centY, camW, velocity = null){
-        let lower = new Lower(scene, centX, centY, camW, spriteSheetName, 2, velocity);
+    buildLowerCharacter(scene, spriteSheetName, centX, centY, camW, rand = 1, velocity = null){
+        let lower = new Lower(scene, centX, centY, camW, spriteSheetName, 2, rand, velocity);
         lower.maxSpeed = 100;
+        lower.setCircle(40);
+        lower.setOffset(200, 210);
         lower.setCollideWorldBounds(true);
+        lower.setSteerings([
+            new Seek(lower, [scene.player], 1, scene.player.maxSpeed, scene.player.maxSpeed)
+        ]);
         lower.animationSets = this.animationLibrary.get(spriteSheetName);
         lower.speed = new Vector2(0.5, 0.5);
         return lower;
