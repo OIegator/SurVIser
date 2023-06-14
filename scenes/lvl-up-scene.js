@@ -36,9 +36,9 @@ export default class LvlUpScene extends Phaser.Scene {
                 effect: {stat: 'attackSpeed', action: 1}
             },
             {
-                name: 'Wizard\'s map',
+                name: 'Hermes boot',
                 desc: 'Increases the character\'s\nspeed.',
-                texture: {key: 'map_power_up'},
+                texture: {key: 'speed_power_up'},
                 effect: {stat: 'moveSpeed', action: 1}
             },
             {
@@ -160,10 +160,10 @@ export default class LvlUpScene extends Phaser.Scene {
 
             container.setInteractive()
                 .on('pointerover', () => {
-                    background.setTint(0xE59866); // Устанавливаем темный оттенок при наведении курсора
+                    background.setTint(0xE59866);
                 })
                 .on('pointerout', () => {
-                    background.clearTint(); // Очищаем оттенок при отведении курсора;
+                    background.clearTint();
                 })
                 .on('pointerdown', () => {
                     player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
@@ -175,8 +175,6 @@ export default class LvlUpScene extends Phaser.Scene {
 
             this.buttonContainer.push(container);
         });
-
-        console.log(this.buttonContainer); // Displays all button containers in the console
     }
 
 }

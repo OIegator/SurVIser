@@ -58,8 +58,8 @@ export default class Golem extends Boss {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
                 const patrolPoints = [
-                    new Vector2(880, 520),
-                    new Vector2(580, 520),
+                    new Vector2(14580, 764),
+                    new Vector2(15080, 764),
                 ];
                 this.setSteerings([
                     new Patrol(this, patrolPoints, 1, this.maxSpeed)

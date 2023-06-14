@@ -116,7 +116,6 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         if (!this.isDying || !this.isDead) {
             if (this.hp <= 0) {
                 this.isDying = true;
-                console.log('enemy dying')
             }
             let dmg = 0;
             const strength = this.scene.player.isConfig.strength;
@@ -169,7 +168,6 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         const numb = animsController.currentFrame.frame.name;
         if (numb == 54) {
             this.isDead = true;
-            console.log('enemy die')
         }
     }
 

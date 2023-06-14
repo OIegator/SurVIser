@@ -10,7 +10,7 @@ import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 
 let inZone = false;
-const maxLower = 1;
+const maxLower = 30;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
@@ -97,9 +97,26 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.resetPostPipeline();
     },
 
+    EnemyAttack(x, y, attacker, size, offset, delay) {
+        let add;
+        this.time.delayedCall(delay, () => {
+            let add;
+            if (attacker.scaleX < 0)
+                add = offset;
+            else
+                add = -offset;
+            const attack = new AutoAttack(this, x + add, y, 'smash');
+            attack.body.setSize(size, size);
+            this.enAttacks.push(attack);
+            this.physics.add.collider(attack, this.worldLayer);
+        });
+
+    },
+
     create: function () {
         this.attacks = [];
         this.enemies = [];
+        this.enAttacks = [];
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.gameObjects = [];
@@ -112,9 +129,13 @@ let ZeusScene = new Phaser.Class({
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
         // Phaser's cache (i.e. the name you used in preload)
         const tileset = this.map.addTilesetImage("Tileset_Grass", "tiles");
+        const tileset2 = this.map.addTilesetImage("TX Tileset PrePreSnow", "tiles2");
+        const tileset3 = this.map.addTilesetImage("TX Tileset Sand2", "tiles3");
+        const tileset4 = this.map.addTilesetImage("TX Tileset Snow3", "tiles4");
+        const tileset5 = this.map.addTilesetImage("Dungeon_Tileset", "tiles5");
 
         // Parameters: layer name (or index) from Tiled, tileset, x, y
-        this.map.createLayer("Floor", tileset, 0, 0);
+        this.map.createLayer("Floor", [tileset, tileset2, tileset3, tileset4, tileset5], 0, 0);
         const worldLayer = this.map.createLayer("Walls", tileset, 0, 0);
         this.worldLayer = worldLayer;
         const aboveLayer = this.map.createLayer("Upper", tileset, 0, 0);
@@ -139,6 +160,14 @@ let ZeusScene = new Phaser.Class({
         this.zeus = this.characterFactory.buildZeus("zeus", 850, 580, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
+
+        this.bers = this.characterFactory.buildBers("berserk", 15080, 15080, 100);
+        this.gameObjects.push(this.bers);
+        this.physics.add.collider(this.bers, worldLayer);
+
+        this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
+        this.gameObjects.push(this.golem);
+        this.physics.add.collider(this.golem, worldLayer);
 
         const pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -174,7 +203,7 @@ let ZeusScene = new Phaser.Class({
             delay: 2000,
             callback: function (args) {
                 args.player.isAttacking = true;
-                if (args.player.isAlive) {
+                if (args.player.isAlive && (args.player.IsTossed == false)) {
                     args.time.delayedCall(260, () => {
 
                         let add;
@@ -260,11 +289,9 @@ let ZeusScene = new Phaser.Class({
         });
     },
 
-
     expUP(xp) {
         this.expBar.resiveHealing(xp);
     },
-
 
     updateTimer() {
         if (!this.isTimerPaused) {
@@ -370,6 +397,48 @@ let ZeusScene = new Phaser.Class({
                 this.lowerColl(attack, mob);
                 mob.gotDamage = true;
             });
+            this.attacks.forEach(function (element) {
+                element.update(time);
+            });
+        }
+
+        if (this.enAttacks) {
+            this.physics.overlap(this.enAttacks, this.player, (attack, mob) => {
+                this.player.GetTossed(2, attack.x, attack.y)
+            });
+            this.enAttacks.forEach(function (element) {
+                element.update(time);
+            });
+        }
+
+        if (this.attacks) {
+
+            this.physics.overlap(this.attacks, this.golem, (attack, mob) => {
+                if (this.canDamage) {
+                    this.golem.behaviour.GetHit(25);
+
+                    this.canDamage = false; // Set the flag false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+
+            this.physics.overlap(this.attacks, this.bers, (attack, mob) => {
+                if (this.canDamage) {
+                    this.bers.behaviour.GetHit(25);
+
+                    this.canDamage = false; // Set the flag false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+
+            this.attacks.forEach(function (element) {
+                element.update(time);
+            });
+
             this.attacks.forEach(function (element) {
                 element.update(time);
             });

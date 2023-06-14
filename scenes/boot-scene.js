@@ -2,7 +2,7 @@ import cursor from "../assets/sprites/ui/cursor.png";
 import lvl_up_background from "../assets/sprites/ui/background_powerup.png";
 import lvl_up_item_background from "../assets/sprites/ui/item_background_powerup.png";
 import sword_power_up from "../assets/sprites/ui/sword_powerup.png";
-import map_power_up from "../assets/sprites/ui/map_powerup.png";
+import speed_power_up from "../assets/sprites/ui/speed_powerup.png";
 import armor_power_up from "../assets/sprites/ui/armor_powerup.png";
 import critical_power_up from "../assets/sprites/ui/critical_powerup.png";
 import critical_rate_power_up from "../assets/sprites/ui/criticalRate_powerup.png";
@@ -15,6 +15,10 @@ import vi_icon from "../assets/sprites/ui/vi_icon.png";
 import star from "../assets/sprites/ui/star3.png";
 
 import tilemapPng from "../assets/tileset/Tileset_Grass.png";
+import tilemap2Png from "../assets/tileset/TX Tileset PrePreSnow.png";
+import tilemap3Png from "../assets/tileset/TX Tileset Sand2.png";
+import tilemap4Png from "../assets/tileset/TX Tileset Snow3.png";
+import tilemap5Png from "../assets/tileset/Dungeon_Tileset.png";
 import dungeonRoomJson from "../assets/boletaria.json";
 
 import viSpriteSheet from "../assets/sprites/characters/vi.png";
@@ -51,6 +55,10 @@ import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 
 import main_theme from "../assets/audio/main_theme.mp3";
 
+import smash from "../assets/sprites/projectile/Sm05.png";
+import golemSpriteSheet from "../assets/sprites/characters/rock.png";
+import bersSpriteSheet from "../assets/sprites/characters/berserk.png";
+
 export default class Boot extends Phaser.Scene {
 
     constructor() {
@@ -63,8 +71,15 @@ export default class Boot extends Phaser.Scene {
         this.zeusFrameConfig = {frameWidth: 683, frameHeight: 500};
         this.inkyFrameConfig = {frameWidth: 476, frameHeight: 476};
         this.pinkyFrameConfig = {frameWidth: 403, frameHeight: 403};
+        this.bersFrameConfig = { frameWidth: 500, frameHeight: 500 };
+        this.golemFrameConfig = {frameWidth: 996, frameHeight: 709};
+
         //loading map tiles and json with positions
         this.load.image("tiles", tilemapPng);
+        this.load.image("tiles2", tilemap2Png);
+        this.load.image("tiles3", tilemap3Png);
+        this.load.image("tiles4", tilemap4Png);
+        this.load.image("tiles5", tilemap5Png);
         this.load.tilemapTiledJSON("map", dungeonRoomJson);
 
         //loading spritesheets
@@ -72,6 +87,8 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
         this.load.spritesheet('inky', inkySpriteSheet, this.inkyFrameConfig);
         this.load.spritesheet('pinky', pinkySpriteSheet, this.pinkyFrameConfig);
+        this.load.spritesheet('berserk', bersSpriteSheet, this.bersFrameConfig);
+        this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
 
         //loading health bar
@@ -85,12 +102,13 @@ export default class Boot extends Phaser.Scene {
         //loading projectiles
         this.load.image('lightning', lightning);
         this.load.image('attack', slash);
+        this.load.image('smash', smash);
 
         this.load.image('cursor', cursor);
         this.load.image('lvl_up_background', lvl_up_background);
         this.load.image('lvl_up_item_background', lvl_up_item_background);
         this.load.image('sword_power_up', sword_power_up);
-        this.load.image('map_power_up', map_power_up);
+        this.load.image('speed_power_up', speed_power_up);
         this.load.image('armor_power_up', armor_power_up);
         this.load.image('critical_power_up', critical_power_up);
         this.load.image('critical_rate_power_up', critical_rate_power_up);
@@ -117,7 +135,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('character_background', character_background);
         this.load.image('character_selected_background', character_selected_background);
         this.load.image('todo_character', todo_character);
+
         this.load.audio('main_theme', main_theme);
+
 
         let loadingBar = this.add.graphics({
             fillStyle: {

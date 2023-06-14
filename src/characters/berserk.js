@@ -63,8 +63,8 @@ export default class Berserk extends Boss {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
                 const patrolPoints = [
-                    new Vector2(880, 520),
-                    new Vector2(580, 520),
+                    new Vector2(14580, 15080),
+                    new Vector2(15080, 15080),
                 ];
                 this.setSteerings([
                     new Patrol(this, patrolPoints, 1, this.maxSpeed)
@@ -138,7 +138,7 @@ export default class Berserk extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'dd', 'dd_icon'));
 
             return State.SUCCEEDED;
         },
