@@ -255,6 +255,9 @@ let ZeusScene = new Phaser.Class({
 
         this.iconDictionary = {};
 
+        // this.sound.play("main_theme", {
+        //     loop: true
+        // });
     },
 
 
@@ -338,6 +341,11 @@ let ZeusScene = new Phaser.Class({
         this.lvlText.setStyle({
             color: 'white',
             fontSize: '16pt',
+            fontFamily: 'Squada One'
+        });
+        this.timerText.setStyle({
+            color: 'white',
+            fontSize: '32pt',
             fontFamily: 'Squada One'
         });
 

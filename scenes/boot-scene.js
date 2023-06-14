@@ -42,7 +42,6 @@ import dd from "../assets/sprites/ui/dd.png";
 import dd_icon from "../assets/sprites/ui/dd_icon.png";
 import magic_icon from "../assets/sprites/ui/magic_icon.png";
 import armor_icon from "../assets/sprites/ui/armor_icon.png";
-import grobold from "url:../assets/fonts/GROBOLD.ttf";
 import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
 import barsSh from '../assets/bars/barHorizontal_shadow.png'
 import barPix from '../assets/bars/pixel_barHorizontalShadow.png'
@@ -50,25 +49,16 @@ import barParts from '../assets/bars/barhorizontalparts.png'
 import inkySpriteSheet from "../assets/sprites/characters/inky.png";
 import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 
+//import main_theme from "../assets/audio/main_theme.mp3";
+
 export default class Boot extends Phaser.Scene {
 
     constructor() {
         super('boot');
     }
 
-    init() {
-        // let element = document.createElement('style');
-        //
-        // document.head.appendChild(element);
-        //
-        // element.sheet.insertRule('@font-face { font-family: "grobold"; src: url("../assets/fonts/GROBOLD.ttf") format("truetype"); }', 0);
-        // element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("../assets/fonts/PassionOne-Regular.ttf") format("truetype"); }', 0);
-        // element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("../assets/fonts/SquadaOne-Regular.ttf") format("truetype"); }', 0);
-    }
-
 
     preload() {
-
         this.viFrameConfig = {frameWidth: 305, frameHeight: 305};
         this.zeusFrameConfig = {frameWidth: 683, frameHeight: 500};
         this.inkyFrameConfig = {frameWidth: 476, frameHeight: 476};
@@ -127,14 +117,21 @@ export default class Boot extends Phaser.Scene {
         this.load.image('character_background', character_background);
         this.load.image('character_selected_background', character_selected_background);
         this.load.image('todo_character', todo_character);
+        //this.load.audio('main_theme', main_theme);
 
         let loadingBar = this.add.graphics({
             fillStyle: {
                 color: 0xffffff
             }
         })
+        this.add.text(700, 500,  "LOADING", {
+            color: 'white',
+            fontSize: '32pt',
+            fontFamily: 'grobold'
+        });
 
         this.load.on("progress", (percent) => {
+
             loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
         })
 
@@ -161,6 +158,21 @@ export default class Boot extends Phaser.Scene {
     }
 
     create() {
+        this.add.text(800, 500,  "LOADING", {
+            color: 'white',
+            fontSize: '32pt',
+            fontFamily: 'grobold'
+        });
+        this.add.text(800, 500,  "LOADING", {
+            color: 'white',
+            fontSize: '32pt',
+            fontFamily: 'Passion One'
+        });
+        this.add.text(800, 500,  "LOADING", {
+            color: 'white',
+            fontSize: '32pt',
+            fontFamily: 'Squada One'
+        });
         this.input.setDefaultCursor('url(' + cursor + '), pointer');
         this.scene.start('zeus');
     }
