@@ -114,8 +114,10 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
 
     GetHit(damage = null) {
         if (!this.isDying || !this.isDead) {
-            if (this.hp <= 0)
+            if (this.hp <= 0) {
                 this.isDying = true;
+                console.log('enemy dying')
+            }
             let dmg = 0;
             const strength = this.scene.player.isConfig.strength;
             const criticalRate = this.scene.player.isConfig.criticalRate;
@@ -145,7 +147,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
     }
 
     Attack() {
-        if (!this.isDying || !this.isDead) {
+        if (!this.isDying) {
             const currentTime = this.scene.time.now;
 
             // Calculate the elapsed time since the last attack
@@ -165,8 +167,10 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         const animsController = this.anims;
         animsController.play(animations[0], true);
         const numb = animsController.currentFrame.frame.name;
-        if (numb == 54)
+        if (numb == 54) {
             this.isDead = true;
+            console.log('enemy die')
+        }
     }
 
     updateAnimation() {

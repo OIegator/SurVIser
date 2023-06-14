@@ -10,7 +10,7 @@ import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 
 let inZone = false;
-const maxLower = 15;
+const maxLower = 1;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
@@ -430,8 +430,7 @@ let ZeusScene = new Phaser.Class({
                     inky.body,
                     this.player.body,
                     () => {
-                        // Delay the attack function by 1 second
-                        this.time.delayedCall(100, inky.Attack, [], inky);
+                        inky.Attack();
                     },
                     null,
                     this
