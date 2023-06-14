@@ -57,13 +57,13 @@ export default class Boot extends Phaser.Scene {
     }
 
     init() {
-        let element = document.createElement('style');
-
-        document.head.appendChild(element);
-
-        element.sheet.insertRule('@font-face { font-family: "grobold"; src: url:("../assets/fonts/GROBOLD.ttf") format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("../assets/fonts/PassionOne-Regular.ttf") format("truetype"); }', 0);
-        element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("../assets/fonts/SquadaOne-Regular.ttf") format("truetype"); }', 0);
+        // let element = document.createElement('style');
+        //
+        // document.head.appendChild(element);
+        //
+        // element.sheet.insertRule('@font-face { font-family: "grobold"; src: url("../assets/fonts/GROBOLD.ttf") format("truetype"); }', 0);
+        // element.sheet.insertRule('@font-face { font-family: "Passion One"; src: url("../assets/fonts/PassionOne-Regular.ttf") format("truetype"); }', 0);
+        // element.sheet.insertRule('@font-face { font-family: "Squada One"; src: url("../assets/fonts/SquadaOne-Regular.ttf") format("truetype"); }', 0);
     }
 
 
