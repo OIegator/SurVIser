@@ -248,16 +248,16 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
         this.iconDictionary = {};
 
-        // this.sound.play("main_theme", {
-        //     loop: true
-        // });
+        this.sound.play("main_theme", {
+            loop: true
+        });
     },
 
 

@@ -49,7 +49,7 @@ import barParts from '../assets/bars/barhorizontalparts.png'
 import inkySpriteSheet from "../assets/sprites/characters/inky.png";
 import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 
-//import main_theme from "../assets/audio/main_theme.mp3";
+import main_theme from "../assets/audio/main_theme.mp3";
 
 export default class Boot extends Phaser.Scene {
 
@@ -117,7 +117,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('character_background', character_background);
         this.load.image('character_selected_background', character_selected_background);
         this.load.image('todo_character', todo_character);
-        //this.load.audio('main_theme', main_theme);
+        this.load.audio('main_theme', main_theme);
 
         let loadingBar = this.add.graphics({
             fillStyle: {

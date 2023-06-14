@@ -25,7 +25,7 @@ const config = {
             gravity: {
                 y: 0// set to true to view zones
             },
-            debug: true
+            debug: false
         }
     },
     pipeline: { BlurFX }
