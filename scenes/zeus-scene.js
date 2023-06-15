@@ -1,4 +1,5 @@
 import {LightningGroup} from "../src/LightningGroup";
+import {BulletGroup} from "../src/BulletGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
 //======================FX===============
@@ -10,21 +11,16 @@ import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 
 let inZone = false;
-const maxLower = 30;
+const maxLower = 15;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
 
-    Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
+    Extends: Phaser.Scene, lightningGroup: undefined, bulletGroup: undefined, zeus: undefined,
 
 
     initialize: function ZeusScene() {
         Phaser.Scene.call(this, {key: 'zeus'});
-    },
-
-
-    lowerColl(player, lower) {
-        lower.gotDamage = true;
     },
 
     gameover() {
@@ -98,7 +94,6 @@ let ZeusScene = new Phaser.Class({
     },
 
     EnemyAttack(x, y, attacker, size, offset, delay) {
-        let add;
         this.time.delayedCall(delay, () => {
             let add;
             if (attacker.scaleX < 0)
@@ -123,6 +118,7 @@ let ZeusScene = new Phaser.Class({
         this.damageNumbers = this.add.group();
         this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
+        this.bulletGroup = new BulletGroup(this);
 
         this.map = this.make.tilemap({key: "map"});
 
@@ -194,16 +190,24 @@ let ZeusScene = new Phaser.Class({
             this.enemies.push(pinky);
         });
 
+        const clydes = this.characterFactory.buildShooters('clyde');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
 
-        this.centX = this.cameras.main.centerX;
-        this.centY = this.cameras.main.centerY;
-        this.camW = this.cameras.main.width;
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
 
         this.attack_timer = this.time.addEvent({
             delay: 2000,
             callback: function (args) {
                 args.player.isAttacking = true;
-                if (args.player.isAlive && (args.player.IsTossed == false)) {
+                if (args.player.isAlive && (args.player.IsTossed === false)) {
                     args.time.delayedCall(260, () => {
 
                         let add;
@@ -284,9 +288,9 @@ let ZeusScene = new Phaser.Class({
 
         this.iconDictionary = {};
 
-        this.sound.play("main_theme", {
-            loop: true
-        });
+        // this.sound.play("main_theme", {
+        //     loop: true
+        // });
     },
 
     expUP(xp) {
@@ -319,7 +323,7 @@ let ZeusScene = new Phaser.Class({
             this.iconDictionary[name].count = 0;
         }
 
-        this.player.isConfig.powerUps.forEach(function (powerUp, index) {
+        this.player.isConfig.powerUps.forEach(function (powerUp) {
             const name = powerUp.name;
 
             // Increment the count if the icon already exists
@@ -392,10 +396,21 @@ let ZeusScene = new Phaser.Class({
             this.lightningGroup.update(time); // Call the update method of the lightning group
         }
 
+        if (this.bulletGroup) {
+            this.bulletGroup.update(time); // Call the update method of the bullet group
+        }
+
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                this.lowerColl(attack, mob);
-                mob.gotDamage = true;
+                if (mob.constructor.name === "Shooter" && this.canDamage ){
+                    mob.behaviour.GetHit();
+                    this.canDamage = false; // Set the flag false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                } else {
+                    mob.gotDamage = true;
+                }
             });
             this.attacks.forEach(function (element) {
                 element.update(time);
@@ -403,7 +418,7 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (this.enAttacks) {
-            this.physics.overlap(this.enAttacks, this.player, (attack, mob) => {
+            this.physics.overlap(this.enAttacks, this.player, (attack) => {
                 this.player.GetTossed(2, attack.x, attack.y)
             });
             this.enAttacks.forEach(function (element) {
@@ -413,7 +428,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
 
-            this.physics.overlap(this.attacks, this.golem, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.golem, ( ) => {
                 if (this.canDamage) {
                     this.golem.behaviour.GetHit(25);
 
@@ -424,7 +439,7 @@ let ZeusScene = new Phaser.Class({
                 }
             });
 
-            this.physics.overlap(this.attacks, this.bers, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.bers, () => {
                 if (this.canDamage) {
                     this.bers.behaviour.GetHit(25);
 
@@ -438,15 +453,11 @@ let ZeusScene = new Phaser.Class({
             this.attacks.forEach(function (element) {
                 element.update(time);
             });
-
-            this.attacks.forEach(function (element) {
-                element.update(time);
-            });
         }
 
         if (this.attacks && this.zeus.isVulnerable) {
 
-            this.physics.overlap(this.attacks, this.zeus, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.zeus, ( ) => {
                 if (this.canDamage) {
                     this.zeus.behaviour.GetHit(25);
 
@@ -479,6 +490,12 @@ let ZeusScene = new Phaser.Class({
                 } else if (element.constructor.name === "Ordinary") {
                     if (element.isDead) {
                         self.expUP(210);
+                        element.destroy();
+                        object.splice(index, 1);
+                    }
+                } else if (element.constructor.name === "Shooter") {
+                    if (element.isDead) {
+                        self.expUP(80);
                         element.destroy();
                         object.splice(index, 1);
                     }
@@ -518,7 +535,7 @@ let ZeusScene = new Phaser.Class({
 
             currLower = maxLower;
 
-            this.gameObjects.forEach(function (element, index, object) {
+            this.gameObjects.forEach(function (element) {
                 if (element.constructor.name === "Lower") {
                     element.outsideCameraCheck(self);
                 }

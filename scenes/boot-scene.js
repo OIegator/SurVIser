@@ -31,6 +31,7 @@ import barHorizontal_red_left_shadow from "../assets/sprites/ui/barHorizontal_re
 import barHorizontal_red_mid_shadow from "../assets/sprites/ui/barHorizontal_red_mid_shadow.png";
 import barHorizontal_red_right_shadow from "../assets/sprites/ui/barHorizontal_red_right_shadow.png";
 import lightning from "../assets/sprites/projectile/Weapon.png";
+import bullet from "../assets/sprites/projectile/4.png";
 import slash from "../assets/sprites/projectile/Splash.png";
 import menu_background from "../assets/sprites/ui/menu_background.png";
 import green_btn from "../assets/sprites/ui/green_btn.png";
@@ -50,8 +51,10 @@ import barsjs from '../assets/bars/barhorizontalparts_atlas.json'
 import barsSh from '../assets/bars/barHorizontal_shadow.png'
 import barPix from '../assets/bars/pixel_barHorizontalShadow.png'
 import barParts from '../assets/bars/barhorizontalparts.png'
+
 import inkySpriteSheet from "../assets/sprites/characters/inky.png";
 import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
+import clydeSpriteSheet from "../assets/sprites/characters/clyde.png";
 
 import main_theme from "../assets/audio/main_theme.mp3";
 
@@ -59,18 +62,19 @@ import smash from "../assets/sprites/projectile/Sm05.png";
 import golemSpriteSheet from "../assets/sprites/characters/rock.png";
 import bersSpriteSheet from "../assets/sprites/characters/berserk.png";
 
+
 export default class Boot extends Phaser.Scene {
 
     constructor() {
         super('boot');
     }
 
-
     preload() {
         this.viFrameConfig = {frameWidth: 305, frameHeight: 305};
         this.zeusFrameConfig = {frameWidth: 683, frameHeight: 500};
         this.inkyFrameConfig = {frameWidth: 476, frameHeight: 476};
         this.pinkyFrameConfig = {frameWidth: 403, frameHeight: 403};
+        this.clydeFrameConfig = {frameWidth: 341, frameHeight: 341};
         this.bersFrameConfig = { frameWidth: 500, frameHeight: 500 };
         this.golemFrameConfig = {frameWidth: 996, frameHeight: 709};
 
@@ -87,6 +91,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
         this.load.spritesheet('inky', inkySpriteSheet, this.inkyFrameConfig);
         this.load.spritesheet('pinky', pinkySpriteSheet, this.pinkyFrameConfig);
+        this.load.spritesheet('clyde', clydeSpriteSheet, this.clydeFrameConfig);
         this.load.spritesheet('berserk', bersSpriteSheet, this.bersFrameConfig);
         this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
@@ -101,6 +106,7 @@ export default class Boot extends Phaser.Scene {
 
         //loading projectiles
         this.load.image('lightning', lightning);
+        this.load.image('bullet', bullet);
         this.load.image('attack', slash);
         this.load.image('smash', smash);
 

@@ -20,6 +20,7 @@ import Golem from "./golem.js"
 import PlayerContainer from "./player_container";
 import Ordinary from "./ordinary_mob";
 import Seek from "../ai/steerings/seek";
+import Shooter from "./shooter-mob";
 
 
 export default class CharacterFactory {
@@ -121,9 +122,30 @@ export default class CharacterFactory {
     }
 
     buildOrdinaries(spriteSheetName) {
-        let characters = this.scene.map.createFromObjects('Pinkys', {
+        let characters = this.scene.map.createFromObjects('Enemies', {
             name: 'pinky',
             classType: Ordinary
+        });
+
+        characters.forEach((character) => {
+            character.patrolPoints = [
+                new Vector2(character.x - 300, character.y),
+                new Vector2(character.x + 300, character.y),
+            ];
+            character.hp = character.data.list.hp;
+            character.setCollideWorldBounds(true);
+            character.body.pushable = false;
+            character.animationSets = this.animationLibrary.get(spriteSheetName);
+            character.speed = new Vector2(0.5, 0.5);
+        });
+
+        return characters;
+    }
+
+    buildShooters(spriteSheetName) {
+        let characters = this.scene.map.createFromObjects('Enemies', {
+            name: 'clyde',
+            classType: Shooter
         });
 
         characters.forEach((character) => {
