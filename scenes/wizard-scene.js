@@ -114,9 +114,12 @@ let GolemScene = new Phaser.Class({
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
 
+        
         this.attacks = [];
         this.enAttacks = [];
         this.enemies = [];
+
+        this.attacks.push(this.player.fire);
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -253,6 +256,7 @@ let GolemScene = new Phaser.Class({
             this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
                 if (this.canDamage) {
                     this.wizard.behaviour.GetHit(25);
+                    //this.player.addFireBonus();
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
