@@ -4,10 +4,12 @@ import dungeonRoomJson from '../assets/big_dungeon_room.json'
 import viSpriteSheet from '../assets/sprites/characters/vi.png'
 import golemSpriteSheet from '../assets/sprites/characters/rock.png'
 import shockCircleSpriteSheet from '../assets/sprites/projectile/shock.png'
+import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 
 //======================Projectiles===========================
 import slash from '../assets/sprites/projectile/Splash.png'
 import smash from '../assets/sprites/projectile/Sm05.png'
+import fire from '../assets/sprites/projectile/2.png'
 //=======================BossHealthBar========================
 import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
 import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
@@ -19,6 +21,7 @@ import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_r
 import { LightningGroup } from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
+import Projectile from "../src/projectiles/Projectile.js"
 
 let inZone = false;
 
@@ -36,7 +39,8 @@ let GolemScene = new Phaser.Class({
     slimeFrameConfig: { frameWidth: 32, frameHeight: 32 },
     viFrameConfig: { frameWidth: 305, frameHeight: 305 },
     bersFrameConfig: { frameWidth: 500, frameHeight: 500 },
-    golemFrameConfig: { frameWidth: 996, frameHeight: 709},
+    golemFrameConfig: { frameWidth: 996, frameHeight: 709 },
+    wizardFrameConfig: { frameWidth: 500, frameHeight: 500 },
 
 
     preload: function () {
@@ -48,6 +52,7 @@ let GolemScene = new Phaser.Class({
         //loading spritesheets
         this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
         this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
+        this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, { frameWidth: 240, frameHeight: 240 });
 
         //loading health bar
@@ -62,6 +67,7 @@ let GolemScene = new Phaser.Class({
         //this.load.image('lightning', lightning);
         this.load.image('attack', slash);
         this.load.image('smash', smash);
+        this.load.image('fire', fire);
     },
 
     lowerColl(player, lower) {
@@ -104,9 +110,9 @@ let GolemScene = new Phaser.Class({
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
 
-        this.golem = this.characterFactory.buildGolem("golem", 650, 190, 100);
-        this.gameObjects.push(this.golem);
-        this.physics.add.collider(this.golem, worldLayer);
+        this.wizard = this.characterFactory.buildWizard("wizard", 650, 190, 100);
+        this.gameObjects.push(this.wizard);
+        this.physics.add.collider(this.wizard, worldLayer);
 
         this.attacks = [];
         this.enAttacks = [];
@@ -141,6 +147,64 @@ let GolemScene = new Phaser.Class({
         });
 
         this.canDamage = true;
+    },
+
+    ProjectAttack(x, y, attacker, delay, cond) {
+        this.time.delayedCall(delay, () => {
+            const difx = this.player.x - x;
+            const dify = this.player.y - y;
+            var c = Math.sqrt(difx * difx + dify * dify);
+            const angle = Math.atan2(dify, difx) * 180 / Math.PI;
+            let path = 0;
+            if (cond)
+                path = 190;
+            else
+                path = 170;
+            const curve = new Phaser.Curves.Ellipse(x + difx / 2, y + dify / 2, -c / 2, 80, 0, path, cond, angle);
+            var tempVec = new Phaser.Math.Vector2();
+            var start = curve.getStartPoint();
+            var distance = curve.getLength();
+            var duration = 1500;
+            var speed = distance / duration;
+            var speedSec = 1000 * speed;
+            var tSpeed = 1 / duration;
+            
+            var fire = new Projectile(this, start.x, start.y, 'fire');
+            this.enAttacks.push(fire);
+            fire.scale = 0.5;
+            //fire.setRotation(angle);
+
+            if (Math.abs(angle) < 90)
+                fire.flipX = true;
+            
+           var resetFire = function (counter) {
+                var start = curve.getStartPoint();
+               fire.body.reset(start.x, start.y);
+               updateFire(counter);
+            };
+
+            var destroyFire = function (counter) {
+                fire.destroy();
+            }
+
+            var updateFire = function (counter) {
+                var t = counter.getValue();
+                if (fire != null) {
+                    curve.getTangent(t, tempVec);
+                    fire.body.velocity.copy(tempVec.scale(speedSec));
+                    //Rotate the fire. Пока отключил, потому что непонятно как сделать красиво
+                    //ship.setRotation(tempVec.angle()/10.0);
+                }
+            };
+
+            this.tweens.addCounter({
+                duration: duration,
+                loop: 0,
+                onStart: resetFire,
+                onComplete: destroyFire,
+                onUpdate: updateFire,
+            });
+        });
     },
 
     EnemyAttack(x, y, attacker, size, offset, delay) {
@@ -186,9 +250,9 @@ let GolemScene = new Phaser.Class({
 
         if (this.attacks) {
 
-            this.physics.overlap(this.attacks, this.golem, (attack, mob) => {
+            this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
                 if (this.canDamage) {
-                    this.golem.behaviour.GetHit(25);
+                    this.wizard.behaviour.GetHit(25);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {

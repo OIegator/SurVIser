@@ -16,13 +16,18 @@ const treeDefinition = `root {
                     flip {
                         repeat until(IsDead) {  
                             selector {  
+                                repeat until(IsFarEnough) {   
+                                    action [Evade]
+                                }
                                 repeat until(IsCloseEnough) {   
                                     action [Pursuit]
-                                }
+                                } 
                                     sequence { 
                                         action [Attack]
-                                        wait[1800]
+                                        wait [2500]
                                     }
+                                
+                                
                             }
                         }
                     }
@@ -33,13 +38,14 @@ const treeDefinition = `root {
             }
         }`;
 
-export default class Golem extends Boss {
+export default class Zeus extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
-        this.body.setSize(330, 330);
-        this.body.setOffset(350, 240);
-        this.isOffset(350, 240);
+        this.body.setSize(150, 190);
+        this.body.setOffset(200, 240);
+        this.isOffset(200, 240);
         this.state = "idle";
+        this.isVulnerable = false;
         this.isDead = false;
         this.gotHit = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
@@ -85,18 +91,16 @@ export default class Golem extends Boss {
         Attack: () => {
             this.changeState("attack");
             this.setSteerings([]);
-
+            this.scene.ProjectAttack(this.x, this.y, this.scene.player, 555, true);
+            this.scene.ProjectAttack(this.x, this.y, this.scene.player, 1100, false);
             // Play attack animation
             const attackAnimations = this.animationSets.get('Attack');
             const animsController = this.anims;
-
             animsController.play(attackAnimations[0]);
-            animsController.msPerFrame = 45;
             this.attackAnimationEnded = false;
-            this.scene.EnemyAttack(this.x, this.y + 30, this, 180, 100, 385);
+
             return State.SUCCEEDED;
         },
-
         GetHit: (damage) => {
             this.gotHit = true;;
             this.hp -= damage;
@@ -145,10 +149,10 @@ export default class Golem extends Boss {
             // Calculate the range zone based on screen size
 
             const attackZone = {
-                x: this.scene.player.x - 100,
-                y: this.scene.player.y - 100,
-                width: 210,
-                height: 210
+                x: this.scene.player.x - screenWidth / 3,
+                y: this.scene.player.y - screenHeight / 3,
+                width: screenWidth,
+                height: screenHeight
             };
             return Phaser.Geom.Rectangle.ContainsPoint(attackZone, this);
         },
@@ -175,7 +179,8 @@ export default class Golem extends Boss {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
-        //const stanAnimations = this.animationSets.get('Stan');
+        const hitAnimations = this.animationSets.get('Hit');
+        const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
@@ -196,7 +201,7 @@ export default class Golem extends Boss {
                 animsController.play(idle[0]); // Play the idle animation
             }
         } else if (this.gotHit) {
-
+            
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the attack animation
                 this.gotHit = false;
@@ -204,9 +209,16 @@ export default class Golem extends Boss {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        }
-            else if (this.state === "dead") {
 
+        }
+        else if (this.state === "dead") {
+            // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
+            //     animsController.play(deathAnimations[0]);
+            //     animsController.pause();
+            // } else if (animsController.currentFrame.isFirst) {
+            //     // Reached the first frame of the death animation (playing in reverse)
+            //     animsController.currentAnim.paused = true; // Freeze the animation on the first frame
+            // }
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;

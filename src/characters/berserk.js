@@ -198,7 +198,17 @@ export default class Berserk extends Boss {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        } else if (this.state === "dead") {
+        } else if (this.gotHit) {
+
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the attack animation
+                this.gotHit = false;
+                animsController.stop(); // Stop the attack animation
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0]); // Play the idle animation
+            }
+        }
+        else if (this.state === "dead") {
            
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation

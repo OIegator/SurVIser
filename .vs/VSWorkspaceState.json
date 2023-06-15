@@ -11,6 +11,6 @@
     "\\src\\characters",
     "\\src\\projectiles"
   ],
-  "SelectedNode": "\\src\\characters\\character.js",
+  "SelectedNode": "\\src\\projectiles\\AutoAttack.js",
   "PreviewInSolutionExplorer": false
 }

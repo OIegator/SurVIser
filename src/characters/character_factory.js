@@ -19,6 +19,7 @@ import Lower from "./lower_mob";
 import Zeus from "./zeus";
 import Bers from "./berserk";
 import Golem from "./golem.js"
+import Wizard from "./wizard.js"
 import PlayerContainer from "./player_container";
 
 
@@ -62,7 +63,7 @@ export default class CharacterFactory {
         animationLibrary.set(this.sansSpriteSheet,
             new AnimationLoader(scene, this.sansSpriteSheet, sansConfigJson, this.sansSpriteSheet, 40).createAnimations());
         animationLibrary.set(this.wizardSpriteSheet,
-            new AnimationLoader(scene, this.wizardSpriteSheet, wizardConfigJson, this.wizardSpriteSheet, 10).createAnimations());
+            new AnimationLoader(scene, this.wizardSpriteSheet, wizardConfigJson, this.wizardSpriteSheet, 24).createAnimations());
 
         this.animationLibrary = animationLibrary;
     }
@@ -135,6 +136,15 @@ export default class CharacterFactory {
 
     buildGolem(spriteSheetName, x, y, maxHP, velocity = null) {
         let character = new Golem(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
+        character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildWizard(spriteSheetName, x, y, maxHP, velocity = null) {
+        let character = new Wizard(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
