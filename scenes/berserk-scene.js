@@ -149,6 +149,8 @@ let BerserkScene = new Phaser.Class({
                 add = -offset;
             const attack = new AutoAttack(this, x + add, y);
             attack.body.setSize(size, size);
+            if (attacker.constructor.name == "Golem")
+                attack.isTossing = true;
             this.enAttacks.push(attack);
             this.physics.add.collider(attack, this.worldLayer);
         });
@@ -168,7 +170,10 @@ let BerserkScene = new Phaser.Class({
 
         if (this.enAttacks) {
             this.physics.overlap(this.enAttacks, this.player, (attack, mob) => {
-                this.player.GetHit(2);
+                if (attack.isTossing)
+                    this.player.GetTossed(2, attack.x, attack.y)
+                else
+                    this.player.GetHit(2);
             });
             this.enAttacks.forEach(function (element) {
                 element.update(time);

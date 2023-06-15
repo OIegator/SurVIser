@@ -1,4 +1,5 @@
 import Player from "./player";
+import Projectile from "../projectiles/Projectile";
 import HealthBar from "../ui/healthbar";
 import Vector2 from 'phaser/src/math/Vector2';
 
@@ -22,6 +23,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
+        this.fire = [];
         this.add(this.sprite);
         this.add(this.healthBar);
         this.isConfig = {
@@ -136,5 +138,68 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         animsController.play(animations[0], true);
         this.state = "attack"
     }
+
+    addFireBonus(scene) {
+        const curve = new Phaser.Curves.Ellipse(0, 30, 100, 100, 0, 360, false, 0);
+        var tempVec = new Phaser.Math.Vector2();
+        var start = curve.getStartPoint();
+        var distance = curve.getLength();
+        var duration = 3500;
+        var speed = distance / duration;
+        var speedSec = 1000 * speed;
+
+
+        const fire = new Projectile(this.scene, 0, 0, 'fire');
+        fire.scale = 0.3;
+        fire.flipX = true;
+        fire.setCircle(60);
+        fire.setOffset(30, 0);
+        this.fire = fire
+        this.add(this.fire);
+
+        var resetFire = function (counter) {
+            var start = curve.getStartPoint();
+            fire.body.reset(start.x, start.y);
+            updateFire(counter);
+        };
+
+        var updateFire = function (counter) {
+            var t = counter.getValue();
+            if (fire != null) {
+                curve.getTangent(t, tempVec);
+                fire.body.velocity.copy(tempVec.scale(speedSec));
+                fire.setRotation(tempVec.angle());
+            }
+        };
+
+        this.scene.tweens.addCounter({
+            duration: duration,
+            loop: -1,
+            onStart: resetFire,
+            onLoop: resetFire,
+            onUpdate: updateFire,
+        });
+    }
+
+    findNearestEnemy(enemies) {
+        if (enemies.length === 0) {
+            const randomX = Phaser.Math.Between(-this.scene.cameras.main.width / 2, this.scene.cameras.main.width / 2);
+            const randomY = Phaser.Math.Between(-this.scene.cameras.main.height / 2, this.scene.cameras.main.height / 2);
+            return new Phaser.Math.Vector2(this.x + randomX, this.y + randomY);
+        }
+
+        let nearestEnemy = null;
+        let nearestDistance = Infinity;
+        const playerPosition = new Phaser.Math.Vector2(this.x, this.y);
+
+        enemies.forEach(enemy => {
+            const enemyPosition = new Phaser.Math.Vector2(enemy.x, enemy.y);
+            const distance = playerPosition.distance(enemyPosition);
+
+            if (distance < nearestDistance) {
+                nearestEnemy = enemy;
+                nearestDistance = distance;
+            }
+        });
 
 }

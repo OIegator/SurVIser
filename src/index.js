@@ -1,14 +1,11 @@
 import Phaser from 'phaser'
 
-import StartingScene from '../scenes/starting-scene';
 import ZeusScene from '../scenes/zeus-scene';
 import LvlUpScene from '../scenes/lvl-up-scene';
 import Boot from "../scenes/boot-scene";
 import MenuScene from "../scenes/menu-scene";
 import GameOverScene from "../scenes/gameover-scene";
-import BerserkScene from '../scenes/berserk-scene';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
-import GolemScene from "../scenes/golem-scene";
 import PauseScene from "../scenes/pause-scene";
 
 

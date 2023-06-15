@@ -1,9 +1,9 @@
 import Boss from "./boss";
 import { State, BehaviourTree } from "mistreevous";
 import Vector2 from 'phaser/src/math/Vector2';
-import {Patrol} from "../ai/steerings/patrol";
-import {Pursuit} from "../ai/steerings/pursuit";
-import {Evade} from "../ai/steerings/evade";
+import { Patrol } from "../ai/steerings/patrol";
+import { Pursuit } from "../ai/steerings/pursuit";
+import { Evade } from "../ai/steerings/evade";
 import PowerUp from "../power-ups/power-up";
 
 const treeDefinition = `root {
@@ -16,18 +16,18 @@ const treeDefinition = `root {
                     flip {
                         repeat until(IsDead) {  
                             selector {  
+                                repeat until(IsFarEnough) {   
+                                    action [Evade]
+                                }
                                 repeat until(IsCloseEnough) {   
                                     action [Pursuit]
-                                }
-                                
+                                } 
                                     sequence { 
                                         action [Attack]
-                                        wait[700]
-                                        action [Attack]
-                                        wait[700]
-                                        action [Attack]
-                                        wait[1000]
+                                        wait [2500]
                                     }
+                                
+                                
                             }
                         }
                     }
@@ -38,18 +38,21 @@ const treeDefinition = `root {
             }
         }`;
 
-export default class Berserk extends Boss {
+export default class Zeus extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
-        this.body.setSize(200, 250);
-        this.body.setOffset(200, 180);
-        this.isOffset(200, 180);
+        this.body.setSize(150, 190);
+        this.body.setOffset(200, 240);
+        this.isOffset(200, 240);
         this.state = "idle";
+        this.isVulnerable = false;
         this.isDead = false;
+        this.gotHit = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
     update(collide) {
+        
         if (!this.isDead) {
             super.update(collide);
             this.behaviourTree.step();
@@ -62,8 +65,8 @@ export default class Berserk extends Boss {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
                 const patrolPoints = [
-                    new Vector2(14580, 15080),
-                    new Vector2(15080, 15080),
+                    new Vector2(880, 520),
+                    new Vector2(580, 520),
                 ];
                 this.setSteerings([
                     new Patrol(this, patrolPoints, 1, this.maxSpeed)
@@ -88,37 +91,25 @@ export default class Berserk extends Boss {
         Attack: () => {
             this.changeState("attack");
             this.setSteerings([]);
-            
+            this.scene.ProjectAttack(this.x, this.y, this.scene.player, 555, true);
+            this.scene.ProjectAttack(this.x, this.y, this.scene.player, 1100, false);
             // Play attack animation
             const attackAnimations = this.animationSets.get('Attack');
             const animsController = this.anims;
-            
             animsController.play(attackAnimations[0]);
-            animsController.msPerFrame = 19;
             this.attackAnimationEnded = false;
-            this.scene.EnemyAttack(this.x, this.y + 30, this, 100, 80, 255);
+
             return State.SUCCEEDED;
         },
-       
         GetHit: (damage) => {
-            this.gotHit = true;
-            //this.hp -= damage;
-            const strength = this.scene.player.isConfig.strength;
-            const criticalRate = this.scene.player.isConfig.criticalRate;
-            const criticalMultiplier = this.scene.player.isConfig.critical;
-
-            if (Math.random() < criticalRate) {
-                // Critical hit
-                this.hp -= damage ? damage * criticalMultiplier : strength * criticalMultiplier ;
-            } else {
-                // Regular hit
-                this.hp -= damage ? damage : strength;
-            }
+            this.gotHit = true;;
+            this.hp -= damage;
             this.setMeterPercentageAnimated(this.hp / 100);
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;
-            animsController.play(hitAnimations[0], true);
+            animsController.play(hitAnimations[0]);
+            animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
@@ -137,7 +128,7 @@ export default class Berserk extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'dd', 'dd_icon'));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
 
             return State.SUCCEEDED;
         },
@@ -158,10 +149,10 @@ export default class Berserk extends Boss {
             // Calculate the range zone based on screen size
 
             const attackZone = {
-                x: this.scene.player.x-100,
-                y: this.scene.player.y-100,
-              width: 200,
-              height: 200
+                x: this.scene.player.x - screenWidth / 3,
+                y: this.scene.player.y - screenHeight / 3,
+                width: screenWidth,
+                height: screenHeight
             };
             return Phaser.Geom.Rectangle.ContainsPoint(attackZone, this);
         },
@@ -188,11 +179,12 @@ export default class Berserk extends Boss {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
-        //const stanAnimations = this.animationSets.get('Stan');
+        const hitAnimations = this.animationSets.get('Hit');
+        const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
-      
+
         if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
             // Play attack animation if the SPACE key is pressed
             animsController.play(attackAnimations[0]);
@@ -209,7 +201,7 @@ export default class Berserk extends Boss {
                 animsController.play(idle[0]); // Play the idle animation
             }
         } else if (this.gotHit) {
-
+            
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the attack animation
                 this.gotHit = false;
@@ -217,9 +209,16 @@ export default class Berserk extends Boss {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
+
         }
         else if (this.state === "dead") {
-           
+            // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
+            //     animsController.play(deathAnimations[0]);
+            //     animsController.pause();
+            // } else if (animsController.currentFrame.isFirst) {
+            //     // Reached the first frame of the death animation (playing in reverse)
+            //     animsController.currentAnim.paused = true; // Freeze the animation on the first frame
+            // }
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;

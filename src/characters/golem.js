@@ -41,6 +41,7 @@ export default class Golem extends Boss {
         this.isOffset(350, 240);
         this.state = "idle";
         this.isDead = false;
+        this.gotHit = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
@@ -97,12 +98,14 @@ export default class Golem extends Boss {
         },
 
         GetHit: (damage) => {
+            this.gotHit = true;;
             this.hp -= damage;
             this.setMeterPercentageAnimated(this.hp / 100);
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;
-            animsController.play(hitAnimations[0], true);
+            animsController.play(hitAnimations[0]);
+            animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
         },
@@ -192,7 +195,17 @@ export default class Golem extends Boss {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        } else if (this.state === "dead") {
+        } else if (this.gotHit) {
+
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the attack animation
+                this.gotHit = false;
+                animsController.stop(); // Stop the attack animation
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0]); // Play the idle animation
+            }
+        }
+            else if (this.state === "dead") {
 
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
