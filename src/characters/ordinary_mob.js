@@ -18,7 +18,6 @@ export default class Ordinary extends Character {
         this.gotDamage = false;
     }
 
-
     update(collide) {
         if (!this.isDead) {
             if (this.state !== 'patrol' && !this.IsPlayerInRange()) {

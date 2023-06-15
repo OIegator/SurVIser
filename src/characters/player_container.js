@@ -15,8 +15,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.body.setCircle(35);
         this.body.setOffset(-22, -9);
         this.powerUps = [];
-        this.maxHp = 100;
-        this.hp = 100;
+        this.maxHp = 1000;
+        this.hp = 1000;
         this.isAttacking = false;
         this.isAlive = true;
         this.IsTossed = false;
@@ -77,7 +77,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         }
         if (this.isAttacking && this.isAlive)
             this.attack();
-
+        // else??
         this.sprite.updateAnimation();
     };
 
@@ -127,6 +127,11 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         // Add the power-up to the power-ups array
         this.powerUps.push(powerUp);
         this.scene.displayPowerUps();
+
+        if(powerUp.name === "magic") {
+            this.addFireBonus();
+            this.scene.attacks.push(this.fire);
+        }
         // Remove the power-up from the scene
         powerUp.destroy();
     }
@@ -141,30 +146,30 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
     addFireBonus(scene) {
         const curve = new Phaser.Curves.Ellipse(0, 30, 100, 100, 0, 360, false, 0);
-        var tempVec = new Phaser.Math.Vector2();
-        var start = curve.getStartPoint();
-        var distance = curve.getLength();
-        var duration = 3500;
-        var speed = distance / duration;
-        var speedSec = 1000 * speed;
-
+        const tempVec = new Phaser.Math.Vector2();
+        const start = curve.getStartPoint();
+        const distance = curve.getLength();
+        const duration = 3500;
+        const speed = distance / duration;
+        const speedSec = 1000 * speed;
 
         const fire = new Projectile(this.scene, 0, 0, 'fire');
         fire.scale = 0.3;
         fire.flipX = true;
         fire.setCircle(60);
-        fire.setOffset(30, 0);
+        fire.setOffset(60, 20);
+        fire.postFX.addGlow(0xffea00);
         this.fire = fire
         this.add(this.fire);
 
-        var resetFire = function (counter) {
-            var start = curve.getStartPoint();
+        const resetFire = function (counter) {
+            const start = curve.getStartPoint();
             fire.body.reset(start.x, start.y);
             updateFire(counter);
         };
 
-        var updateFire = function (counter) {
-            var t = counter.getValue();
+        const updateFire = function (counter) {
+            const t = counter.getValue();
             if (fire != null) {
                 curve.getTangent(t, tempVec);
                 fire.body.velocity.copy(tempVec.scale(speedSec));
@@ -180,26 +185,5 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             onUpdate: updateFire,
         });
     }
-
-    findNearestEnemy(enemies) {
-        if (enemies.length === 0) {
-            const randomX = Phaser.Math.Between(-this.scene.cameras.main.width / 2, this.scene.cameras.main.width / 2);
-            const randomY = Phaser.Math.Between(-this.scene.cameras.main.height / 2, this.scene.cameras.main.height / 2);
-            return new Phaser.Math.Vector2(this.x + randomX, this.y + randomY);
-        }
-
-        let nearestEnemy = null;
-        let nearestDistance = Infinity;
-        const playerPosition = new Phaser.Math.Vector2(this.x, this.y);
-
-        enemies.forEach(enemy => {
-            const enemyPosition = new Phaser.Math.Vector2(enemy.x, enemy.y);
-            const distance = playerPosition.distance(enemyPosition);
-
-            if (distance < nearestDistance) {
-                nearestEnemy = enemy;
-                nearestDistance = distance;
-            }
-        });
 
 }

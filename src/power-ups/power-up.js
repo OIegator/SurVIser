@@ -9,6 +9,7 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
         };
         this.name = name;
         this.setScale(dict[name]);
+        this.postFX.addGlow(0x00f6d0);
         this.key = key;
         scene.physics.world.enable(this);
         scene.add.existing(this);

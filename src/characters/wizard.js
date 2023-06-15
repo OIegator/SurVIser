@@ -32,7 +32,7 @@ const treeDefinition = `root {
                         }
                     }
                     action [Die] 
-                    wait [2000]
+                    wait [1100]
                     action [Disappear]
                 }
             }
@@ -42,8 +42,8 @@ export default class Zeus extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
         this.body.setSize(150, 190);
-        this.body.setOffset(200, 240);
-        this.isOffset(200, 240);
+        this.body.setOffset(200, 265);
+        this.isOffset(200, 265);
         this.state = "idle";
         this.isVulnerable = false;
         this.isDead = false;
@@ -52,7 +52,6 @@ export default class Zeus extends Boss {
     }
 
     update(collide) {
-        
         if (!this.isDead) {
             super.update(collide);
             this.behaviourTree.step();
@@ -65,8 +64,8 @@ export default class Zeus extends Boss {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
                 const patrolPoints = [
-                    new Vector2(880, 520),
-                    new Vector2(580, 520),
+                    new Vector2(880, 15080),
+                    new Vector2(580, 15080),
                 ];
                 this.setSteerings([
                     new Patrol(this, patrolPoints, 1, this.maxSpeed)
@@ -114,12 +113,13 @@ export default class Zeus extends Boss {
             return State.SUCCEEDED;
         },
         Die: () => {
+            this.setSteerings([]);
             this.changeState("dead");
             this.isVulnerable = false;
 
             const deathAnimations = this.animationSets.get('Death');
             const animsController = this.anims;
-            animsController.play(deathAnimations[0]);
+            animsController.play(deathAnimations[0], true);
             animsController.currentAnim.paused = false;
 
             return State.SUCCEEDED;
@@ -128,7 +128,7 @@ export default class Zeus extends Boss {
             this.removeHealthBar();
             this.isDead = true;
 
-            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning'));
+            this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y + 100, 'magic', 'magic_icon'));
 
             return State.SUCCEEDED;
         },
@@ -178,18 +178,9 @@ export default class Zeus extends Boss {
 
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
-        const attackAnimations = this.animationSets.get('Attack');
-        const hitAnimations = this.animationSets.get('Hit');
-        const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
-
-        if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
-            // Play attack animation if the SPACE key is pressed
-            animsController.play(attackAnimations[0]);
-            this.attackAnimationEnded = false;
-        }
 
         if (animsController.isPlaying && this.state === "attack") {
             // Attack animation is playing
@@ -201,7 +192,6 @@ export default class Zeus extends Boss {
                 animsController.play(idle[0]); // Play the idle animation
             }
         } else if (this.gotHit) {
-            
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the attack animation
                 this.gotHit = false;
@@ -210,15 +200,10 @@ export default class Zeus extends Boss {
                 animsController.play(idle[0]); // Play the idle animation
             }
 
-        }
-        else if (this.state === "dead") {
-            // if (!animsController.isPlaying || !deathAnimations.includes(animsController.currentAnim.key)) {
-            //     animsController.play(deathAnimations[0]);
-            //     animsController.pause();
-            // } else if (animsController.currentFrame.isFirst) {
-            //     // Reached the first frame of the death animation (playing in reverse)
-            //     animsController.currentAnim.paused = true; // Freeze the animation on the first frame
-            // }
+        } else if (this.state === "dead") {
+            const deathAnimations = this.animationSets.get('Death');
+            const animsController = this.anims;
+            animsController.play(deathAnimations[0], true);
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;
@@ -232,7 +217,7 @@ export default class Zeus extends Boss {
             } else if (x > 0) {
                 this.setScale(-0.5, 0.5);
                 animsController.play(animations[1], true);
-                this.body.setOffset(2 * this.offset.x, this.offset.y);
+                this.body.setOffset( this.offset.x + 150, this.offset.y);
             } else if (y < 0) {
                 animsController.play(animations[2], true);
             } else if (y > 0) {

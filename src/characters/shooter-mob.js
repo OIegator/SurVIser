@@ -98,6 +98,11 @@ export default class Shooter extends Character {
             const criticalRate = this.scene.player.isConfig.criticalRate;
             const criticalMultiplier = this.scene.player.isConfig.critical;
 
+            const animations = this.animationSets.get('Hit');
+            const animsController = this.anims;
+            animsController.play(animations[0], true);
+            animsController.currentAnim.paused = false;
+
             if (Math.random() < criticalRate) {
                 // Critical hit
                 this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
@@ -107,10 +112,6 @@ export default class Shooter extends Character {
                 this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
                 this.hp -= damage ? damage : strength;
             }
-
-            const animations = this.animationSets.get('Hit');
-            const animsController = this.anims;
-
 
             return State.SUCCEEDED;
         },

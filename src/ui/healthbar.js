@@ -19,7 +19,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         // Create the health bar rectangle
         this.healthBar = new Phaser.GameObjects.Graphics(scene);
-        this.healthBar.fillStyle(0x00ff00); // Green color
+        this.healthBar.fillStyle(0x9cfa57); // Green color
         this.healthBar.fillRect(0, 0, w, h);
         this.add(this.healthBar);
     }

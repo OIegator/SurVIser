@@ -9,9 +9,10 @@ import Seek from "../src/ai/steerings/seek";
 import HealthBar from "../src/UI-Bar/HealthBar";
 import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
+import Projectile from "../src/projectiles/Projectile";
 
 let inZone = false;
-const maxLower = 15;
+const maxLower = 20;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
@@ -93,6 +94,69 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.resetPostPipeline();
     },
 
+    ProjectAttack(x, y, attacker, delay, cond) {
+        this.time.delayedCall(delay, () => {
+            const difx = this.player.x - x;
+            const dify = this.player.y - y;
+            const c = Math.sqrt(difx * difx + dify * dify);
+            const angle = Math.atan2(dify, difx) * 180 / Math.PI;
+            let path = 0;
+            if (cond)
+                path = 190;
+            else
+                path = 170;
+            const curve = new Phaser.Curves.Ellipse(x + difx / 2, y + dify / 2, -c / 2, 80, 0, path, cond, angle);
+            const tempVec = new Phaser.Math.Vector2();
+            const start = curve.getStartPoint();
+            const distance = curve.getLength();
+            const duration = 1500;
+            const speed = distance / duration;
+            const speedSec = 1000 * speed;
+            const tSpeed = 1 / duration;
+
+            const fire = new Projectile(this, start.x, start.y, 'fire');
+            this.enAttacks.push(fire);
+            fire.scale = 0.5;
+            fire.flipX = true;
+            fire.setCircle(50);
+            fire.postFX.addGlow(0xffea00);
+            fire.setOffset(80, 30);
+            //fire.setRotation(angle);
+
+            if (Math.abs(angle) < 90)
+                fire.flipX = true;
+
+            const resetFire = function (counter) {
+                const start = curve.getStartPoint();
+                fire.body.reset(start.x, start.y);
+                updateFire(counter);
+            };
+
+            const destroyFire = function (counter) {
+                fire.destroy();
+            }
+
+            const updateFire = function (counter) {
+                const t = counter.getValue();
+                if (fire != null) {
+                    curve.getTangent(t, tempVec);
+                    fire.body.velocity.copy(tempVec.scale(speedSec));
+                    fire.setRotation(tempVec.angle());
+                    //Rotate the fire. Пока отключил, потому что непонятно как сделать красиво
+                    //ship.setRotation(tempVec.angle()/10.0);
+                }
+            };
+
+            this.tweens.addCounter({
+                duration: duration,
+                loop: 0,
+                onStart: resetFire,
+                onComplete: destroyFire,
+                onUpdate: updateFire,
+            });
+        });
+    },
+
     EnemyAttack(x, y, attacker, size, offset, delay) {
         this.time.delayedCall(delay, () => {
             let add;
@@ -102,6 +166,8 @@ let ZeusScene = new Phaser.Class({
                 add = -offset;
             const attack = new AutoAttack(this, x + add, y, 'smash');
             attack.body.setSize(size, size);
+            if (attacker.constructor.name === "Golem")
+                attack.isTossing = true;
             this.enAttacks.push(attack);
             this.physics.add.collider(attack, this.worldLayer);
         });
@@ -112,6 +178,7 @@ let ZeusScene = new Phaser.Class({
         this.attacks = [];
         this.enemies = [];
         this.enAttacks = [];
+        this.iconDictionary = {};
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.gameObjects = [];
@@ -164,6 +231,10 @@ let ZeusScene = new Phaser.Class({
         this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
         this.gameObjects.push(this.golem);
         this.physics.add.collider(this.golem, worldLayer);
+
+        this.wizard = this.characterFactory.buildWizard("wizard", 850, 15080, 100);
+        this.gameObjects.push(this.wizard);
+        this.physics.add.collider(this.wizard, worldLayer);
 
         const pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -285,8 +356,6 @@ let ZeusScene = new Phaser.Class({
         // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
-
-        this.iconDictionary = {};
 
         // this.sound.play("main_theme", {
         //     loop: true
@@ -431,6 +500,18 @@ let ZeusScene = new Phaser.Class({
             this.physics.overlap(this.attacks, this.golem, ( ) => {
                 if (this.canDamage) {
                     this.golem.behaviour.GetHit(25);
+
+                    this.canDamage = false; // Set the flag false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+
+            this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
+                if (this.canDamage) {
+                    this.wizard.behaviour.GetHit(100);
+                    //this.player.addFireBonus();
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {

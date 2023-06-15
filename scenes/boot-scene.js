@@ -61,6 +61,8 @@ import main_theme from "../assets/audio/main_theme.mp3";
 import smash from "../assets/sprites/projectile/Sm05.png";
 import golemSpriteSheet from "../assets/sprites/characters/rock.png";
 import bersSpriteSheet from "../assets/sprites/characters/berserk.png";
+import wizardSpriteSheet from "../assets/sprites/characters/wizard.png";
+import fire from "../assets/sprites/projectile/2.png";
 
 
 export default class Boot extends Phaser.Scene {
@@ -77,6 +79,7 @@ export default class Boot extends Phaser.Scene {
         this.clydeFrameConfig = {frameWidth: 341, frameHeight: 341};
         this.bersFrameConfig = { frameWidth: 500, frameHeight: 500 };
         this.golemFrameConfig = {frameWidth: 996, frameHeight: 709};
+        this.wizardFrameConfig = { frameWidth: 500, frameHeight: 500 };
 
         //loading map tiles and json with positions
         this.load.image("tiles", tilemapPng);
@@ -94,6 +97,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('clyde', clydeSpriteSheet, this.clydeFrameConfig);
         this.load.spritesheet('berserk', bersSpriteSheet, this.bersFrameConfig);
         this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
+        this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
 
         //loading health bar
@@ -109,6 +113,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('bullet', bullet);
         this.load.image('attack', slash);
         this.load.image('smash', smash);
+        this.load.image('fire', fire);
 
         this.load.image('cursor', cursor);
         this.load.image('lvl_up_background', lvl_up_background);

@@ -62,9 +62,9 @@ export default class CharacterFactory {
         animationLibrary.set(this.rockSpriteSheet,
             new AnimationLoader(scene, this.rockSpriteSheet, rockConfigJson, this.rockSpriteSheet, 24).createAnimations());
         animationLibrary.set(this.sansSpriteSheet,
-            new AnimationLoader(scene, this.sansSpriteSheet, sansConfigJson, this.sansSpriteSheet, 40).createAnimations());
+            new AnimationLoader(scene, this.sansSpriteSheet, sansConfigJson, this.sansSpriteSheet, 28).createAnimations());
         animationLibrary.set(this.wizardSpriteSheet,
-            new AnimationLoader(scene, this.wizardSpriteSheet, wizardConfigJson, this.wizardSpriteSheet, 24).createAnimations());
+            new AnimationLoader(scene, this.wizardSpriteSheet, wizardConfigJson, this.wizardSpriteSheet, 28).createAnimations());
 
         this.animationLibrary = animationLibrary;
     }
