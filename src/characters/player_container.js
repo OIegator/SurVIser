@@ -20,6 +20,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.isAlive = true;
         this.IsTossed = false;
         this.Invc = false;
+        this.doubleAtt = true;
         this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);

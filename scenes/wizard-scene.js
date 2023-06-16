@@ -135,20 +135,11 @@ let WizardScene = new Phaser.Class({
 
         this.enemies.push(this.wizard);
 
-        let pickUp = new PickUp(this, 250, 1100, 'dmg', 'damage');
-        this.pickUps.push(pickUp);
-        this.physics.add.collider(pickUp, this.worldLayer);
-
-        pickUp = new PickUp(this, 180, 500, 'dmg', 'damage');
-        this.pickUps.push(pickUp);
-        this.physics.add.collider(pickUp, this.worldLayer);
-
         //this.attacks.push(this.player.fire);
 
         this.timer = this.time.addEvent({
             delay: 2000,
             callback: function (args) {
-
                 if (args.player.isAlive && (args.player.IsTossed == false)) {
                     args.player.isAttacking = true;
                     args.time.delayedCall(255, () => {
@@ -158,13 +149,20 @@ let WizardScene = new Phaser.Class({
                             add = 100;
                         else
                             add = -100;
-                        const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
+                        let attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
                         args.attacks.push(attack);
                         args.physics.add.collider(attack, args.worldLayer);
                         attack.flipX = args.player.sprite.scaleX < 0;
                         attack.scaleX = 0.8;
                         attack.scaleY = 0.5;
-
+                        if (args.player.doubleAtt) {
+                            attack = new AutoAttack(args, args.player.x - (add*1.4), args.player.y + 30, 'attack');
+                            args.attacks.push(attack);
+                            args.physics.add.collider(attack, args.worldLayer);
+                            attack.flipX = args.player.sprite.scaleX > 0;
+                            attack.scaleX = 0.8;
+                            attack.scaleY = 0.5;
+                        }
                     });
                 }
             },
