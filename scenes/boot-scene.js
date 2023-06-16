@@ -62,6 +62,7 @@ import smash from "../assets/sprites/projectile/Sm05.png";
 import golemSpriteSheet from "../assets/sprites/characters/rock.png";
 import bersSpriteSheet from "../assets/sprites/characters/berserk.png";
 import wizardSpriteSheet from "../assets/sprites/characters/wizard.png";
+import garySpriteSheet from "../assets/sprites/characters/gary.png";
 import fire from "../assets/sprites/projectile/2.png";
 
 
@@ -80,6 +81,7 @@ export default class Boot extends Phaser.Scene {
         this.bersFrameConfig = { frameWidth: 500, frameHeight: 500 };
         this.golemFrameConfig = {frameWidth: 996, frameHeight: 709};
         this.wizardFrameConfig = { frameWidth: 500, frameHeight: 500 };
+        this.garyFrameConfig = {frameWidth: 500, frameHeight: 500},
 
         //loading map tiles and json with positions
         this.load.image("tiles", tilemapPng);
@@ -98,6 +100,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('berserk', bersSpriteSheet, this.bersFrameConfig);
         this.load.spritesheet('golem', golemSpriteSheet, this.golemFrameConfig);
         this.load.spritesheet('wizard', wizardSpriteSheet, this.wizardFrameConfig);
+        this.load.spritesheet('gary', garySpriteSheet, this.garyFrameConfig);
         this.load.spritesheet('shock_circle', shockCircleSpriteSheet, {frameWidth: 240, frameHeight: 240});
 
         //loading health bar

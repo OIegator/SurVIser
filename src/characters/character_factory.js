@@ -22,6 +22,7 @@ import PlayerContainer from "./player_container";
 import Ordinary from "./ordinary_mob";
 import Seek from "../ai/steerings/seek";
 import Shooter from "./shooter-mob";
+import Gary from "./gary";
 
 
 export default class CharacterFactory {
@@ -58,7 +59,7 @@ export default class CharacterFactory {
         animationLibrary.set(this.berserkSpriteSheet,
             new AnimationLoader(scene, this.berserkSpriteSheet, berserkConfigJson, this.berserkSpriteSheet, 28).createAnimations());
         animationLibrary.set(this.garySpriteSheet,
-            new AnimationLoader(scene, this.garySpriteSheet, garyConfigJson, this.garySpriteSheet, 40).createAnimations());
+            new AnimationLoader(scene, this.garySpriteSheet, garyConfigJson, this.garySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.rockSpriteSheet,
             new AnimationLoader(scene, this.rockSpriteSheet, rockConfigJson, this.rockSpriteSheet, 24).createAnimations());
         animationLibrary.set(this.sansSpriteSheet,
@@ -194,6 +195,15 @@ export default class CharacterFactory {
 
     buildWizard(spriteSheetName, x, y, maxHP, velocity = null) {
         let character = new Wizard(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
+        character.maxSpeed = 100;
+        character.setCollideWorldBounds(true);
+        character.animationSets = this.animationLibrary.get(spriteSheetName);
+        character.speed = new Vector2(0.5, 0.5);
+        return character;
+    }
+
+    buildGary(spriteSheetName, x, y, maxHP, velocity = null) {
+        let character = new Gary(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
         character.maxSpeed = 100;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);

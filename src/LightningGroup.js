@@ -32,6 +32,7 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
             target = this.findNearestEnemy(target);
         }
         this.setScale(0.6);
+        this.postFX.addGlow(0xf0d700);
         this.setDepth(10);
         this.setActive(true);
         this.setVisible(true);
@@ -209,6 +210,7 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         this.lightning = lightning; // Set the reference to the parent lightning sprite
         this.setActive(true);
         this.setVisible(true);
+        this.postFX.addGlow(0xf0d700);
         this.startTime = this.scene.time.now; // Set the start time of the sprite
 
         // Create a color tint transition

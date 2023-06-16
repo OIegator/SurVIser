@@ -53,7 +53,10 @@ export default class PauseScene extends Phaser.Scene {
                 fontFamily: 'Squada One'
             });
 
-            const valueLabel = this.add.text(245, 0, player_config[stat.field].toString(), {
+            const value = player_config[stat.field];
+            const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(1);
+
+            const valueLabel = this.add.text(245, 0, formattedValue, {
                 color: 'white',
                 fontSize: '32px',
                 fontFamily: 'Squada One'

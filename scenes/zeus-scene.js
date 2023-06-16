@@ -12,7 +12,7 @@ import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
 
 let inZone = false;
-const maxLower = 20;
+const maxLower = 0;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
@@ -55,7 +55,11 @@ let ZeusScene = new Phaser.Class({
     },
 
     showDamageNumber(x, y, damage, color, scale = '24') {
-        const damageNumber = this.add.text(x, y, damage.toString(), {font: scale + 'px Squada One', fill: color});
+        let damageText = damage.toString();
+        if (typeof damage === 'number') {
+            damageText = Math.floor(damage).toString();
+        }
+        const damageNumber = this.add.text(x, y, damageText, {font: scale + 'px Squada One', fill: color});
         damageNumber.setStroke('#ffffff', 2);
         this.damageNumbers.add(damageNumber);
 
@@ -224,55 +228,59 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
-        this.bers = this.characterFactory.buildBers("berserk", 15080, 15080, 100);
-        this.gameObjects.push(this.bers);
-        this.physics.add.collider(this.bers, worldLayer);
+        // this.bers = this.characterFactory.buildBers("berserk", 15080, 15080, 100);
+        // this.gameObjects.push(this.bers);
+        // this.physics.add.collider(this.bers, worldLayer);
+        //
+        // this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
+        // this.gameObjects.push(this.golem);
+        // this.physics.add.collider(this.golem, worldLayer);
+        //
+        // this.wizard = this.characterFactory.buildWizard("wizard", 850, 15080, 100);
+        // this.gameObjects.push(this.wizard);
+        // this.physics.add.collider(this.wizard, worldLayer);
 
-        this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
-        this.gameObjects.push(this.golem);
-        this.physics.add.collider(this.golem, worldLayer);
+        this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
+        this.gameObjects.push(this.gary);
+        this.physics.add.collider(this.gary, worldLayer);
 
-        this.wizard = this.characterFactory.buildWizard("wizard", 850, 15080, 100);
-        this.gameObjects.push(this.wizard);
-        this.physics.add.collider(this.wizard, worldLayer);
-
-        const pinkies = this.characterFactory.buildOrdinaries('pinky');
-        pinkies.forEach((pinky) => {
-            this.gameObjects.push(pinky);
-
-            this.physics.add.collider(
-                pinky,
-                this.player,
-                () => {
-                    // Delay the attack function by 1 second
-                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
-                },
-                null,
-                this
-            );
-
-            this.physics.add.collider(pinky, worldLayer);
-
-            // Add collision between each enemy
-            this.enemies.forEach((enemy) => {
-                this.physics.add.collider(pinky, enemy);
-            });
-
-            this.enemies.push(pinky);
-        });
-
-        const clydes = this.characterFactory.buildShooters('clyde');
-        clydes.forEach((clyde) => {
-            this.gameObjects.push(clyde);
-            this.physics.add.collider(clyde, worldLayer);
-
-            // Add collision between each enemy
-            this.enemies.forEach((enemy) => {
-                this.physics.add.collider(clyde, enemy);
-            });
-
-            this.enemies.push(clyde);
-        });
+        // const pinkies = this.characterFactory.buildOrdinaries('pinky');
+        // pinkies.forEach((pinky) => {
+        //     this.gameObjects.push(pinky);
+        //
+        //     this.physics.add.collider(
+        //         pinky,
+        //         this.player,
+        //         () => {
+        //             // Delay the attack function by 1 second
+        //             this.time.delayedCall(1000, pinky.Attack, [], pinky);
+        //         },
+        //         null,
+        //         this
+        //     );
+        //
+        //     this.physics.add.collider(pinky, worldLayer);
+        //
+        //     // Add collision between each enemy
+        //     this.enemies.forEach((enemy) => {
+        //         this.physics.add.collider(pinky, enemy);
+        //     });
+        //
+        //     this.enemies.push(pinky);
+        // });
+        //
+        // const clydes = this.characterFactory.buildShooters('clyde');
+        // clydes.forEach((clyde) => {
+        //     this.gameObjects.push(clyde);
+        //     this.physics.add.collider(clyde, worldLayer);
+        //
+        //     // Add collision between each enemy
+        //     this.enemies.forEach((enemy) => {
+        //         this.physics.add.collider(clyde, enemy);
+        //     });
+        //
+        //     this.enemies.push(clyde);
+        // });
 
         this.attack_timer = this.time.addEvent({
             delay: 2000,
@@ -352,7 +360,7 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        // this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
+        //this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
@@ -454,7 +462,8 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.lvlUP();
+            //this.lvlUP();
+            this.player.healthBar.highColor = 0x0000ff;
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {

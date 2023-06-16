@@ -117,11 +117,15 @@ export default class LvlUpScene extends Phaser.Scene {
                 fontFamily: 'Squada One'
             });
 
-            const valueLabel = this.add.text(245, 0, player_config[stat.field].toString(), {
+            const value = player_config[stat.field];
+            const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(1);
+
+            const valueLabel = this.add.text(245, 0, formattedValue, {
                 color: 'white',
                 fontSize: '32px',
                 fontFamily: 'Squada One'
             });
+
 
             container.add([statLabel, valueLabel]);
         });
@@ -158,22 +162,93 @@ export default class LvlUpScene extends Phaser.Scene {
 
             container.powerUp = item
 
+            // container.setInteractive()
+            //     .on('pointerover', () => {
+            //         background.setTint(0xE59866);
+            //     })
+            //     .on('pointerout', () => {
+            //         background.clearTint();
+            //     })
+            //     .on('pointerdown', () => {
+            //         player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
+            //         player_config.powerUps.push(container.powerUp);
+            //         this.registry.set('player_config', player_config);
+            //         this.resume();
+            //     });
+
+
+            this.buttonContainer.push(container);
+        });
+
+        let selectedButtonIndex = 0;
+        let selectedButton = this.buttonContainer[selectedButtonIndex];
+        const backgroundImages = this.buttonContainer.map((container) => container.getAt(0));
+
+        const updateButtonTint = () => {
+            backgroundImages.forEach((image, index) => {
+                image.clearTint();
+                if (index === selectedButtonIndex) {
+                    image.setTint(0xE59866);
+                }
+            });
+        };
+
+        updateButtonTint();
+
+        // Handle keyboard input
+        this.input.keyboard.on('keydown', (event) => {
+            const { code } = event;
+            const previousButton = selectedButton;
+            const previousButtonIndex = selectedButtonIndex;
+
+            // Remove tint from the previously selected button
+            previousButton.list.forEach((child) => {
+                updateButtonTint();
+            });
+
+            // Change selection based on keyboard input
+            if (code === 'ArrowUp' || code === 'KeyW') {
+                selectedButtonIndex = (selectedButtonIndex - 1 + this.buttonContainer.length) % this.buttonContainer.length;
+            } else if (code === 'ArrowDown' || code === 'KeyS') {
+                selectedButtonIndex = (selectedButtonIndex + 1) % this.buttonContainer.length;
+            }
+
+            // Apply tint to the newly selected button
+            selectedButton = this.buttonContainer[selectedButtonIndex];
+            selectedButton.list.forEach((child) => {
+                updateButtonTint()
+            });
+
+            // Handle button selection
+            if (code === 'Space' || code === 'Enter') {
+                const container = this.buttonContainer[selectedButtonIndex];
+                const button = container.powerUp;
+                player_config[button.effect.stat] += button.effect.action;
+                player_config.powerUps.push(button);
+                this.registry.set('player_config', player_config);
+                this.resume();
+            }
+            updateButtonTint();
+        });
+
+        this.buttonContainer.forEach((container, index) => {
             container.setInteractive()
                 .on('pointerover', () => {
-                    background.setTint(0xE59866);
+                    selectedButtonIndex = index;
+                    updateButtonTint();
                 })
                 .on('pointerout', () => {
-                    background.clearTint();
+                    // If the pointer is not over any button, maintain the current selection
+                    updateButtonTint();
                 })
                 .on('pointerdown', () => {
                     player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
                     player_config.powerUps.push(container.powerUp);
                     this.registry.set('player_config', player_config);
                     this.resume();
+
+                    updateButtonTint();
                 });
-
-
-            this.buttonContainer.push(container);
         });
     }
 
