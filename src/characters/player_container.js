@@ -19,6 +19,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.isAttacking = false;
         this.isAlive = true;
         this.IsTossed = false;
+        this.Invc = false;
         this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
@@ -28,6 +29,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
 
     update(collide) {
+        //console.log(this.healthBar.highColor);
         if (this.isAlive) {
             const body = this.body;
             this.body.setVelocity(0);
@@ -55,6 +57,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             }
 
             this.checkPowerUpCollision(this.scene.powerUpsGroup);
+            this.checkPickUpCollision(this.scene.pickUps);
             // Normalize and scale the velocity so that player can't move faster along a diagonal
             body.velocity.normalize().scale(speed);
         }
@@ -71,30 +74,38 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.scene.physics.overlap(this, powerUpsGroup, this.collectPowerUp, null, this);
     }
 
-    GetHit(damage) {
-        this.isAttacking = false;
-        this.hp -= damage;
-        this.healthBar.updateBar();
-        const hitAnimations = this.sprite.animationSets.get('Hit');
-        const animsController = this.sprite.anims;
-        animsController.play(hitAnimations[0], true);
+    checkPickUpCollision(powerUpsGroup) {
+        this.scene.physics.overlap(this, powerUpsGroup, this.collectPickUp, null, this);
+    }
 
-        this.state = "damaged"
+    GetHit(damage) {
+        if (!this.Invc) {
+            this.isAttacking = false;
+            this.hp -= damage;
+            this.healthBar.updateBar();
+            const hitAnimations = this.sprite.animationSets.get('Hit');
+            const animsController = this.sprite.anims;
+            animsController.play(hitAnimations[0], true);
+
+            this.state = "damaged"
+        }
 
     }
 
     GetTossed(damage, x, y) {
-        this.isAttacking = false;
-        this.IsTossed = true;
-        this.hp -= damage;
-        this.healthBar.updateBar();
-        const hitAnimations = this.sprite.animationSets.get('Hit');
-        const animsController = this.sprite.anims;
-        animsController.play(hitAnimations[0], true);
+        if (!this.Invc) {
+            this.isAttacking = false;
+            this.IsTossed = true;
+            this.hp -= damage;
+            this.healthBar.updateBar();
+            const hitAnimations = this.sprite.animationSets.get('Hit');
+            const animsController = this.sprite.anims;
+            animsController.play(hitAnimations[0], true);
 
-        const desired = new Vector2(this.x - x, this.y - y);
-        this.tossedVector = new Vector2(desired.x*50.5, desired.y*50.5);
-        this.state = "damaged"
+            const desired = new Vector2(this.x - x, this.y - y);
+            this.tossedVector = new Vector2(desired.x * 50.5, desired.y * 50.5);
+            this.state = "damaged"
+        }
     }
 
     Die() {
@@ -108,6 +119,39 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
         // Remove the power-up from the scene
         powerUp.destroy();
+    }
+
+    collectPickUp(player, pickUp) {
+        switch (pickUp.name) {
+            case 'bigHeal':
+                this.hp = this.maxHp;
+                this.healthBar.updateBar();
+                break;
+            case 'heal':
+                this.hp += this.maxHp * 0.25;
+                if (this.hp > this.maxHp)
+                    this.hp = this.maxHp;
+                this.healthBar.updateBar();
+                break;
+            case 'invincible':
+                this.Invc = true;
+                this.healthBar.highColor = 0x0000ff;
+                this.healthBar.mediumColor = 0x0000ff;
+                this.healthBar.lowColor = 0x0000ff;
+                
+                this.scene.time.delayedCall(4000, () => {
+                    this.Invc = false;
+                    this.healthBar.highColor = 0x00ff00;
+                    this.healthBar.mediumColor = 0xffa500;
+                    this.healthBar.lowColor = 0xff0000;
+                });
+                break;
+            case 'damage':
+                this.scene.tacticalNuke();
+                break;
+
+        }
+        pickUp.destroy();
     }
 
     attack() {

@@ -38,7 +38,7 @@ const treeDefinition = `root {
             }
         }`;
 
-export default class Zeus extends Boss {
+export default class Wizard extends Boss {
     constructor(scene, x, y, name, frame, maxHP, velocity = null) {
         super(scene, x, y, name, frame, maxHP, velocity);
         this.body.setSize(150, 190);
@@ -51,10 +51,14 @@ export default class Zeus extends Boss {
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
-    update(collide) {
-        
+    update(collide) { 
         if (!this.isDead) {
-            super.update(collide);
+            if (this.hp > 0) {
+                super.update(collide);
+            }
+            else {
+                this.body.setVelocity(0, 0);
+            }
             this.behaviourTree.step();
         }
         this.updateAnimation();
@@ -102,14 +106,16 @@ export default class Zeus extends Boss {
             return State.SUCCEEDED;
         },
         GetHit: (damage) => {
-            this.gotHit = true;;
-            this.hp -= damage;
-            this.setMeterPercentageAnimated(this.hp / 100);
-            // Play hit animation
-            const hitAnimations = this.animationSets.get('Hit');
-            const animsController = this.anims;
-            animsController.play(hitAnimations[0]);
-            animsController.currentAnim.paused = false;
+            if (this.hp >0) {
+                this.gotHit = true;;
+                this.hp -= damage;
+                this.setMeterPercentageAnimated(this.hp / 100);
+                // Play hit animation
+                const hitAnimations = this.animationSets.get('Hit');
+                const animsController = this.anims;
+                animsController.play(hitAnimations[0]);
+                animsController.currentAnim.paused = false;
+            }
 
             return State.SUCCEEDED;
         },
@@ -206,8 +212,6 @@ export default class Zeus extends Boss {
                 // Reached the last frame of the attack animation
                 this.gotHit = false;
                 animsController.stop(); // Stop the attack animation
-                const idle = this.animationSets.get('Idle');
-                animsController.play(idle[0]); // Play the idle animation
             }
 
         }
@@ -221,7 +225,7 @@ export default class Zeus extends Boss {
             // }
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
-                animsController.currentAnim.paused = true;
+                animsController.stop();
             }
         } else {
             // Play walk or idle animations if no attack or death animation is playing

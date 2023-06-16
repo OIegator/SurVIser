@@ -10,6 +10,9 @@ import wizardSpriteSheet from '../assets/sprites/characters/wizard.png'
 import slash from '../assets/sprites/projectile/Splash.png'
 import smash from '../assets/sprites/projectile/Sm05.png'
 import fire from '../assets/sprites/projectile/2.png'
+import heal from '../assets/sprites/projectile/projectile.png'
+import dmg from '../assets/sprites/projectile/red_sphere.png'
+import invc from '../assets/sprites/projectile/red_blue.png'
 //=======================BossHealthBar========================
 import barHorizontal_red_left from '../assets/sprites/ui/BarHorizontal_red_left.png'
 import barHorizontal_red_mid from '../assets/sprites/ui/BarHorizontal_red_mid.png'
@@ -20,13 +23,14 @@ import barHorizontal_red_right_shadow from '../assets/sprites/ui/BarHorizontal_r
 //============================================================
 import { LightningGroup } from "../src/LightningGroup";
 import CharacterFactory from "../src/characters/character_factory"
-import AutoAttack from "../src/projectiles/AutoAttack.js"
+import AutoAttack from "../src/projectiles/AutoAttack"
 import Projectile from "../src/projectiles/Projectile.js"
+import PickUp from "../src/power-ups/pick-up"
 
 let inZone = false;
 
 
-let GolemScene = new Phaser.Class({
+let WizardScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
 
@@ -68,6 +72,11 @@ let GolemScene = new Phaser.Class({
         this.load.image('attack', slash);
         this.load.image('smash', smash);
         this.load.image('fire', fire);
+
+        this.load.image('heal', heal);
+        this.load.image('invc', invc);
+        this.load.image('dmg', dmg);
+
     },
 
     lowerColl(player, lower) {
@@ -110,6 +119,8 @@ let GolemScene = new Phaser.Class({
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
 
+        
+
         this.wizard = this.characterFactory.buildWizard("wizard", 650, 190, 100);
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
@@ -118,8 +129,21 @@ let GolemScene = new Phaser.Class({
         this.attacks = [];
         this.enAttacks = [];
         this.enemies = [];
+        this.pickUps = [];
 
-        this.attacks.push(this.player.fire);
+        this.enemies.length
+
+        this.enemies.push(this.wizard);
+
+        let pickUp = new PickUp(this, 250, 1100, 'dmg', 'damage');
+        this.pickUps.push(pickUp);
+        this.physics.add.collider(pickUp, this.worldLayer);
+
+        pickUp = new PickUp(this, 180, 500, 'dmg', 'damage');
+        this.pickUps.push(pickUp);
+        this.physics.add.collider(pickUp, this.worldLayer);
+
+        //this.attacks.push(this.player.fire);
 
         this.timer = this.time.addEvent({
             delay: 2000,
@@ -228,6 +252,43 @@ let GolemScene = new Phaser.Class({
 
     },
 
+    spawnPickUp(x, y) {
+        const rnd = Math.floor(Math.random() * 100);
+        let pickUp;
+        switch (true) {
+            case rnd <= 15:
+                pickUp = new PickUp(this, x, y, 'heal', 'bigHeal');
+                this.pickUps.push(pickUp);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 15 && rnd <= 50:
+                pickUp = new PickUp(this, x, y, 'heal', 'heal');
+                this.pickUps.push(pickUp);
+                pickUp.scale = 0.7;
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 50 && rnd <= 75:
+                pickUp = new PickUp(this, x, y, 'dmg', 'damage');
+                this.pickUps.push(pickUp);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 75 && rnd <= 100:
+                pickUp = new PickUp(this, x, y, 'invc', 'invincible');
+                this.pickUps.push(pickUp);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+        }
+
+    },
+
+    tacticalNuke() {
+        //Add all enemies lists here
+        this.enemies.forEach((element) => {
+            if (this.cameras.main.worldView.contains(element.x, element.y))
+                element.behaviour.GetHit(50);
+        });
+    },
+
     update(time) {
 
         if (this.attacks) {
@@ -238,7 +299,6 @@ let GolemScene = new Phaser.Class({
                 element.update(time);
             });
         }
-
         if (this.enAttacks) {
             this.physics.overlap(this.enAttacks, this.player, (attack, mob) => {
                 if (attack.isTossing)
@@ -256,8 +316,8 @@ let GolemScene = new Phaser.Class({
             this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
                 if (this.canDamage) {
                     this.wizard.behaviour.GetHit(25);
-                    //this.player.addFireBonus();
-
+                    //this.spawnPickUp(this.wizard.x, this.wizard.y);
+                    
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
                         this.canDamage = true; // Set the flag to true after the delay
@@ -269,11 +329,13 @@ let GolemScene = new Phaser.Class({
                 element.update(time);
             });
         }
-
-
+        const self = this;
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.isDead) {
+                    const rand = Math.floor(Math.random() * 3);
+                    if (rand == 1)
+                        self.spawnPickUp(element.x, element.y);
                     element.destroy();
                     object.splice(index, 1);
                 }
@@ -289,4 +351,4 @@ let GolemScene = new Phaser.Class({
     }
 });
 
-export default GolemScene
+export default WizardScene

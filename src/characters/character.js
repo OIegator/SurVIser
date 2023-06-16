@@ -33,7 +33,12 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         const speed = this.maxSpeed;
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         body.velocity.normalize().scale(speed);
+
         this.updateAnimation();
+    }
+
+    updateDead() {
+
     }
 
     updateAnimation() {

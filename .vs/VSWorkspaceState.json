@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\assets",
-    "\\assets\\animations",
-    "\\assets\\bars",
     "\\assets\\sprites",
-    "\\assets\\sprites\\characters",
+    "\\assets\\sprites\\projectile",
     "\\scenes",
     "\\src",
     "\\src\\characters",
-    "\\src\\projectiles"
+    "\\src\\power-ups",
+    "\\src\\projectiles",
+    "\\src\\ui"
   ],
-  "SelectedNode": "\\src\\characters\\berserk.js",
+  "SelectedNode": "\\src\\characters\\golem.js",
   "PreviewInSolutionExplorer": false
 }

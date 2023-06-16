@@ -46,9 +46,13 @@ export default class Golem extends Boss {
     }
 
     update(collide) {
-        
         if (!this.isDead) {
-            super.update(collide);
+            if (this.hp > 0) {
+                super.update(collide);
+            }
+            else {
+                this.body.setVelocity(0, 0);
+            }
             this.behaviourTree.step();
         }
         this.updateAnimation();

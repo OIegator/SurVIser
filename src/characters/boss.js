@@ -88,4 +88,5 @@ export default class Boss extends Character {
     update(time) {
         super.update();
     }
+
 }
