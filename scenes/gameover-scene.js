@@ -47,7 +47,21 @@ export default class GameOverScene extends Phaser.Scene {
             });
 
             const value = player_config[stat.field];
-            const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(1);
+            let formattedValue;
+
+            if (typeof value === "string") {
+                formattedValue = value;
+            } else if (typeof value === "number") {
+                if (Number.isInteger(value)) {
+                    formattedValue = value.toString();
+                } else {
+                    formattedValue = value.toFixed(1);
+                }
+            } else {
+                // Handle other types if necessary
+                formattedValue = value.toString();
+            }
+
 
             const valueLabel = this.add.text(245, 0, formattedValue, {
                 color: 'white',

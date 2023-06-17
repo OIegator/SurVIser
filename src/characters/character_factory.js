@@ -204,7 +204,7 @@ export default class CharacterFactory {
 
     buildGary(spriteSheetName, x, y, maxHP, velocity = null) {
         let character = new Gary(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
-        character.maxSpeed = 100;
+        character.maxSpeed = 30;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
         character.speed = new Vector2(0.5, 0.5);

@@ -59,11 +59,13 @@ import clydeSpriteSheet from "../assets/sprites/characters/clyde.png";
 import main_theme from "../assets/audio/main_theme.mp3";
 
 import smash from "../assets/sprites/projectile/Sm05.png";
+import poke from "../assets/sprites/projectile/Sm10.png";
 import golemSpriteSheet from "../assets/sprites/characters/rock.png";
 import bersSpriteSheet from "../assets/sprites/characters/berserk.png";
 import wizardSpriteSheet from "../assets/sprites/characters/wizard.png";
 import garySpriteSheet from "../assets/sprites/characters/gary.png";
 import fire from "../assets/sprites/projectile/2.png";
+import eye from "../assets/sprites/projectile/eye.png";
 
 
 export default class Boot extends Phaser.Scene {
@@ -116,7 +118,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('bullet', bullet);
         this.load.image('attack', slash);
         this.load.image('smash', smash);
+        this.load.image('poke', poke);
         this.load.image('fire', fire);
+        this.load.image('eye', eye);
 
         this.load.image('cursor', cursor);
         this.load.image('lvl_up_background', lvl_up_background);

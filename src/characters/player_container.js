@@ -70,7 +70,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
             this.checkPowerUpCollision(this.scene.powerUpsGroup);
             // Normalize and scale the velocity so that player can't move faster along a diagonal
-            body.velocity.normalize().scale(speed);
+            if(this.IsTossed === false) body.velocity.normalize().scale(speed);
         }
         if (this.hp <= 0 && this.isAlive) {
             this.Die();
@@ -104,7 +104,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
     }
 
-    GetTossed(damage, x, y) {
+    GetTossed(damage, x, y, multiplier = 3.5) {
         this.isAttacking = false;
         this.IsTossed = true;
         this.hp -= damage;
@@ -114,7 +114,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         animsController.play(hitAnimations[0], true);
 
         const desired = new Vector2(this.x - x, this.y - y);
-        this.tossedVector = new Vector2(desired.x * 50.5, desired.y * 50.5);
+        this.tossedVector = new Vector2(desired.x * multiplier, desired.y * multiplier);
         this.state = "damaged"
     }
 

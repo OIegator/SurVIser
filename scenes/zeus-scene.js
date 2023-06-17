@@ -161,14 +161,14 @@ let ZeusScene = new Phaser.Class({
         });
     },
 
-    EnemyAttack(x, y, attacker, size, offset, delay) {
+    EnemyAttack(x, y, attacker, size, offset, delay, key = 'smash') {
         this.time.delayedCall(delay, () => {
             let add;
             if (attacker.scaleX < 0)
                 add = offset;
             else
                 add = -offset;
-            const attack = new AutoAttack(this, x + add, y, 'smash');
+            const attack = new AutoAttack(this, x + add, y, key);
             attack.body.setSize(size, size);
             if (attacker.constructor.name === "Golem")
                 attack.isTossing = true;
@@ -509,6 +509,18 @@ let ZeusScene = new Phaser.Class({
             this.physics.overlap(this.attacks, this.golem, ( ) => {
                 if (this.canDamage) {
                     this.golem.behaviour.GetHit(25);
+
+                    this.canDamage = false; // Set the flag false to prevent further damage
+                    setTimeout(() => {
+                        this.canDamage = true; // Set the flag to true after the delay
+                    }, 1500); // 1.5 seconds delay
+                }
+            });
+
+
+            this.physics.overlap(this.attacks, this.gary, ( ) => {
+                if (this.canDamage  && this.gary.isVulnerable) {
+                    this.gary.behaviour.GetHit(25);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
