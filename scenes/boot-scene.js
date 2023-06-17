@@ -66,6 +66,9 @@ import wizardSpriteSheet from "../assets/sprites/characters/wizard.png";
 import garySpriteSheet from "../assets/sprites/characters/gary.png";
 import fire from "../assets/sprites/projectile/2.png";
 import eye from "../assets/sprites/projectile/eye.png";
+import heal from "../assets/sprites/projectile/Projectile.png";
+import invc from "../assets/sprites/projectile/red_blue.png";
+import dmg from "../assets/sprites/projectile/red_sphere.png";
 
 
 export default class Boot extends Phaser.Scene {
@@ -121,6 +124,10 @@ export default class Boot extends Phaser.Scene {
         this.load.image('poke', poke);
         this.load.image('fire', fire);
         this.load.image('eye', eye);
+
+        this.load.image('heal', heal);
+        this.load.image('invc', invc);
+        this.load.image('dmg', dmg);
 
         this.load.image('cursor', cursor);
         this.load.image('lvl_up_background', lvl_up_background);

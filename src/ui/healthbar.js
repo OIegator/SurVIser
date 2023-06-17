@@ -9,6 +9,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.lowColor = 0xfa5b57; // Red color
         this.mediumColor = 0xfab957; // Orange color
         this.highColor = 0x9cfa57; // Green color
+        this.invincibilityWidth = 0;
 
         // Create the black background rectangle
         const bgRect = new Phaser.GameObjects.Graphics(scene);
@@ -22,6 +23,11 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.healthBar.fillStyle(0x9cfa57); // Green color
         this.healthBar.fillRect(0, 0, w, h);
         this.add(this.healthBar);
+
+        this.invincibilityRect = new Phaser.GameObjects.Graphics(scene);
+        this.invincibilityRect.fillStyle(0x0000ff); // Green color
+        this.invincibilityRect.fillRect(0, 0, this.invincibilityWidth, h);
+        this.add(this.invincibilityRect);
     }
 
     updateBar() {
@@ -44,6 +50,12 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             this.healthBar.fillStyle(this.highColor);
         }
         this.healthBar.fillRect(0, 0, this.currentSize, this.height);
+
+        if (this.invincibilityWidth) {
+            this.invincibilityRect.clear();
+            this.invincibilityRect.fillStyle(0x0000ff);
+            this.invincibilityRect.fillRect(0, 0, this.invincibilityWidth, this.height);
+        }
     }
 
 

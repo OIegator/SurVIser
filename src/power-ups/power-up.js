@@ -10,7 +10,7 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
         const dictColor = {
             lightning: 0xf0d700,
             armor: 0xb2bed3,
-            dd: 0x000000,
+            dd: 0xffffff,
             magic: 0x00f6d0,
         };
         this.name = name;

@@ -160,17 +160,26 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
                 break;
             case 'invincible':
                 this.Invc = true;
-                this.healthBar.highColor = 0x0000ff;
-                this.healthBar.mediumColor = 0x0000ff;
-                this.healthBar.lowColor = 0x0000ff;
+                this.sprite.postFX.addGlow(0x0000ff);
+                const delayDuration = 6000; // Duration of the delay in milliseconds
+                this.healthBar.invincibilityWidth = this.healthBar.width;
+                this.healthBar.updateBar()
 
-                this.scene.time.delayedCall(4000, () => {
-                    this.Invc = false;
-                    this.healthBar.highColor = 0x00ff00;
-                    this.healthBar.mediumColor = 0xffa500;
-                    this.healthBar.lowColor = 0xff0000;
+                // Create a tween to gradually decrease the invincibility rectangle width
+                this.scene.tweens.add({
+                    targets: this.healthBar,
+                    invincibilityWidth: 0,
+                    duration: delayDuration,
+                    onUpdate: (tween, target) => {
+                        this.healthBar.updateBar()
+                    },
+                    onComplete: () => {
+                        this.Invc = false;
+                        this.sprite.postFX.clear();
+                    }
                 });
                 break;
+
             case 'damage':
                 this.scene.tacticalNuke();
                 break;

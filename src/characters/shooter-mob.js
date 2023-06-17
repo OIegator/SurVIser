@@ -93,26 +93,27 @@ export default class Shooter extends Character {
             return State.SUCCEEDED;
         },
         GetHit: (damage) => {
+            if (!this.isDead) {
+                const strength = this.scene.player.isConfig.strength;
+                const criticalRate = this.scene.player.isConfig.criticalRate;
+                const criticalMultiplier = this.scene.player.isConfig.critical;
 
-            const strength = this.scene.player.isConfig.strength;
-            const criticalRate = this.scene.player.isConfig.criticalRate;
-            const criticalMultiplier = this.scene.player.isConfig.critical;
 
-            const animations = this.animationSets.get('Hit');
-            const animsController = this.anims;
-            animsController.play(animations[0], true);
-            animsController.currentAnim.paused = false;
+                const animations = this.animationSets.get('Hit');
+                const animsController = this.anims;
+                animsController.play(animations[0], true);
+                animsController.currentAnim.paused = false;
 
-            if (Math.random() < criticalRate) {
-                // Critical hit
-                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
-                this.hp -= (damage ? damage : strength) * criticalMultiplier;
-            } else {
-                // Regular hit
-                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
-                this.hp -= damage ? damage : strength;
+                if (Math.random() < criticalRate) {
+                    // Critical hit
+                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
+                    this.hp -= (damage ? damage : strength) * criticalMultiplier;
+                } else {
+                    // Regular hit
+                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
+                    this.hp -= damage ? damage : strength;
+                }
             }
-
             return State.SUCCEEDED;
         },
         Die: () => {

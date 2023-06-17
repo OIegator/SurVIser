@@ -10,6 +10,7 @@ import HealthBar from "../src/UI-Bar/HealthBar";
 import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
+import PickUp from "../src/power-ups/pick-up";
 
 let inZone = false;
 const maxLower = 20;
@@ -178,10 +179,66 @@ let ZeusScene = new Phaser.Class({
 
     },
 
+    spawnPickUp(x, y) {
+        const rnd = Math.floor(Math.random() * 100);
+        let pickUp;
+        switch (true) {
+            case rnd <= 15:
+                pickUp = new PickUp(this, x, y, 'heal', 'bigHeal');
+                this.pickUps.push(pickUp);
+                pickUp.scale = 0.8;
+                pickUp.setDepth(1);
+                pickUp.postFX.addGlow(0x00ff00);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 15 && rnd <= 50:
+                pickUp = new PickUp(this, x, y, 'heal', 'heal');
+                this.pickUps.push(pickUp);
+                pickUp.scale = 0.6;
+                pickUp.setDepth(1);
+                pickUp.postFX.addGlow(0x00ff00);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 50 && rnd <= 75:
+                pickUp = new PickUp(this, x, y, 'dmg', 'damage');
+                this.pickUps.push(pickUp);
+                pickUp.scale = 0.8;
+                pickUp.setDepth(1);
+                pickUp.postFX.addGlow(0xff0000);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+            case rnd > 75 && rnd <= 100:
+                pickUp = new PickUp(this, x, y, 'invc', 'invincible');
+                this.pickUps.push(pickUp);
+                pickUp.scale = 0.8;
+                pickUp.setDepth(1);
+                pickUp.postFX.addGlow(0x0000ff);
+                this.physics.add.collider(pickUp, this.worldLayer);
+                break;
+        }
+
+    },
+
+    tacticalNuke() {
+        //Add all enemies lists here
+        this.enemies.forEach((element) => {
+            if (this.cameras.main.worldView.contains(element.x, element.y)) {
+                if (element.constructor.name === "Ordinary" ||
+                    element.constructor.name === "Lower") {
+                    element.GetHit(50);
+                } else {
+                    element.behaviour.GetHit(50);
+                }
+
+            }
+        });
+    },
+
     create: function () {
         this.attacks = [];
         this.enemies = [];
         this.enAttacks = [];
+        this.pickUps = [];
         this.iconDictionary = {};
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -218,31 +275,31 @@ let ZeusScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', 8014, 8014, {player: true});
+        this.player = this.characterFactory.buildCharacter('vi', 7980, 7950, {player: true});
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
         this.registry.set('player_config', this.player.isConfig);
 
-        this.zeus = this.characterFactory.buildZeus("zeus", 850, 580, 100);
+        this.zeus = this.characterFactory.buildZeus("zeus", 850, 764, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
-        // this.bers = this.characterFactory.buildBers("berserk", 15080, 15080, 100);
-        // this.gameObjects.push(this.bers);
-        // this.physics.add.collider(this.bers, worldLayer);
-        //
-        // this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
-        // this.gameObjects.push(this.golem);
-        // this.physics.add.collider(this.golem, worldLayer);
-        //
-        // this.wizard = this.characterFactory.buildWizard("wizard", 850, 15080, 100);
-        // this.gameObjects.push(this.wizard);
-        // this.physics.add.collider(this.wizard, worldLayer);
+        this.bers = this.characterFactory.buildBers("berserk", 15080, 15080, 100);
+        this.gameObjects.push(this.bers);
+        this.physics.add.collider(this.bers, worldLayer);
 
-        // this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
-        // this.gameObjects.push(this.gary);
-        // this.physics.add.collider(this.gary, worldLayer);
+        this.golem = this.characterFactory.buildGolem("golem", 15080, 764, 100);
+        this.gameObjects.push(this.golem);
+        this.physics.add.collider(this.golem, worldLayer);
+
+        this.wizard = this.characterFactory.buildWizard("wizard", 850, 15080, 100);
+        this.gameObjects.push(this.wizard);
+        this.physics.add.collider(this.wizard, worldLayer);
+
+        this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
+        this.gameObjects.push(this.gary);
+        this.physics.add.collider(this.gary, worldLayer);
 
         const pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -294,7 +351,7 @@ let ZeusScene = new Phaser.Class({
                             add = 100;
                         else
                             add = -100;
-                        const attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
+                        let attack = new AutoAttack(args, args.player.x + add, args.player.y + 30, 'attack');
                         args.attacks.push(attack);
                         args.physics.add.collider(attack, args.worldLayer);
                         attack.flipX = args.player.sprite.scaleX < 0;
@@ -302,6 +359,14 @@ let ZeusScene = new Phaser.Class({
                         attack.scaleY = 0.5 + 0.025 * args.player.isConfig.attackRange;
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
                             args.lightningGroup.fireLightning(args.player.x, args.player.y, args.enemies);
+                        }
+                        if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'dd')) {
+                            attack = new AutoAttack(args, args.player.x - (add * 1.4), args.player.y + 30, 'attack');
+                            args.attacks.push(attack);
+                            args.physics.add.collider(attack, args.worldLayer);
+                            attack.flipX = args.player.sprite.scaleX > 0;
+                            attack.scaleX = 0.8 + 0.025 * args.player.isConfig.attackRange;
+                            attack.scaleY = 0.5 + 0.025 * args.player.isConfig.attackRange;
                         }
                     });
                 }
@@ -362,7 +427,7 @@ let ZeusScene = new Phaser.Class({
 
         //this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
-        // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
+        //this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
         // this.sound.play("main_theme", {
@@ -480,7 +545,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                if (mob.constructor.name === "Shooter" && this.canDamage ){
+                if (mob.constructor.name === "Shooter" && this.canDamage) {
                     mob.behaviour.GetHit();
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -506,7 +571,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
 
-            this.physics.overlap(this.attacks, this.golem, ( ) => {
+            this.physics.overlap(this.attacks, this.golem, () => {
                 if (this.canDamage) {
                     this.golem.behaviour.GetHit(25);
 
@@ -518,8 +583,8 @@ let ZeusScene = new Phaser.Class({
             });
 
 
-            this.physics.overlap(this.attacks, this.gary, ( ) => {
-                if (this.canDamage  && this.gary.isVulnerable) {
+            this.physics.overlap(this.attacks, this.gary, () => {
+                if (this.canDamage && this.gary.isVulnerable) {
                     this.gary.behaviour.GetHit(25);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
@@ -557,9 +622,11 @@ let ZeusScene = new Phaser.Class({
             });
         }
 
-        if (this.attacks && this.zeus.isVulnerable) {
+        if (this.attacks) {
 
-            this.physics.overlap(this.attacks, this.zeus, ( ) => {
+            this.physics.overlap(this.attacks, this.zeus, () => {
+                if (!this.zeus.isVulnerable && this.zeus.isAlive)
+                    this.showDamageNumber(this.zeus.x, this.zeus.y, 'UNVULNERABLE', '#2E86C1', 32);
                 if (this.canDamage) {
                     this.zeus.behaviour.GetHit(25);
 
@@ -584,6 +651,9 @@ let ZeusScene = new Phaser.Class({
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.constructor.name === "Lower") {
                     if (element.isDead) {
+                        const rand = Math.random() * 100;;
+                        if (rand <= 3)
+                            self.spawnPickUp(element.x, element.y);
                         self.expUP(50);
                         element.destroy();
                         object.splice(index, 1);
@@ -591,18 +661,27 @@ let ZeusScene = new Phaser.Class({
                     }
                 } else if (element.constructor.name === "Ordinary") {
                     if (element.isDead) {
+                        const rand = Math.floor(Math.random() * 3);
+                        if (rand === 1)
+                            self.spawnPickUp(element.x, element.y);
                         self.expUP(210);
                         element.destroy();
                         object.splice(index, 1);
                     }
                 } else if (element.constructor.name === "Shooter") {
                     if (element.isDead) {
+                        const rand = Math.floor(Math.random() * 3);
+                        if (rand === 1)
+                            self.spawnPickUp(element.x, element.y);
                         self.expUP(80);
                         element.destroy();
                         object.splice(index, 1);
                     }
                 } else {
                     if (element.isDead) {
+                        const rand = Math.floor(Math.random() * 3);
+                        if (rand === 1)
+                            self.spawnPickUp(element.x, element.y);
                         element.destroy();
                         object.splice(index, 1);
                     }

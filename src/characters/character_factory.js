@@ -3,7 +3,6 @@ import zeusConfigJson from "../../assets/animations/zeus.json";
 import inkyConfigJson from "../../assets/animations/inky.json";
 import pinkyConfigJson from "../../assets/animations/pinky.json";
 import clydeConfigJson from "../../assets/animations/clyde.json";
-import blinkyConfigJson from "../../assets/animations/blinky.json";
 import berserkConfigJson from "../../assets/animations/berserk.json";
 import garyConfigJson from "../../assets/animations/gary.json";
 import rockConfigJson from "../../assets/animations/rock.json";
@@ -35,7 +34,6 @@ export default class CharacterFactory {
         this.inkySpriteSheet = 'inky';
         this.pinkySpriteSheet = 'pinky';
         this.clydeSpriteSheet = 'clyde';
-        this.blinkySpriteSheet = 'blinky';
         this.berserkSpriteSheet = 'berserk';
         this.garySpriteSheet = 'gary';
         this.rockSpriteSheet = 'golem';
@@ -54,8 +52,6 @@ export default class CharacterFactory {
             new AnimationLoader(scene, this.pinkySpriteSheet, pinkyConfigJson, this.pinkySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.clydeSpriteSheet,
             new AnimationLoader(scene, this.clydeSpriteSheet, clydeConfigJson, this.clydeSpriteSheet, 28).createAnimations());
-        animationLibrary.set(this.blinkySpriteSheet,
-            new AnimationLoader(scene, this.blinkySpriteSheet, blinkyConfigJson, this.blinkySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.berserkSpriteSheet,
             new AnimationLoader(scene, this.berserkSpriteSheet, berserkConfigJson, this.berserkSpriteSheet, 28).createAnimations());
         animationLibrary.set(this.garySpriteSheet,
@@ -103,6 +99,7 @@ export default class CharacterFactory {
     buildLowerCharacter(scene, spriteSheetName, centX, centY, camW, rand = 1, velocity = null){
         let lower = new Lower(scene, centX, centY, camW, spriteSheetName, 2, rand, velocity);
         lower.maxSpeed = 100;
+        lower.setDepth(2);
         lower.setCircle(40);
         lower.setOffset(200, 210);
         lower.setCollideWorldBounds(true);
@@ -134,6 +131,7 @@ export default class CharacterFactory {
                 new Vector2(character.x - 300, character.y),
                 new Vector2(character.x + 300, character.y),
             ];
+            character.setDepth(2);
             character.hp = character.data.list.hp;
             character.setCollideWorldBounds(true);
             character.body.pushable = false;
@@ -155,6 +153,7 @@ export default class CharacterFactory {
                 new Vector2(character.x - 300, character.y),
                 new Vector2(character.x + 300, character.y),
             ];
+            character.setDepth(2);
             character.hp = character.data.list.hp;
             character.setCollideWorldBounds(true);
             character.body.pushable = false;
