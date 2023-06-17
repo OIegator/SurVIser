@@ -5,6 +5,7 @@ import ZeusScene from '../scenes/zeus-scene';
 import BerserkScene from '../scenes/berserk-scene';
 import GolemScene from '../scenes/golem-scene'
 import WizardScene from '../scenes/wizard-scene'
+import TestScene from '../scenes/test-scene'
 
 const config = {
   type: Phaser.AUTO,
@@ -12,7 +13,7 @@ const config = {
   height: 880,
   pixelArt: false,
   zoom: 1.0,
-    scene: WizardScene,
+    scene: TestScene,
   physics: {
     default: "arcade",
     arcade: {
