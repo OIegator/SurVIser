@@ -12,7 +12,7 @@ import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
 
 let inZone = false;
-const maxLower = 0;
+const maxLower = 20;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
@@ -240,47 +240,47 @@ let ZeusScene = new Phaser.Class({
         // this.gameObjects.push(this.wizard);
         // this.physics.add.collider(this.wizard, worldLayer);
 
-        this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
-        this.gameObjects.push(this.gary);
-        this.physics.add.collider(this.gary, worldLayer);
+        // this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
+        // this.gameObjects.push(this.gary);
+        // this.physics.add.collider(this.gary, worldLayer);
 
-        // const pinkies = this.characterFactory.buildOrdinaries('pinky');
-        // pinkies.forEach((pinky) => {
-        //     this.gameObjects.push(pinky);
-        //
-        //     this.physics.add.collider(
-        //         pinky,
-        //         this.player,
-        //         () => {
-        //             // Delay the attack function by 1 second
-        //             this.time.delayedCall(1000, pinky.Attack, [], pinky);
-        //         },
-        //         null,
-        //         this
-        //     );
-        //
-        //     this.physics.add.collider(pinky, worldLayer);
-        //
-        //     // Add collision between each enemy
-        //     this.enemies.forEach((enemy) => {
-        //         this.physics.add.collider(pinky, enemy);
-        //     });
-        //
-        //     this.enemies.push(pinky);
-        // });
-        //
-        // const clydes = this.characterFactory.buildShooters('clyde');
-        // clydes.forEach((clyde) => {
-        //     this.gameObjects.push(clyde);
-        //     this.physics.add.collider(clyde, worldLayer);
-        //
-        //     // Add collision between each enemy
-        //     this.enemies.forEach((enemy) => {
-        //         this.physics.add.collider(clyde, enemy);
-        //     });
-        //
-        //     this.enemies.push(clyde);
-        // });
+        const pinkies = this.characterFactory.buildOrdinaries('pinky');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+
+            this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
+            this.enemies.push(pinky);
+        });
+
+        const clydes = this.characterFactory.buildShooters('clyde');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
 
         this.attack_timer = this.time.addEvent({
             delay: 2000,
