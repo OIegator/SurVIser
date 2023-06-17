@@ -30,7 +30,7 @@ import PickUp from "../src/power-ups/pick-up"
 let inZone = false;
 
 
-let WizardScene = new Phaser.Class({
+let TestScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, zeus: undefined,
 
@@ -119,13 +119,14 @@ let WizardScene = new Phaser.Class({
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
 
-        
+
 
         this.wizard = this.characterFactory.buildWizard("wizard", 650, 190, 100);
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
 
-        
+        this.wizard.visible = true;
+
         this.attacks = [];
         this.enAttacks = [];
         this.enemies = [];
@@ -156,7 +157,7 @@ let WizardScene = new Phaser.Class({
                         attack.scaleX = 0.8;
                         attack.scaleY = 0.5;
                         if (args.player.doubleAtt) {
-                            attack = new AutoAttack(args, args.player.x - (add*1.4), args.player.y + 30, 'attack');
+                            attack = new AutoAttack(args, args.player.x - (add * 1.4), args.player.y + 30, 'attack');
                             args.attacks.push(attack);
                             args.physics.add.collider(attack, args.worldLayer);
                             attack.flipX = args.player.sprite.scaleX > 0;
@@ -193,7 +194,7 @@ let WizardScene = new Phaser.Class({
             var speed = distance / duration;
             var speedSec = 1000 * speed;
             var tSpeed = 1 / duration;
-            
+
             var fire = new Projectile(this, start.x, start.y, 'fire');
             this.enAttacks.push(fire);
             fire.scale = 0.5;
@@ -201,11 +202,11 @@ let WizardScene = new Phaser.Class({
 
             if (Math.abs(angle) < 90)
                 fire.flipX = true;
-            
-           var resetFire = function (counter) {
+
+            var resetFire = function (counter) {
                 var start = curve.getStartPoint();
-               fire.body.reset(start.x, start.y);
-               updateFire(counter);
+                fire.body.reset(start.x, start.y);
+                updateFire(counter);
             };
 
             var destroyFire = function (counter) {
@@ -309,13 +310,19 @@ let WizardScene = new Phaser.Class({
             });
         }
 
+        const self = this;
+        this.enemies.forEach((element) => {
+            if (element.state === "attack" || element.state === "evade" || element.state === "pursuit" || element.state === "dead")
+                element.outsideCameraCheck(self);
+        });
+
         if (this.attacks) {
 
             this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
                 if (this.canDamage) {
                     this.wizard.behaviour.GetHit(25);
                     //this.spawnPickUp(this.wizard.x, this.wizard.y);
-                    
+
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
                         this.canDamage = true; // Set the flag to true after the delay
@@ -327,7 +334,7 @@ let WizardScene = new Phaser.Class({
                 element.update(time);
             });
         }
-        const self = this;
+        
         if (this.gameObjects) {
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.isDead) {
@@ -349,4 +356,4 @@ let WizardScene = new Phaser.Class({
     }
 });
 
-export default WizardScene
+export default TestScene

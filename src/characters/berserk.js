@@ -51,7 +51,12 @@ export default class Berserk extends Boss {
 
     update(collide) {
         if (!this.isDead) {
-            super.update(collide);
+            if (this.hp > 0) {
+                super.update(collide);
+            }
+            else {
+                this.body.setVelocity(0, 0);
+            }
             this.behaviourTree.step();
         }
         this.updateAnimation();
@@ -183,6 +188,29 @@ export default class Berserk extends Boss {
             return this.hp <= 0;
         },
 
+    }
+
+    outsideCameraCheck(scene) {
+        if (!scene.cameras.main.worldView.contains(this.x, this.y)) {
+            if (!this.timer) {
+                this.timer = scene.time.now + 3000; // Set the timer to the current time plus 3 seconds
+            } else if (scene.time.now > this.timer) {
+                this.reset(scene);
+                this.timer = scene.time.now + 3000; // Reset the timer to the current time plus 3 seconds
+            }
+        } else {
+            this.timer = null; // Reset the timer if the game object is back within the camera bounds
+        }
+
+    }
+
+    reset() {
+        this.removeHealthBar();
+        this.x = this.startX;
+        this.y = this.startY;
+        console.log(this.behaviour.IsPlayerSpotted());
+        this.changeState("patrol");
+        this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
     updateAnimation() {
