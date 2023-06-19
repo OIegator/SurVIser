@@ -28,7 +28,7 @@ const treeDefinition = `root {
                         }
                     }
                     action [Die] 
-                    wait [1000]
+                    wait [800]
                     action [Disappear]
                 }
             }

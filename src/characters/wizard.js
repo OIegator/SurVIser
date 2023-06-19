@@ -109,7 +109,7 @@ export default class Wizard extends Boss {
         },
         GetHit: (damage) => {
             if (this.hp >0) {
-                this.gotHit = true;;
+                this.gotHit = true;
                 this.hp -= damage;
                 this.setMeterPercentageAnimated(this.hp / 100);
                 // Play hit animation

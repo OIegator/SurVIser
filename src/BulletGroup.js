@@ -33,7 +33,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     update(time) {
         this.scene.physics.overlap(this, this.target, () => {
             if (this.canDamage) {
-                this.target.GetHit(10);
+                if (this.target.isAlive) {
+                    this.target.GetHit(10);
+                }
                 this.canDamage = false;
 
                 setTimeout(() => {
@@ -62,7 +64,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     hide() {
         this.setActive(false);
         this.setVisible(false);
-        this.anims.stop(); // Stop the animation
         this.destroy(); // Destroy the parent bullet sprite
     }
 

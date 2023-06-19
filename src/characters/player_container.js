@@ -261,4 +261,12 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         });
     }
 
+    calculateDamage() {
+        if (Math.random() < this.isConfig.criticalRate) {
+            return this.isConfig.strength * this.isConfig.critical;
+        } else {
+            return this.isConfig.strength;
+        }
+    }
+
 }
