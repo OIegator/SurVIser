@@ -582,7 +582,7 @@ let ZeusScene = new Phaser.Class({
         this.events.on('resume', this.resumeTimer, this);
 
         //this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
         //this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
@@ -815,7 +815,8 @@ let ZeusScene = new Phaser.Class({
                 }
             });
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
@@ -877,7 +878,8 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
@@ -897,7 +899,8 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
@@ -911,7 +914,6 @@ let ZeusScene = new Phaser.Class({
                 if (element.constructor.name === "Lower") {
                     if (element.isDead) {
                         const rand = Math.random() * 100;
-                        ;
                         if (rand <= 3)
                             self.spawnPickUp(element.x, element.y);
                         self.expUP(50);
