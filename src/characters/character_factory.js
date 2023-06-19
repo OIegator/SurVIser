@@ -120,8 +120,8 @@ export default class CharacterFactory {
         return character;
     }
 
-    buildOrdinaries(spriteSheetName) {
-        let characters = this.scene.map.createFromObjects('Enemies', {
+    buildOrdinaries(spriteSheetName, biome = 'Enemies') {
+        let characters = this.scene.map.createFromObjects(biome, {
             name: 'pinky',
             classType: Ordinary
         });
@@ -142,8 +142,8 @@ export default class CharacterFactory {
         return characters;
     }
 
-    buildShooters(spriteSheetName) {
-        let characters = this.scene.map.createFromObjects('Enemies', {
+    buildShooters(spriteSheetName, biome = 'Enemies') {
+        let characters = this.scene.map.createFromObjects(biome, {
             name: 'clyde',
             classType: Shooter
         });

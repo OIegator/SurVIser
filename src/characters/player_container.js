@@ -2,6 +2,8 @@ import Player from "./player";
 import Projectile from "../projectiles/Projectile";
 import HealthBar from "../ui/healthbar";
 import Vector2 from 'phaser/src/math/Vector2';
+import AnimationLoader from "../utils/animation-loader";
+import pinkyConfigJson from "../../assets/animations/pinky.json";
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     constructor(scene, x, y, name, frame) {
@@ -22,6 +24,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.IsTossed = false;
         this.Invc = false;
         this.doubleAtt = true;
+        this.biome = 'border'
         this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
@@ -142,6 +145,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
             this.addFireBonus();
             this.scene.attacks.push(this.fire);
         }
+
+        if(powerUp.name === "armor") {
+            this.changeSpritesheet('pinky', 2);
+        }
         // Remove the power-up from the scene
         powerUp.destroy();
     }
@@ -196,6 +203,21 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.state = "attack"
     }
 
+    changeSpritesheet(name, frame) {
+        // Create a new player sprite with the updated spritesheet
+        const newPlayer = new Player(this.scene, 0, 0, name, frame, this);
+        newPlayer.scale = this.sprite.scale; // Preserve the scale of the previous player sprite
+
+        const animSets = this.sprite.animationSets
+        // Remove the old player sprite from the container
+        this.remove(this.sprite, true);
+
+        // Assign the new player sprite to the container
+        this.sprite = newPlayer;
+        this.sprite.animationSets = new AnimationLoader(this.scene, 'pinky', pinkyConfigJson, 'pinky', 28).createAnimations();
+        this.add(this.sprite);
+    }
+
     addFireBonus(scene) {
         const curve = new Phaser.Curves.Ellipse(0, 30, 100, 100, 0, 360, false, 0);
         const tempVec = new Phaser.Math.Vector2();
@@ -228,6 +250,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
                 fire.setRotation(tempVec.angle());
             }
         };
+
 
         this.scene.tweens.addCounter({
             duration: duration,

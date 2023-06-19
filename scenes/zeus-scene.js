@@ -13,12 +13,12 @@ import Projectile from "../src/projectiles/Projectile";
 import PickUp from "../src/power-ups/pick-up";
 
 let inZone = false;
-const maxLower = 20;
+const maxLower = 0;
 let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
 
-    Extends: Phaser.Scene, lightningGroup: undefined, bulletGroup: undefined, zeus: undefined,
+    Extends: Phaser.Scene, lightningGroup: undefined, bulletGroup: undefined, zeus: undefined, biomes: undefined,
 
 
     initialize: function ZeusScene() {
@@ -240,6 +240,8 @@ let ZeusScene = new Phaser.Class({
         this.enAttacks = [];
         this.pickUps = [];
         this.iconDictionary = {};
+        this.biomes;
+        this.biomeCrossed = {};
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.gameObjects = [];
@@ -297,11 +299,11 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
 
-        this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
-        this.gameObjects.push(this.gary);
-        this.physics.add.collider(this.gary, worldLayer);
+        // this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
+        // this.gameObjects.push(this.gary);
+        // this.physics.add.collider(this.gary, worldLayer);
 
-        const pinkies = this.characterFactory.buildOrdinaries('pinky');
+        let pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
             this.gameObjects.push(pinky);
 
@@ -326,7 +328,7 @@ let ZeusScene = new Phaser.Class({
             this.enemies.push(pinky);
         });
 
-        const clydes = this.characterFactory.buildShooters('clyde');
+        let clydes = this.characterFactory.buildShooters('clyde');
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
@@ -338,6 +340,160 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(clyde);
         });
+
+        // !!!Danger!!!
+        // Next code will spawn all biomes at once
+        pinkies = this.characterFactory.buildOrdinaries('pinky', 'tundra');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+
+            this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
+            this.enemies.push(pinky);
+        });
+
+        clydes = this.characterFactory.buildShooters('clyde', 'tundra');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
+        pinkies = this.characterFactory.buildOrdinaries('pinky', 'meadow');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+
+            this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
+            this.enemies.push(pinky);
+        });
+
+        clydes = this.characterFactory.buildShooters('clyde', 'meadow');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
+        pinkies = this.characterFactory.buildOrdinaries('pinky', 'desert');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+
+            this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
+            this.enemies.push(pinky);
+        });
+
+        clydes = this.characterFactory.buildShooters('clyde', 'desert');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
+        pinkies = this.characterFactory.buildOrdinaries('pinky', 'castle');
+        pinkies.forEach((pinky) => {
+            this.gameObjects.push(pinky);
+
+            this.physics.add.collider(
+                pinky,
+                this.player,
+                () => {
+                    // Delay the attack function by 1 second
+                    this.time.delayedCall(1000, pinky.Attack, [], pinky);
+                },
+                null,
+                this
+            );
+
+            this.physics.add.collider(pinky, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(pinky, enemy);
+            });
+
+            this.enemies.push(pinky);
+        });
+
+        clydes = this.characterFactory.buildShooters('clyde', 'castle');
+        clydes.forEach((clyde) => {
+            this.gameObjects.push(clyde);
+            this.physics.add.collider(clyde, worldLayer);
+
+            // Add collision between each enemy
+            this.enemies.forEach((enemy) => {
+                this.physics.add.collider(clyde, enemy);
+            });
+
+            this.enemies.push(clyde);
+        });
+        //////////////////
+        /////////////////
+
 
         this.attack_timer = this.time.addEvent({
             delay: 2000,
@@ -426,13 +582,26 @@ let ZeusScene = new Phaser.Class({
         this.events.on('resume', this.resumeTimer, this);
 
         //this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
-        // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
         //this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
         // this.sound.play("main_theme", {
         //     loop: true
         // });
+
+        this.biomes = this.add.group();
+        this.biomes.add(this.createBiome(3450, 3400, 6900, 6800, 'desert'));
+        this.biomes.add(this.createBiome(12300, 12200, 7400, 7600, 'tundra'));
+        this.biomes.add(this.createBiome(3700, 12600, 7400, 8600, 'meadow'));
+        this.biomes.add(this.createBiome(12800, 3200, 6800, 6400, 'castle'));
+
+        const self = this;
+
+        this.biomes.getChildren().forEach(function (biome) {
+            const biomeName = biome.getData('name');
+            self.biomeCrossed[biomeName] = false;
+        });
     },
 
     expUP(xp) {
@@ -508,8 +677,98 @@ let ZeusScene = new Phaser.Class({
         }, this);
     },
 
+    createBiome(x, y, width, height, name) {
+        const biome = this.add.rectangle(x, y, width, height, 0x85C1E9);
+        biome.setData('name', name);
+        biome.setAlpha(0);
+        return biome;
+    },
+
+    biomeCrossing(scene) {
+        // Check for overlap between the player and biomes
+        scene.biomes.getChildren().forEach(function (biome) {
+            const biomeName = biome.getData('name');
+
+            // Only process biomes that are different from the current biome
+            if (biomeName !== scene.player.biome) {
+                if (Phaser.Geom.Rectangle.Contains(biome.getBounds(), scene.player.x, scene.player.y)) {
+
+                    scene.player.biome = biomeName;
+
+                    if (!scene.biomeCrossed[biomeName]) {
+                        console.log("Player crossed " + biomeName);
+
+                        const pinkies = scene.characterFactory.buildOrdinaries('pinky', biomeName);
+                        pinkies.forEach((pinky) => {
+                            scene.gameObjects.push(pinky);
+
+                            scene.physics.add.collider(
+                                pinky,
+                                scene.player,
+                                () => {
+                                    // Delay the attack function by 1 second
+                                    scene.time.delayedCall(1000, pinky.Attack, [], pinky);
+                                },
+                                null,
+                                scene
+                            );
+
+                            scene.physics.add.collider(pinky, scene.worldLayer);
+
+                            // Add collision between each enemy
+                            scene.enemies.forEach((enemy) => {
+                                scene.physics.add.collider(pinky, enemy);
+                            });
+
+                            scene.enemies.push(pinky);
+                        });
+
+                        const clydes = scene.characterFactory.buildShooters('clyde', biomeName);
+                        clydes.forEach((clyde) => {
+                            scene.gameObjects.push(clyde);
+                            scene.physics.add.collider(clyde, scene.worldLayer);
+
+                            // Add collision between each enemy
+                            scene.enemies.forEach((enemy) => {
+                                scene.physics.add.collider(clyde, enemy);
+                            });
+
+                            scene.enemies.push(clyde);
+                        });
+
+                        scene.enemies.forEach(function (enemy) {
+                            const enemyBiome = enemy.data.list.biome;
+                            if (enemyBiome !== 'border' && (enemyBiome !== undefined || true)) {
+                                if (enemyBiome !== biomeName) {
+                                    enemy.setActive(false);
+                                    enemy.setVisible(false);
+                                }
+                            }
+                        });
+
+                        scene.biomeCrossed[biomeName] = true;
+                    } else {
+                        console.log("You have already been in " + biomeName);
+
+                        scene.enemies.forEach(function (enemy) {
+                            const enemyBiome = enemy.data.list.biome;
+                            if (enemyBiome !== 'border' && (enemyBiome !== undefined || true)) {
+                                if (enemyBiome === biomeName) {
+                                    enemy.setActive(true);
+                                    enemy.setVisible(true);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    },
+
 
     update(time) {
+        this.biomeCrossing(this);
+
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
             color: 'white',
@@ -651,7 +910,8 @@ let ZeusScene = new Phaser.Class({
             this.gameObjects.forEach(function (element, index, object) {
                 if (element.constructor.name === "Lower") {
                     if (element.isDead) {
-                        const rand = Math.random() * 100;;
+                        const rand = Math.random() * 100;
+                        ;
                         if (rand <= 3)
                             self.spawnPickUp(element.x, element.y);
                         self.expUP(50);

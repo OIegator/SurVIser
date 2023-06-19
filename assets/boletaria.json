@@ -20,7 +20,7 @@
          "name":"Walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":500,
          "x":0,
          "y":0
@@ -32,7 +32,7 @@
          "name":"Upper",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":500,
          "x":0,
          "y":0
@@ -49,7 +49,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -72,7 +72,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -95,7 +95,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -118,7 +118,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -141,7 +141,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -164,7 +164,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -187,7 +187,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -210,7 +210,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -233,7 +233,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -256,7 +256,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -279,7 +279,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -302,7 +302,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -325,7 +325,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -348,7 +348,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -371,7 +371,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -394,7 +394,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -417,7 +417,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -440,7 +440,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -463,7 +463,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -486,7 +486,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -509,7 +509,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -532,7 +532,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -555,7 +555,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -578,7 +578,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -601,7 +601,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -624,7 +624,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -647,7 +647,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -670,7 +670,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -693,7 +693,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -716,7 +716,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -739,7 +739,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -762,7 +762,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -785,7 +785,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -808,7 +808,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -831,7 +831,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -854,7 +854,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -877,7 +877,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -900,7 +900,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -923,7 +923,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -946,7 +946,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -969,7 +969,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -992,7 +992,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1015,7 +1015,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1038,7 +1038,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1061,7 +1061,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1084,7 +1084,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1107,7 +1107,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1130,7 +1130,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1153,7 +1153,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1176,7 +1176,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1199,7 +1199,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1222,7 +1222,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1245,7 +1245,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1268,7 +1268,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1291,7 +1291,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1314,7 +1314,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1337,7 +1337,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1360,7 +1360,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1383,7 +1383,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1406,7 +1406,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1429,7 +1429,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1452,7 +1452,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1475,7 +1475,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1498,7 +1498,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1521,7 +1521,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1544,7 +1544,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1567,7 +1567,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1590,7 +1590,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1613,7 +1613,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1636,7 +1636,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1659,7 +1659,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1682,7 +1682,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1705,7 +1705,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1728,7 +1728,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1751,7 +1751,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1774,7 +1774,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1797,7 +1797,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1820,7 +1820,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1843,7 +1843,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1866,7 +1866,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1889,7 +1889,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1912,7 +1912,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1935,7 +1935,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1958,7 +1958,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -1981,7 +1981,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2004,7 +2004,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2027,7 +2027,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2050,7 +2050,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2073,7 +2073,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2096,7 +2096,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2119,7 +2119,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2142,7 +2142,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2165,7 +2165,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2188,7 +2188,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2211,7 +2211,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2234,7 +2234,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2257,7 +2257,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2280,7 +2280,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2303,7 +2303,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2326,7 +2326,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2349,7 +2349,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2372,7 +2372,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2395,7 +2395,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2418,7 +2418,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2441,7 +2441,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2464,7 +2464,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2487,7 +2487,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2510,7 +2510,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2533,7 +2533,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2556,7 +2556,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2579,7 +2579,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2602,7 +2602,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2625,7 +2625,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2648,7 +2648,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2671,7 +2671,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2694,7 +2694,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2717,7 +2717,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2740,7 +2740,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"border"
                         }, 
@@ -2765,7 +2765,7 @@
         {
          "draworder":"topdown",
          "id":18,
-         "name":"Castle",
+         "name":"castle",
          "objects":[
                 {
                  "height":0,
@@ -2774,7 +2774,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2797,7 +2797,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2820,7 +2820,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2843,7 +2843,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2866,7 +2866,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2889,7 +2889,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2912,7 +2912,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2935,7 +2935,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2958,7 +2958,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -2981,7 +2981,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3004,7 +3004,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3027,7 +3027,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3050,7 +3050,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3073,7 +3073,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3096,7 +3096,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3119,7 +3119,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3142,7 +3142,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3165,7 +3165,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3188,7 +3188,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3211,7 +3211,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3234,7 +3234,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3257,7 +3257,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3280,7 +3280,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3303,7 +3303,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3326,7 +3326,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3349,7 +3349,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3372,7 +3372,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3395,7 +3395,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3418,7 +3418,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3441,7 +3441,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3464,7 +3464,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3487,7 +3487,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3510,7 +3510,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3533,7 +3533,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3556,7 +3556,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3579,7 +3579,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3602,7 +3602,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3625,7 +3625,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3648,7 +3648,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3671,7 +3671,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3694,7 +3694,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3717,7 +3717,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3740,7 +3740,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3763,7 +3763,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3786,7 +3786,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3809,7 +3809,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3832,7 +3832,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3855,7 +3855,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3878,7 +3878,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3901,7 +3901,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3924,7 +3924,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3947,7 +3947,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3970,7 +3970,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -3993,7 +3993,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4016,7 +4016,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4039,7 +4039,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4062,7 +4062,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4085,7 +4085,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4108,7 +4108,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4131,7 +4131,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4154,7 +4154,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4177,7 +4177,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4200,7 +4200,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4223,7 +4223,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4246,7 +4246,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4269,7 +4269,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4292,7 +4292,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4315,7 +4315,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4338,7 +4338,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4361,7 +4361,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4384,7 +4384,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4407,7 +4407,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4430,7 +4430,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4453,7 +4453,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4476,7 +4476,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4499,7 +4499,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4522,7 +4522,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4545,7 +4545,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4568,7 +4568,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4591,7 +4591,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4614,7 +4614,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4637,7 +4637,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4660,7 +4660,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4683,7 +4683,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4706,7 +4706,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4729,7 +4729,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4752,7 +4752,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4775,7 +4775,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4798,7 +4798,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4821,7 +4821,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4844,7 +4844,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4867,7 +4867,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4890,7 +4890,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4913,7 +4913,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4936,7 +4936,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4959,7 +4959,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -4982,7 +4982,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -5005,7 +5005,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -5028,7 +5028,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -5051,7 +5051,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -5074,7 +5074,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"castle"
                         }, 
@@ -5092,14 +5092,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":16,
-         "name":"Meadow",
+         "name":"meadow",
          "objects":[
                 {
                  "height":0,
@@ -5108,7 +5108,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5131,7 +5131,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5154,7 +5154,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5177,7 +5177,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5200,7 +5200,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5223,7 +5223,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5246,7 +5246,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5269,7 +5269,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5292,7 +5292,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5315,7 +5315,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5338,7 +5338,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5361,7 +5361,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5384,7 +5384,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5407,7 +5407,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5430,7 +5430,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5453,7 +5453,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5476,7 +5476,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5499,7 +5499,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5522,7 +5522,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5545,7 +5545,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5568,7 +5568,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5591,7 +5591,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5614,7 +5614,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5637,7 +5637,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5660,7 +5660,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5683,7 +5683,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5706,7 +5706,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5729,7 +5729,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5752,7 +5752,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5775,7 +5775,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5798,7 +5798,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5821,7 +5821,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5844,7 +5844,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5867,7 +5867,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5890,7 +5890,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5913,7 +5913,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5936,7 +5936,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5959,7 +5959,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -5982,7 +5982,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6005,7 +6005,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6028,7 +6028,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6051,7 +6051,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6074,7 +6074,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6097,7 +6097,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6120,7 +6120,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6143,7 +6143,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6166,7 +6166,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6189,7 +6189,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6212,7 +6212,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6235,7 +6235,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6258,7 +6258,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6281,7 +6281,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6304,7 +6304,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6327,7 +6327,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6350,7 +6350,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6373,7 +6373,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6396,7 +6396,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6419,7 +6419,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6442,7 +6442,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6465,7 +6465,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6488,7 +6488,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6511,7 +6511,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6534,7 +6534,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6557,7 +6557,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6580,7 +6580,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6603,7 +6603,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6626,7 +6626,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6649,7 +6649,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6672,7 +6672,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6695,7 +6695,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6718,7 +6718,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6741,7 +6741,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6764,7 +6764,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6787,7 +6787,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6810,7 +6810,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6833,7 +6833,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6856,7 +6856,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6879,7 +6879,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6902,7 +6902,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6925,7 +6925,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6948,7 +6948,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6971,7 +6971,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -6994,7 +6994,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7017,7 +7017,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7040,7 +7040,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7063,7 +7063,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7086,7 +7086,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7109,7 +7109,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7132,7 +7132,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7155,7 +7155,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7178,7 +7178,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7201,7 +7201,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7224,7 +7224,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7247,7 +7247,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7270,7 +7270,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7293,7 +7293,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7316,7 +7316,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7339,7 +7339,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7362,7 +7362,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7385,7 +7385,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7408,7 +7408,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"meadow"
                         }, 
@@ -7426,14 +7426,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":17,
-         "name":"Desert",
+         "name":"desert",
          "objects":[
                 {
                  "height":0,
@@ -7442,7 +7442,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7465,7 +7465,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7488,7 +7488,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7511,7 +7511,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7534,7 +7534,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7557,7 +7557,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7580,7 +7580,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7603,7 +7603,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7626,7 +7626,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7649,7 +7649,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7672,7 +7672,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7695,7 +7695,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7718,7 +7718,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7741,7 +7741,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7764,7 +7764,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7787,7 +7787,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7810,7 +7810,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7833,7 +7833,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7856,7 +7856,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7879,7 +7879,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7902,7 +7902,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7925,7 +7925,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7948,7 +7948,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7971,7 +7971,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -7994,7 +7994,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8017,7 +8017,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8040,7 +8040,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8063,7 +8063,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8086,7 +8086,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8109,7 +8109,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8132,7 +8132,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8155,7 +8155,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8178,7 +8178,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8201,7 +8201,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8224,7 +8224,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8247,7 +8247,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8270,7 +8270,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8293,7 +8293,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8316,7 +8316,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8339,7 +8339,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8362,7 +8362,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8385,7 +8385,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8408,7 +8408,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8431,7 +8431,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8454,7 +8454,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8477,7 +8477,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8500,7 +8500,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8523,7 +8523,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8546,7 +8546,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8569,7 +8569,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8592,7 +8592,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8615,7 +8615,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8638,7 +8638,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8661,7 +8661,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8684,7 +8684,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8707,7 +8707,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8730,7 +8730,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8753,7 +8753,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8776,7 +8776,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8799,7 +8799,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8822,7 +8822,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8845,7 +8845,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8868,7 +8868,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8891,7 +8891,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8914,7 +8914,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8937,7 +8937,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8960,7 +8960,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -8983,7 +8983,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9006,7 +9006,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9029,7 +9029,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9052,7 +9052,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9075,7 +9075,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9098,7 +9098,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9121,7 +9121,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9144,7 +9144,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9167,7 +9167,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9190,7 +9190,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9213,7 +9213,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9236,7 +9236,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9259,7 +9259,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9282,7 +9282,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9305,7 +9305,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9328,7 +9328,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9351,7 +9351,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9374,7 +9374,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9397,7 +9397,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9420,7 +9420,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9443,7 +9443,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9466,7 +9466,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9489,7 +9489,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9512,7 +9512,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9535,7 +9535,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9558,7 +9558,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9581,7 +9581,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9604,7 +9604,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9627,7 +9627,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9650,7 +9650,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9673,7 +9673,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9696,7 +9696,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9719,7 +9719,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9742,7 +9742,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"desert"
                         }, 
@@ -9760,14 +9760,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":15,
-         "name":"Tundra",
+         "name":"tundra",
          "objects":[
                 {
                  "height":0,
@@ -9776,7 +9776,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9799,7 +9799,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9822,7 +9822,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9845,7 +9845,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9868,7 +9868,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9891,7 +9891,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9914,7 +9914,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9937,7 +9937,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9960,7 +9960,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -9983,7 +9983,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10006,7 +10006,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10029,7 +10029,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10052,7 +10052,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10075,7 +10075,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10098,7 +10098,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10121,7 +10121,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10144,7 +10144,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10167,7 +10167,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10190,7 +10190,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10213,7 +10213,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10236,7 +10236,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10259,7 +10259,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10282,7 +10282,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10305,7 +10305,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10328,7 +10328,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10351,7 +10351,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10374,7 +10374,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10397,7 +10397,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10420,7 +10420,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10443,7 +10443,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10466,7 +10466,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10489,7 +10489,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10512,7 +10512,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10535,7 +10535,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10558,7 +10558,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10581,7 +10581,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10604,7 +10604,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10627,7 +10627,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10650,7 +10650,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10673,7 +10673,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10696,7 +10696,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10719,7 +10719,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10742,7 +10742,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10765,7 +10765,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10788,7 +10788,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10811,7 +10811,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10834,7 +10834,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10857,7 +10857,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10880,7 +10880,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10903,7 +10903,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10926,7 +10926,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10949,7 +10949,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10972,7 +10972,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -10995,7 +10995,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11018,7 +11018,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11041,7 +11041,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11064,7 +11064,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11087,7 +11087,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11110,7 +11110,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11133,7 +11133,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11156,7 +11156,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11179,7 +11179,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11202,7 +11202,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11225,7 +11225,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11248,7 +11248,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11271,7 +11271,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11294,7 +11294,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11317,7 +11317,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11340,7 +11340,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11363,7 +11363,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11386,7 +11386,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11409,7 +11409,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11432,7 +11432,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11455,7 +11455,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11478,7 +11478,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11501,7 +11501,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11524,7 +11524,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11547,7 +11547,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11570,7 +11570,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11593,7 +11593,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11616,7 +11616,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11639,7 +11639,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11662,7 +11662,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11685,7 +11685,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11708,7 +11708,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11731,7 +11731,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11754,7 +11754,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11777,7 +11777,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11800,7 +11800,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11823,7 +11823,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11846,7 +11846,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11869,7 +11869,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11892,7 +11892,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11915,7 +11915,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11938,7 +11938,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11961,7 +11961,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -11984,7 +11984,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -12007,7 +12007,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -12030,7 +12030,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -12053,7 +12053,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -12076,7 +12076,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"biom",
+                         "name":"biome",
                          "type":"string",
                          "value":"tundra"
                         }, 
@@ -12100,7 +12100,7 @@
                  "value":"tundra"
                 }],
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
