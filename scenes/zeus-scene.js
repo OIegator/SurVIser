@@ -297,9 +297,9 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
 
-        this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
-        this.gameObjects.push(this.gary);
-        this.physics.add.collider(this.gary, worldLayer);
+        //this.gary = this.characterFactory.buildGary("gary", 8500, 8500, 100);
+        //this.gameObjects.push(this.gary);
+        //this.physics.add.collider(this.gary, worldLayer);
 
         const pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -425,7 +425,7 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        //this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
         //this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
@@ -556,7 +556,8 @@ let ZeusScene = new Phaser.Class({
                 }
             });
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
@@ -618,7 +619,8 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
@@ -638,7 +640,8 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                element.update(time);
+                if (element.constructor.name != "ShockCircle")
+                    element.update(time);
             });
         }
 
