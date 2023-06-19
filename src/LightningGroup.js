@@ -19,6 +19,7 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         this.duration = 1000; // Duration of the lightning in milliseconds
         this.shockCircle = null;
         this.target = null;
+        this.affectedEnemies = [];
         this.canDamage = true;
         this.stopped = false; // Flag to track if the lightning has stopped
     }
@@ -96,76 +97,23 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
 
     update(time) {
         if (!this.stopped) {
-            let targetBounds = null;
-            try {
-                if (Array.isArray(this.target)) {
-                    targetBounds = this.target[0].getBounds(); // Get bounds of the first target
-                } else {
-                    targetBounds = this.target.getBounds();
-                }
-            } catch (error) {
-                this.target = new TargetDummy(this.target);
-                if (Array.isArray(this.target)) {
-                    targetBounds = this.target[0].getBounds(); // Get bounds of the first target
-                } else {
-                    targetBounds = this.target.getBounds();
-                }
-            }
-
-            if (Array.isArray(this.target)) {
-                for (const target of this.scene.enemies) {
-                    this.scene.physics.overlap(this, target, () => {
-                        if (target.constructor.name === "Shooter" && this.canDamage) {
-                            target.gotDamage = true;
-                            target.behaviour.GetHit(10);
-                            this.canDamage = false;
-                            setTimeout(() => {
-                                this.canDamage = true; // Set the flag to true after the delay
-                            }, 100); // 1.5 seconds delay
-                            setTimeout(() => {
-                                if (!this.stopped) {
-                                    this.createShockCircle();
-                                    this.body.setSize(10, 10);
-                                    this.stopped = true; // Set the stopped flag to true
-                                }
-                            }, 50);
-                        }
-                        else if (this.canDamage) {
-                            target.gotDamage = true;
-                            target.GetHit(10);
-                            this.canDamage = false;
-                            setTimeout(() => {
-                                this.canDamage = true; // Set the flag to true after the delay
-                            }, 100); // 1.5 seconds delay
-                            setTimeout(() => {
-                                if (!this.stopped) {
-                                    this.createShockCircle();
-                                    this.body.setSize(10, 10);
-                                    this.stopped = true; // Set the stopped flag to true
-                                }
-                            }, 50);
-                        }
-                    });
-                }
-            } else {
-                this.scene.physics.overlap(this, this.target, () => {
-                    if (this.canDamage) {
-                        this.target.GetHit(10);
-                        this.canDamage = false;
-
-                        setTimeout(() => {
-                            this.canDamage = true; // Set the flag to true after the delay
-                        }, 1500); // 1.5 seconds delay
-                        setTimeout(() => {
-                            if (!this.stopped) {
-                                this.createShockCircle();
-                                this.body.setSize(10, 10);
-                                this.stopped = true; // Set the stopped flag to true
-                            }
-                        }, 50);
+            this.scene.physics.overlap(this, this.target, (attack, mob) => {
+                if (!attack.affectedEnemies.includes(mob)) {
+                    if (mob.constructor.name === "Shooter") {
+                        mob.behaviour.GetHit();
+                    } else {
+                        mob.gotDamage = true;
                     }
-                });
-            }
+                    setTimeout(() => {
+                        if (!this.stopped) {
+                            this.createShockCircle();
+                            this.body.setSize(10, 10);
+                            this.stopped = true; // Set the stopped flag to true
+                        }
+                    }, 50);
+                    attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
+                }
+            });
 
             const sceneWidth = this.scene.width;
             const sceneHeight = this.scene.height;
@@ -208,6 +156,7 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         this.startTime = 0;
         this.canDamage = true;
         this.target = target;
+        this.affectedEnemies = [];
         this.lightning = null; // Reference to the parent lightning sprite
         this.tintTransition = null; // Reference to the color tint transition
 
@@ -249,37 +198,18 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         this.lightning.body.x = this.x - this.width * 0.37;
         this.lightning.body.y = this.y - this.height * 0.37;
         if (this.active && time > this.startTime + this.duration * 0.8) {
-            if (Array.isArray(this.target)) {
-                this.scene.physics.overlap(this.lightning, this.target, (attack, mob) => {
-                    if (mob.constructor.name == "Shooter" && this.canDamage) {
-                        mob.behaviour.GetHit(10);
-                        this.canDamage = false; // Set the flag false to prevent further damage
-                        setTimeout(() => {
-                            this.canDamage = true; // Set the flag to true after the delay
-                        }, 1500); // 1.5 seconds delay
+            this.scene.physics.overlap(this.lightning, this.target, (attack, mob) => {
+                if (!attack.affectedEnemies.includes(mob)) {
+                    if (mob.constructor.name === "Shooter") {
+                        mob.behaviour.GetHit();
                     } else {
-                        if (this.canDamage) {
-                            console.log(mob);
-                            mob.gotDamage = true;
-                            mob.GetHit(10);
-                            setTimeout(() => {
-                                this.canDamage = true; // Set the flag to true after the delay
-                            }, 100);
-                        }
+                        mob.gotDamage = true;
                     }
-                });
-            } else {
-                this.scene.physics.overlap(this.lightning, this.target, () => {
-                    if (this.canDamage) {
-                        this.target.GetHit(10);
-                        this.canDamage = false;
-                        setTimeout(() => {
-                            this.canDamage = true; // Set the flag to true after the delay
-                        }, 1500); // 1.5 seconds delay
-                    }
-                });
-            }
+                    attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
+                }
+            });
         }
+
 
         if (this.active && time > this.startTime + this.duration) {
             this.hide();

@@ -6,6 +6,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.5);
         scene.physics.world.enable(this);
         scene.add.existing(this);
+        this.animMultiplier = 2.2;
         this.velocity = velocity;
         this.steerings = [];
         this.offset = {x: x, y: 0};
@@ -37,30 +38,30 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         this.updateAnimation();
     }
 
-    updateDead() {
-
-    }
 
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
         const hitAnimations = this.animationSets.get('Hit');
+        const deathAnimations = this.animationSets.get('Death');
 
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
 
-        if (this.state === 'hit' || this.state === 'attack') {
-            // If the character is currently in the 'hit' or 'attack' state, don't play other animations
-            return;
-        }
-
-        if (animsController.isPlaying && hitAnimations.includes(animsController.currentAnim.key)) {
-
+        if (animsController.isPlaying && deathAnimations.includes(animsController.currentAnim.key)) {
+            // Death animation is playing
+            if (!this.deathAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the death animation
+                this.deathAnimationEnded = true;
+                animsController.stop(); // Stop the death animation
+            }
+        } else if (animsController.isPlaying && hitAnimations.includes(animsController.currentAnim.key)) {
+            // Hit animation is playing
             if (!this.hitAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
-                // Reached the last frame of the attack animation
+                // Reached the last frame of the hit animation
                 this.hitAnimationEnded = true;
-                animsController.stop(); // Stop the attack animation
+                animsController.stop(); // Stop the hit animation
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
@@ -82,7 +83,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
             } else if (x > 0) {
                 this.setScale(-0.5, 0.5);
                 animsController.play(animations[1], true);
-                this.body.setOffset(2.2 * this.offset.x, this.offset.y);
+                this.body.setOffset(this.animMultiplier * this.offset.x, this.offset.y);
             } else if (y < 0) {
                 animsController.play(animations[2], true);
             } else if (y > 0) {

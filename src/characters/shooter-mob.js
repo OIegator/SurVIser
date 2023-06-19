@@ -3,7 +3,7 @@ import {Patrol} from "../ai/steerings/patrol";
 import {BehaviourTree, State} from "mistreevous";
 import {Pursuit} from "../ai/steerings/pursuit";
 import {Evade} from "../ai/steerings/evade";
-import PowerUp from "../power-ups/power-up";
+import {Wander} from "../ai/steerings/wander";
 
 const treeDefinition = `root {
             selector {
@@ -22,7 +22,7 @@ const treeDefinition = `root {
                                 }
                                 sequence { 
                                     action [Attack]
-                                    wait [4000, 6000]
+                                    wait [2000, 6000]
                                 }
                             }
                         }
@@ -39,6 +39,7 @@ export default class Shooter extends Character {
         super(scene, x, y, name, frame, velocity);
         this.body.setCircle(75);
         this.isOffset(80, 160);
+        this.animMultiplier = 1.8;
         this.hp = 0;
         this.maxSpeed = 120;
         this.lastAttackTime = 0;
@@ -79,10 +80,17 @@ export default class Shooter extends Character {
             ]);
             return State.SUCCEEDED;
         },
+        Wander: () => {
+            this.state = "wander";
+            this.setSteerings([
+                new Wander(this, [this.scene.player], 1, 100, 1, 25, 0.05)
+            ]);
+            return State.SUCCEEDED;
+        },
         Attack: () => {
             this.state = "attack";
             this.setSteerings([]);
-            this.scene.bulletGroup.fireBullet(this.x, this.y, this.scene.player);
+            this.scene.bulletGroup.fireBullet(this.x, this.y + 35, this.scene.player);
 
             // Play attack animation
             const attackAnimations = this.animationSets.get('Attack');
@@ -103,7 +111,7 @@ export default class Shooter extends Character {
                 animsController.play(animations[0], true);
                 animsController.currentAnim.paused = false;
                 this.gotDamage = true;
-
+                this.hitAnimationEnded = false;
                 if (Math.random() < criticalRate) {
                     // Critical hit
                     this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
@@ -160,15 +168,11 @@ export default class Shooter extends Character {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
+        const hitAnimations = this.animationSets.get('Hit');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
 
-        if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
-            // Play attack animation if the SPACE key is pressed
-            animsController.play(attackAnimations[0]);
-            this.attackAnimationEnded = false;
-        }
 
         if (animsController.isPlaying && this.state === "attack") {
             // Attack animation is playing
@@ -179,16 +183,16 @@ export default class Shooter extends Character {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        } else if (this.state === "hit") {
-            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
-                // Reached the last frame of the attack animation
-                this.gotDamage = false;
-                animsController.stop(); // Stop the attack animation
+        } else if (animsController.isPlaying && hitAnimations.includes(animsController.currentAnim.key)) {
+            // Hit animation is playing
+            if (!this.hitAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the hit animation
+                this.hitAnimationEnded = true;
+                animsController.stop(); // Stop the hit animation
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        }
-        else if (this.state === "dead") {
+        } else if (this.state === "dead") {
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;

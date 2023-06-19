@@ -3,7 +3,7 @@ import Projectile from "../projectiles/Projectile";
 import HealthBar from "../ui/healthbar";
 import Vector2 from 'phaser/src/math/Vector2';
 import AnimationLoader from "../utils/animation-loader";
-import pinkyConfigJson from "../../assets/animations/pinky.json";
+import viConfigJson from "../../assets/animations/vi.json";
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     constructor(scene, x, y, name, frame) {
@@ -214,7 +214,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
         // Assign the new player sprite to the container
         this.sprite = newPlayer;
-        this.sprite.animationSets = new AnimationLoader(this.scene, 'pinky', pinkyConfigJson, 'pinky', 28).createAnimations();
+        this.sprite.animationSets = new AnimationLoader(this.scene, 'vi_skull', viConfigJson, 'vi_skull', 28).createAnimations();
         this.add(this.sprite);
     }
 

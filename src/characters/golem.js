@@ -1,9 +1,9 @@
 import Boss from "./boss";
-import { State, BehaviourTree } from "mistreevous";
+import {State, BehaviourTree} from "mistreevous";
 import Vector2 from 'phaser/src/math/Vector2';
-import { Patrol } from "../ai/steerings/patrol";
-import { Pursuit } from "../ai/steerings/pursuit";
-import { Evade } from "../ai/steerings/evade";
+import {Patrol} from "../ai/steerings/patrol";
+import {Pursuit} from "../ai/steerings/pursuit";
+import {Evade} from "../ai/steerings/evade";
 import PowerUp from "../power-ups/power-up";
 
 const treeDefinition = `root {
@@ -27,7 +27,7 @@ const treeDefinition = `root {
                         }
                     }
                     action [Die] 
-                    wait [1500]
+                    wait [1000]
                     action [Disappear]
                 }
             }
@@ -53,8 +53,7 @@ export default class Golem extends Boss {
         if (!this.isDead) {
             if (this.hp > 0) {
                 super.update(collide);
-            }
-            else {
+            } else {
                 this.body.setVelocity(0, 0);
             }
             this.behaviourTree.step();
@@ -102,9 +101,10 @@ export default class Golem extends Boss {
         },
 
         GetHit: (damage) => {
-            this.gotHit = true;;
+            this.gotHit = true;
+            ;
             this.hp -= damage;
-            this.setMeterPercentageAnimated(this.hp / 100);
+            this.setMeterPercentageAnimated(this.hp < 0 ? 0 : this.hp / 100);
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;
@@ -202,7 +202,6 @@ export default class Golem extends Boss {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
-        //const stanAnimations = this.animationSets.get('Stan');
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
@@ -231,8 +230,7 @@ export default class Golem extends Boss {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        }
-            else if (this.state === "dead") {
+        } else if (this.state === "dead") {
 
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation

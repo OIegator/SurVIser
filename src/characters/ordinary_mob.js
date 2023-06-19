@@ -79,7 +79,6 @@ export default class Ordinary extends Character {
             this.hitAnimationEnded = false;
 
             this.gotDamage = false;
-            console.log(this.hp);
             if (this.hp < 0)
                 this.isDying = true;
         }
@@ -110,6 +109,7 @@ export default class Ordinary extends Character {
         const animations = this.animationSets.get('Death');
         const animsController = this.anims;
         animsController.play(animations[0], true);
+        this.deathAnimationEnded = false;
         const numb = animsController.currentFrame.frame.name;
         if (numb == 54)
             this.isDead = true;

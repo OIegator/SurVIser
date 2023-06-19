@@ -64,6 +64,7 @@ let ZeusScene = new Phaser.Class({
         }
         const damageNumber = this.add.text(x, y, damageText, {font: scale + 'px Squada One', fill: color});
         damageNumber.setStroke('#ffffff', 2);
+        damageNumber.setDepth(3);
         this.damageNumbers.add(damageNumber);
 
         this.tweens.add({
@@ -743,8 +744,8 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        // this.powerUpsGroup.add(new PowerUp(this, 8114, 8000, 'lightning', 'shock_icon'));
-        // this.powerUpsGroup.add(new PowerUp(this, 8214, 8000, 'armor', 'armor_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
+        this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 130, this.physics.world.bounds.height / 2 - 130, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
@@ -808,8 +809,18 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                if (!attack.affectedEnemies.includes(mob)) {
+                if (attack.constructor.name === "Projectile") {
                     if (mob.constructor.name === "Shooter" && this.canDamage) {
+                        mob.behaviour.GetHit();
+                        this.canDamage = false; // Set the flag false to prevent further damage
+                        setTimeout(() => {
+                            this.canDamage = true; // Set the flag to true after the delay
+                        }, 1500); // 1.5 seconds delay
+                    } else {
+                        mob.gotDamage = true;
+                    }
+                } else if (!attack.affectedEnemies.includes(mob)) {
+                    if (mob.constructor.name === "Shooter") {
                         mob.behaviour.GetHit();
                     } else {
                         mob.gotDamage = true;

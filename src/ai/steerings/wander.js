@@ -13,16 +13,20 @@ class Wander extends Steering {
     }
 
     calculateImpulse() {
-        // Calculate the circle center
         const circleCenter = this.owner.body.velocity.clone().normalize().scale(this.wanderDistance);
-
         const y = Math.round(Math.random()) === 0 ? -1 : 1;
         const displacement = new Vector2(0, -1).scale(this.circleRadius);
-
         displacement.setAngle(this.wanderAngle);
         this.wanderAngle += Phaser.Math.RND.normal() * this.angleChange;
 
-        return new Vector2(circleCenter.add(displacement).normalize());
+        const impulse = new Vector2(circleCenter.add(displacement).normalize());
+
+        // Check if changing direction will immediately reverse x velocity
+        if (Math.sign(this.owner.body.velocity.x) !== Math.sign(impulse.x)) {
+            impulse.x *= -1; // Reverse the x component of the impulse
+        }
+
+        return impulse;
     }
 }
 

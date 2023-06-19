@@ -22,6 +22,7 @@ import tilemap5Png from "../assets/tileset/Dungeon_Tileset.png";
 import dungeonRoomJson from "../assets/transsilvania.json";
 
 import viSpriteSheet from "../assets/sprites/characters/vi.png";
+import viSkullSpriteSheet from "../assets/sprites/characters/vi_skull.png";
 import zeusSpriteSheet from "../assets/sprites/characters/zeus.png";
 import shockCircleSpriteSheet from "../assets/sprites/projectile/shock.png";
 import barHorizontal_red_left from "../assets/sprites/ui/barHorizontal_red_left.png";
@@ -98,6 +99,7 @@ export default class Boot extends Phaser.Scene {
 
         //loading spritesheets
         this.load.spritesheet('vi', viSpriteSheet, this.viFrameConfig);
+        this.load.spritesheet('vi_skull', viSkullSpriteSheet, this.viFrameConfig);
         this.load.spritesheet('zeus', zeusSpriteSheet, this.zeusFrameConfig);
         this.load.spritesheet('inky', inkySpriteSheet, this.inkyFrameConfig);
         this.load.spritesheet('pinky', pinkySpriteSheet, this.pinkyFrameConfig);
