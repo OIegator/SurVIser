@@ -97,12 +97,11 @@ export default class Shooter extends Character {
                 const strength = this.scene.player.isConfig.strength;
                 const criticalRate = this.scene.player.isConfig.criticalRate;
                 const criticalMultiplier = this.scene.player.isConfig.critical;
-
-
                 const animations = this.animationSets.get('Hit');
                 const animsController = this.anims;
                 animsController.play(animations[0], true);
                 animsController.currentAnim.paused = false;
+                this.gotDamage = true;
 
                 if (Math.random() < criticalRate) {
                     // Critical hit
@@ -179,7 +178,16 @@ export default class Shooter extends Character {
                 const idle = this.animationSets.get('Idle');
                 animsController.play(idle[0]); // Play the idle animation
             }
-        } else if (this.state === "dead") {
+        } else if (this.gotDamage) {
+            if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the attack animation
+                this.gotDamage = false;
+                animsController.stop(); // Stop the attack animation
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0]); // Play the idle animation
+            }
+        }
+        else if (this.state === "dead") {
             if (animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the death animation
                 animsController.currentAnim.paused = true;

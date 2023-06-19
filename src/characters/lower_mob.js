@@ -113,7 +113,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
 
 
     GetHit(damage = null) {
-        if (!this.isDying || !this.isDead) {
+        if (!this.isDying && !this.isDead) {
             if (this.hp <= 0) {
                 this.isDying = true;
             }
