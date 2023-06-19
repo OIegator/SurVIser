@@ -11,7 +11,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         this.offset = {x: x, y: 0};
     }
 
-    isOffset(x, y){
+    isOffset(x, y) {
         this.offset = {x: x, y: y};
     }
 
@@ -44,17 +44,27 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     updateAnimation() {
         const animations = this.animationSets.get('Walk');
         const attackAnimations = this.animationSets.get('Attack');
+        const hitAnimations = this.animationSets.get('Hit');
+
         const animsController = this.anims;
         const x = this.body.velocity.x;
         const y = this.body.velocity.y;
 
-        if (attackAnimations && this.scene.input.keyboard.checkDown(this.scene.input.keyboard.addKey('SPACE'), 200)) {
-            // Play attack animation if the SPACE key is pressed
-            animsController.play(attackAnimations[0]);
-            this.attackAnimationEnded = false;
+        if (this.state === 'hit' || this.state === 'attack') {
+            // If the character is currently in the 'hit' or 'attack' state, don't play other animations
+            return;
         }
 
-        if (animsController.isPlaying && attackAnimations.includes(animsController.currentAnim.key)) {
+        if (animsController.isPlaying && hitAnimations.includes(animsController.currentAnim.key)) {
+
+            if (!this.hitAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
+                // Reached the last frame of the attack animation
+                this.hitAnimationEnded = true;
+                animsController.stop(); // Stop the attack animation
+                const idle = this.animationSets.get('Idle');
+                animsController.play(idle[0]); // Play the idle animation
+            }
+        } else if (animsController.isPlaying && attackAnimations.includes(animsController.currentAnim.key)) {
             // Attack animation is playing
             if (!this.attackAnimationEnded && animsController.currentFrame.index === animsController.currentAnim.frames.length - 1) {
                 // Reached the last frame of the attack animation
@@ -83,7 +93,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
             }
         }
     }
-
 
 
     setSteerings(steerings) {

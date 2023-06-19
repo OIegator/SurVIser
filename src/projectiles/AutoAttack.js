@@ -6,6 +6,7 @@ export default class AutoAttack extends Phaser.Physics.Arcade.Sprite {
         this.startTime = 0; // Store the start time of the attack
         this.duration = 100; // Duration of the attack in milliseconds
         this.startTime = this.scene.time.now;
+        this.affectedEnemies = [];
         scene.physics.world.enable(this);
         scene.add.existing(this);
     }

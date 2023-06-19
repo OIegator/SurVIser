@@ -12,7 +12,7 @@ export default class Ordinary extends Character {
         this.hp = 0;
         this.maxSpeed = 50;
         this.lastAttackTime = 0;
-        this.state = "idle";
+        this.state = 'idle';
         this.isDead = false;
         this.isDying = false;
         this.gotDamage = false;
@@ -54,38 +54,34 @@ export default class Ordinary extends Character {
 
         if (this.gotDamage)
             this.GetHit();
-        else
-            this.updateAnimation();
+
+        this.updateAnimation();
     }
 
     GetHit(damage = null) {
-        if (!this.isDying || !this.isDead) {
-
-            if (this.hp < 0)
-                this.isDying = true;
+        if (!this.isDead) {
+            const strength = this.scene.player.isConfig.strength;
+            const criticalRate = this.scene.player.isConfig.criticalRate;
+            const criticalMultiplier = this.scene.player.isConfig.critical;
+            if (Math.random() < criticalRate) {
+                // Critical hit
+                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
+                this.hp -= (damage ? damage : strength) * criticalMultiplier;
+            } else {
+                // Regular hit
+                this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
+                this.hp -= damage ? damage : strength;
+            }
 
             const animations = this.animationSets.get('Hit');
             const animsController = this.anims;
             animsController.play(animations[0], true);
+            this.hitAnimationEnded = false;
 
-            const numb = animsController.currentFrame.frame.name;
-            if (numb == 70) {
-                const strength = this.scene.player.isConfig.strength;
-                const criticalRate = this.scene.player.isConfig.criticalRate;
-                const criticalMultiplier = this.scene.player.isConfig.critical;
-
-                if (Math.random() < criticalRate) {
-                    // Critical hit
-                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);
-                    this.hp -= (damage ? damage : strength) * criticalMultiplier;
-                } else {
-                    // Regular hit
-                    this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength), '#000000');
-                    this.hp -= damage ? damage : strength;
-                }
-
-                this.gotDamage = false;
-            }
+            this.gotDamage = false;
+            console.log(this.hp);
+            if (this.hp < 0)
+                this.isDying = true;
         }
     }
 
@@ -121,7 +117,7 @@ export default class Ordinary extends Character {
 
     IsPlayerInRange() {
         const screenHeight = this.scene.cameras.main.height;
-        const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight);
+        const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight * 0.6);
         const playerPos = new Phaser.Geom.Point(this.scene.player.x, this.scene.player.y);
         return Phaser.Geom.Circle.ContainsPoint(Range, playerPos);
     }

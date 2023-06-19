@@ -96,7 +96,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
 
     GetHit(damage) {
-        if (!this.Invc) {
+        if (!this.Invc && this.isAlive) {
             const dodgeRate = this.scene.player.isConfig.dodgeRate;
             if (Math.random() < dodgeRate) {
                 this.scene.showDamageNumber(this.x, this.y, 'Dodge!', '#000000', 36);

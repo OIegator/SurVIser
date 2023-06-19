@@ -140,7 +140,7 @@ export default class Zeus extends Boss {
                 // Regular hit
                 this.hp -= damage ? damage : strength;
             }
-            this.setMeterPercentageAnimated(this.hp / 100);
+            this.setMeterPercentageAnimated(this.hp < 0 ? 0 : this.hp / 100);
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;

@@ -5,7 +5,6 @@ export default class LvlUpScene extends Phaser.Scene {
         super('lvl-up');
     }
 
-
     resume() {
         const zeus_scene = this.scene.get('zeus');
         zeus_scene.expBar._reset();
@@ -160,22 +159,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
             container.setSize(background.width, background.height);
 
-            container.powerUp = item
-
-            // container.setInteractive()
-            //     .on('pointerover', () => {
-            //         background.setTint(0xE59866);
-            //     })
-            //     .on('pointerout', () => {
-            //         background.clearTint();
-            //     })
-            //     .on('pointerdown', () => {
-            //         player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
-            //         player_config.powerUps.push(container.powerUp);
-            //         this.registry.set('player_config', player_config);
-            //         this.resume();
-            //     });
-
+            container.powerUp = item;
 
             this.buttonContainer.push(container);
         });
@@ -199,10 +183,9 @@ export default class LvlUpScene extends Phaser.Scene {
         this.input.keyboard.on('keydown', (event) => {
             const { code } = event;
             const previousButton = selectedButton;
-            const previousButtonIndex = selectedButtonIndex;
 
             // Remove tint from the previously selected button
-            previousButton.list.forEach((child) => {
+            previousButton.list.forEach(() => {
                 updateButtonTint();
             });
 
@@ -215,7 +198,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
             // Apply tint to the newly selected button
             selectedButton = this.buttonContainer[selectedButtonIndex];
-            selectedButton.list.forEach((child) => {
+            selectedButton.list.forEach(() => {
                 updateButtonTint()
             });
 

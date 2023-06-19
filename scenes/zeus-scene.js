@@ -440,13 +440,13 @@ let ZeusScene = new Phaser.Class({
         this.characterFactory = new CharacterFactory(this);
 
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', this.physics.world.bounds.width / 2 + 30,  this.physics.world.bounds.height / 2 - 50, {player: true});
+        this.player = this.characterFactory.buildCharacter('vi', this.physics.world.bounds.width / 2 + 30, this.physics.world.bounds.height / 2 - 50, {player: true});
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
         this.registry.set('player_config', this.player.isConfig);
 
-        this.zeus = this.characterFactory.buildZeus("zeus",  1100, 1100, 100);
+        this.zeus = this.characterFactory.buildZeus("zeus", 1100, 1100, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
@@ -454,7 +454,7 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.bers);
         this.physics.add.collider(this.bers, worldLayer);
 
-        this.golem = this.characterFactory.buildGolem("golem", this.physics.world.bounds.width - 1100 , 1100, 100);
+        this.golem = this.characterFactory.buildGolem("golem", this.physics.world.bounds.width - 1100, 1100, 100);
         this.gameObjects.push(this.golem);
         this.physics.add.collider(this.golem, worldLayer);
 
@@ -495,7 +495,7 @@ let ZeusScene = new Phaser.Class({
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
-
+            this.physics.add.collider(clyde, this.player);
             // Add collision between each enemy
             this.enemies.forEach((enemy) => {
                 this.physics.add.collider(clyde, enemy);
@@ -530,12 +530,11 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(pinky);
         });
-
         clydes = this.characterFactory.buildShooters('clyde', 'tundra');
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
-
+            this.physics.add.collider(clyde, this.player);
             // Add collision between each enemy
             this.enemies.forEach((enemy) => {
                 this.physics.add.collider(clyde, enemy);
@@ -543,6 +542,7 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(clyde);
         });
+
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'meadow');
         pinkies.forEach((pinky) => {
             this.gameObjects.push(pinky);
@@ -567,12 +567,11 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(pinky);
         });
-
         clydes = this.characterFactory.buildShooters('clyde', 'meadow');
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
-
+            this.physics.add.collider(clyde, this.player);
             // Add collision between each enemy
             this.enemies.forEach((enemy) => {
                 this.physics.add.collider(clyde, enemy);
@@ -580,6 +579,7 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(clyde);
         });
+
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'desert');
         pinkies.forEach((pinky) => {
             this.gameObjects.push(pinky);
@@ -604,12 +604,11 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(pinky);
         });
-
         clydes = this.characterFactory.buildShooters('clyde', 'desert');
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
-
+            this.physics.add.collider(clyde, this.player);
             // Add collision between each enemy
             this.enemies.forEach((enemy) => {
                 this.physics.add.collider(clyde, enemy);
@@ -617,6 +616,7 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(clyde);
         });
+
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'castle');
         pinkies.forEach((pinky) => {
             this.gameObjects.push(pinky);
@@ -641,12 +641,11 @@ let ZeusScene = new Phaser.Class({
 
             this.enemies.push(pinky);
         });
-
         clydes = this.characterFactory.buildShooters('clyde', 'castle');
         clydes.forEach((clyde) => {
             this.gameObjects.push(clyde);
             this.physics.add.collider(clyde, worldLayer);
-
+            this.physics.add.collider(clyde, this.player);
             // Add collision between each enemy
             this.enemies.forEach((enemy) => {
                 this.physics.add.collider(clyde, enemy);
@@ -809,14 +808,13 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                if (mob.constructor.name === "Shooter" && this.canDamage) {
-                    mob.behaviour.GetHit();
-                    this.canDamage = false; // Set the flag false to prevent further damage
-                    setTimeout(() => {
-                        this.canDamage = true; // Set the flag to true after the delay
-                    }, 1500); // 1.5 seconds delay
-                } else {
-                    mob.gotDamage = true;
+                if (!attack.affectedEnemies.includes(mob)) {
+                    if (mob.constructor.name === "Shooter" && this.canDamage) {
+                        mob.behaviour.GetHit();
+                    } else {
+                        mob.gotDamage = true;
+                    }
+                    attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
                 }
             });
             this.attacks.forEach(function (element) {
