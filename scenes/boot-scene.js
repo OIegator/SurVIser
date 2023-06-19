@@ -19,7 +19,7 @@ import tilemap2Png from "../assets/tileset/TX Tileset PrePreSnow.png";
 import tilemap3Png from "../assets/tileset/TX Tileset Sand2.png";
 import tilemap4Png from "../assets/tileset/TX Tileset Snow3.png";
 import tilemap5Png from "../assets/tileset/Dungeon_Tileset.png";
-import dungeonRoomJson from "../assets/boletaria.json";
+import dungeonRoomJson from "../assets/transsilvania.json";
 
 import viSpriteSheet from "../assets/sprites/characters/vi.png";
 import zeusSpriteSheet from "../assets/sprites/characters/zeus.png";

@@ -45,6 +45,10 @@ export default class Berserk extends Boss {
         this.body.setOffset(200, 180);
         this.isOffset(200, 180);
         this.state = "idle";
+        this.patrolPoints = [
+            new Vector2(x - 100, y),
+            new Vector2(x + 100, y),
+        ];
         this.isDead = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
@@ -66,12 +70,8 @@ export default class Berserk extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                const patrolPoints = [
-                    new Vector2(14580, 15080),
-                    new Vector2(15080, 15080),
-                ];
                 this.setSteerings([
-                    new Patrol(this, patrolPoints, 1, this.maxSpeed)
+                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
                 ]);
             }
             return State.SUCCEEDED;

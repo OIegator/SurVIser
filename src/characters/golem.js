@@ -41,6 +41,10 @@ export default class Golem extends Boss {
         this.isOffset(350, 240);
         this.state = "idle";
         this.isDead = false;
+        this.patrolPoints = [
+            new Vector2(x - 100, y),
+            new Vector2(x + 100, y),
+        ];
         this.gotHit = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
@@ -62,12 +66,8 @@ export default class Golem extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                const patrolPoints = [
-                    new Vector2(14580, 764),
-                    new Vector2(15080, 764),
-                ];
                 this.setSteerings([
-                    new Patrol(this, patrolPoints, 1, this.maxSpeed)
+                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
                 ]);
             }
             return State.SUCCEEDED;

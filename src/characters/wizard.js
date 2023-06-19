@@ -48,6 +48,10 @@ export default class Wizard extends Boss {
         this.isVulnerable = false;
         this.isDead = false;
         this.gotHit = false;
+        this.patrolPoints = [
+            new Vector2(x - 100, y),
+            new Vector2(x + 100, y),
+        ];
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
         this.startX = x;
         this.startY = y;
@@ -70,12 +74,8 @@ export default class Wizard extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                const patrolPoints = [
-                    new Vector2(880, 15080),
-                    new Vector2(580, 15080),
-                ];
                 this.setSteerings([
-                    new Patrol(this, patrolPoints, 1, this.maxSpeed)
+                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
                 ]);
             }
             return State.SUCCEEDED;

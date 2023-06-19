@@ -54,6 +54,10 @@ export default class Zeus extends Boss {
         this.state = "idle";
         this.ammo = 3;
         this.isVulnerable = false;
+        this.patrolPoints = [
+            new Vector2(x - 100, y),
+            new Vector2(x + 100, y),
+        ];
         this.isDead = false;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
@@ -68,12 +72,8 @@ export default class Zeus extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                const patrolPoints = [
-                    new Vector2(880, 520),
-                    new Vector2(580, 520),
-                ];
                 this.setSteerings([
-                    new Patrol(this, patrolPoints, 1, this.maxSpeed)
+                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
                 ]);
             }
             return State.SUCCEEDED;
