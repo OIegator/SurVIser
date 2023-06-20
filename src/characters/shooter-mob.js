@@ -155,7 +155,7 @@ export default class Shooter extends Character {
         },
         IsPlayerSpotted: () => {
             const screenHeight = this.scene.cameras.main.height;
-            const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight);
+            const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight * 0.65);
             const playerPos = new Phaser.Geom.Point(this.scene.player.x, this.scene.player.y);
             return Phaser.Geom.Circle.ContainsPoint(Range, playerPos);
         },

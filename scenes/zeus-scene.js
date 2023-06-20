@@ -902,9 +902,11 @@ let ZeusScene = new Phaser.Class({
         if (this.attacks) {
 
             this.physics.overlap(this.attacks, this.zeus, () => {
-                if (!this.zeus.isVulnerable && this.zeus.isAlive)
+                if (!this.zeus.isVulnerable && this.zeus.state !== 'dead') {
                     this.showDamageNumber(this.zeus.x, this.zeus.y, 'UNVULNERABLE', '#2E86C1', 32);
-                if (this.canDamage) {
+                    }
+
+                if (this.canDamage && this.zeus.isVulnerable) {
                     this.zeus.behaviour.GetHit();
 
                     this.canDamage = false; // Set the flag false to prevent further damage
