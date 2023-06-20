@@ -6,7 +6,7 @@ export default class GameOverScene extends Phaser.Scene {
     create() {
         const player_config = this.registry.get('player_config');
 
-        this.add.image(0, 0, 'menu_background').setOrigin(0);
+        this.add.image(0, 0, 'gameover_background').setOrigin(0);
         this.add.text(445, 710, 'Game Over', {
             color: 'red',
             fontSize: '96pt',

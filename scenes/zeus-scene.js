@@ -443,10 +443,10 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.characterFactory = new CharacterFactory(this);
 
-        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 - 220, 'zeus_stone');
-        this.add.sprite(this.physics.world.bounds.width / 2 + 365, this.physics.world.bounds.height / 2 + 215, 'bers_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 - 220, 'bers_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 + 365, this.physics.world.bounds.height / 2 + 215, 'wizard_stone');
         this.add.sprite(this.physics.world.bounds.width / 2 + 365, this.physics.world.bounds.height / 2 - 220, 'golem_stone');
-        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 + 215, 'wizard_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 + 215, 'zeus_stone');
 
         // Creating characters
         this.player = this.characterFactory.buildCharacter('vi', this.physics.world.bounds.width / 2 + 15, this.physics.world.bounds.height / 2 - 50, {player: true});
@@ -455,11 +455,12 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.registry.set('player_config', this.player.isConfig);
 
-        this.zeus = this.characterFactory.buildZeus("zeus", 1100, 1100, 100);
+
+        this.zeus = this.characterFactory.buildZeus("zeus", 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
 
-        this.bers = this.characterFactory.buildBers("berserk", this.physics.world.bounds.width - 1200, this.physics.world.bounds.height - 1200, 100);
+        this.bers = this.characterFactory.buildBers("berserk", 1100, 1100, 100);
         this.gameObjects.push(this.bers);
         this.physics.add.collider(this.bers, worldLayer);
 
@@ -467,7 +468,7 @@ let ZeusScene = new Phaser.Class({
         this.gameObjects.push(this.golem);
         this.physics.add.collider(this.golem, worldLayer);
 
-        this.wizard = this.characterFactory.buildWizard("wizard", 1200, this.physics.world.bounds.height - 1200, 100);
+        this.wizard = this.characterFactory.buildWizard("wizard", this.physics.world.bounds.width - 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
 

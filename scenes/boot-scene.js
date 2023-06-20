@@ -35,9 +35,11 @@ import lightning from "../assets/sprites/projectile/Weapon.png";
 import bullet from "../assets/sprites/projectile/4.png";
 import slash from "../assets/sprites/projectile/Splash.png";
 import menu_background from "../assets/sprites/ui/menu_background.png";
+import gameover_background from "../assets/sprites/ui/gameover_background.png";
 import green_btn from "../assets/sprites/ui/green_btn.png";
 import red_btn from "../assets/sprites/ui/red_btn.png";
 import character_selection_background from "../assets/sprites/ui/character_selection_background.png";
+import tutorial_background from "../assets/sprites/ui/tutorial_background.png";
 import character_background from "../assets/sprites/ui/character_background.png";
 import character_selected_background from "../assets/sprites/ui/character_selected_background.png";
 import todo_character from "../assets/sprites/ui/todo_character.png";
@@ -171,10 +173,12 @@ export default class Boot extends Phaser.Scene {
 
         //loading menu
         this.load.image('menu_background', menu_background);
+        this.load.image('gameover_background', gameover_background);
         this.load.image('green_btn', green_btn);
         this.load.image('red_btn', red_btn);
         this.load.image('character_selection_background', character_selection_background);
         this.load.image('character_background', character_background);
+        this.load.image('tutorial_background', tutorial_background);
         this.load.image('character_selected_background', character_selected_background);
         this.load.image('todo_character', todo_character);
 
@@ -236,7 +240,7 @@ export default class Boot extends Phaser.Scene {
             fontFamily: 'Squada One'
         });
         this.input.setDefaultCursor('url(' + cursor + '), pointer');
-        this.scene.start('zeus');
+        this.scene.start('menu');
     }
 
 }

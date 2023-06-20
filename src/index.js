@@ -15,7 +15,7 @@ const config = {
     height: 880,
     pixelArt: false,
     zoom: 1.0,
-    scene: [Boot, ZeusScene, LvlUpScene, PauseScene, GameOverScene],
+    scene: [Boot, MenuScene, ZeusScene, LvlUpScene, PauseScene, GameOverScene],
     physics: {
         default: "arcade",
         arcade: {

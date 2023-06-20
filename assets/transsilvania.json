@@ -20,7 +20,7 @@
          "name":"Walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":200,
          "x":0,
          "y":0
@@ -32,7 +32,7 @@
          "name":"Upper",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":200,
          "x":0,
          "y":0
@@ -41,10 +41,175 @@
          "draworder":"topdown",
          "id":13,
          "name":"grid",
-         "objects":[],
+         "objects":[
+                {
+                 "height":1064,
+                 "id":1605,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":2304,
+                 "y":2608
+                }, 
+                {
+                 "height":1064,
+                 "id":1606,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":4044,
+                 "y":2612
+                }, 
+                {
+                 "height":1064,
+                 "id":1607,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":548,
+                 "y":2596
+                }, 
+                {
+                 "height":1064,
+                 "id":1608,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":556,
+                 "y":3676
+                }, 
+                {
+                 "height":1064,
+                 "id":1609,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":548,
+                 "y":4740
+                }, 
+                {
+                 "height":1064,
+                 "id":1610,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":2348,
+                 "y":3716
+                }, 
+                {
+                 "height":1064,
+                 "id":1611,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":4068,
+                 "y":4788
+                }, 
+                {
+                 "height":1064,
+                 "id":1612,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":2260,
+                 "y":4732
+                }, 
+                {
+                 "height":1064,
+                 "id":1613,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":4076,
+                 "y":3708
+                }, 
+                {
+                 "height":1064,
+                 "id":1614,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":556,
+                 "y":1468
+                }, 
+                {
+                 "height":1064,
+                 "id":1615,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":4116,
+                 "y":1516
+                }, 
+                {
+                 "height":1064,
+                 "id":1616,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":476,
+                 "y":380
+                }, 
+                {
+                 "height":1064,
+                 "id":1617,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":2268,
+                 "y":396
+                }, 
+                {
+                 "height":1064,
+                 "id":1618,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":2292,
+                 "y":1500
+                }, 
+                {
+                 "height":1064,
+                 "id":1619,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1736,
+                 "x":4108,
+                 "y":412
+                }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -73,8 +238,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3511.52,
-                 "y":1525.33
+                 "x":3317.74906812095,
+                 "y":2085.78311608446
                 }, 
                 {
                  "height":0,
@@ -96,8 +261,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3216.53,
-                 "y":1515.4
+                 "x":3085.58779934346,
+                 "y":2077.96806676427
                 }, 
                 {
                  "height":0,
@@ -119,8 +284,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3342.7,
-                 "y":1393.14
+                 "x":3184.88535953756,
+                 "y":1981.74773142838
                 }, 
                 {
                  "height":0,
@@ -142,8 +307,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3532.82,
-                 "y":724.185
+                 "x":3334.51246696485,
+                 "y":1455.270760836
                 }, 
                 {
                  "height":0,
@@ -165,8 +330,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3237.8,
-                 "y":714.255
+                 "x":3102.32758776645,
+                 "y":1447.45571151582
                 }, 
                 {
                  "height":0,
@@ -188,8 +353,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3364,
-                 "y":592
+                 "x":3201.64875838145,
+                 "y":1351.23931125008
                 }, 
                 {
                  "height":0,
@@ -211,8 +376,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3431.52,
-                 "y":5977.33
+                 "x":3254.78794570257,
+                 "y":5589.56957866751
                 }, 
                 {
                  "height":0,
@@ -234,31 +399,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3136.53,
-                 "y":5967.4
-                }, 
-                {
-                 "height":0,
-                 "id":1548,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"border"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3262.7,
-                 "y":5845.14
+                 "x":3022.62667692508,
+                 "y":5581.75452934733
                 }, 
                 {
                  "height":0,
@@ -280,8 +422,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3412.82,
-                 "y":5068.18
+                 "x":3240.07078333727,
+                 "y":4874.05577308409
                 }, 
                 {
                  "height":0,
@@ -303,8 +445,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3117.8,
-                 "y":5058.26
+                 "x":3007.88590413888,
+                 "y":4866.24859390421
                 }, 
                 {
                  "height":0,
@@ -326,8 +468,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3244,
-                 "y":4936
+                 "x":3107.20707475388,
+                 "y":4770.02825856832
                 }, 
                 {
                  "height":0,
@@ -349,8 +491,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1312.82,
-                 "y":3420.18
+                 "x":1587.3413198547,
+                 "y":3577.05665126539
                 }, 
                 {
                  "height":0,
@@ -372,31 +514,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1017.8,
-                 "y":3410.26
-                }, 
-                {
-                 "height":0,
-                 "id":1560,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"border"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1144,
-                 "y":3288
+                 "x":1355.1564406563,
+                 "y":3569.24947208551
                 }, 
                 {
                  "height":0,
@@ -418,8 +537,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2344.82,
-                 "y":3383.21
+                 "x":2399.53979905185,
+                 "y":3547.96074256779
                 }, 
                 {
                  "height":0,
@@ -441,8 +560,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2016.47,
-                 "y":3367.23
+                 "x":2141.12374222589,
+                 "y":3535.38425836472
                 }, 
                 {
                  "height":0,
@@ -464,8 +583,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2176,
-                 "y":3187.39
+                 "x":2266.67609046845,
+                 "y":3393.84765516819
                 }, 
                 {
                  "height":0,
@@ -487,8 +606,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4440.82,
-                 "y":3180.18
+                 "x":4049.1212064135,
+                 "y":3388.17328401024
                 }, 
                 {
                  "height":0,
@@ -510,8 +629,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4148.83,
-                 "y":3236.93
+                 "x":3819.3209797267,
+                 "y":3432.83633022578
                 }, 
                 {
                  "height":0,
@@ -533,8 +652,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4265.94,
-                 "y":3020.73
+                 "x":3911.48819280692,
+                 "y":3262.6838968901
                 }, 
                 {
                  "height":0,
@@ -556,8 +675,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5696.82,
-                 "y":3156.18
+                 "x":5037.61082838213,
+                 "y":3369.28494728472
                 }, 
                 {
                  "height":0,
@@ -579,8 +698,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5401.8,
-                 "y":3146.26
+                 "x":4805.42594918373,
+                 "y":3361.47776810484
                 }, 
                 {
                  "height":0,
@@ -602,8 +721,54 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5528,
-                 "y":3024
+                 "x":4904.74711979873,
+                 "y":3265.25743276895
+                }, 
+                {
+                 "height":0,
+                 "id":1580,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"border"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1469.93170495581,
+                 "y":3430.00570309705
+                }, 
+                {
+                 "height":0,
+                 "id":1581,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"border"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3122.66116843839,
+                 "y":5423.7745796792
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -616,29 +781,6 @@
          "id":3,
          "name":"castle",
          "objects":[
-                {
-                 "height":0,
-                 "id":1486,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"castle"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4419.67,
-                 "y":2130.6
-                }, 
                 {
                  "height":0,
                  "id":1487,
@@ -659,8 +801,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4124.68,
-                 "y":2120.67
+                 "x":3800.31459089666,
+                 "y":2554.32404884146
                 }, 
                 {
                  "height":0,
@@ -682,31 +824,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4250.85,
-                 "y":1998.41
-                }, 
-                {
-                 "height":0,
-                 "id":1489,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"castle"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5406.68,
-                 "y":2167.7
+                 "x":3899.61215109075,
+                 "y":2458.10371350557
                 }, 
                 {
                  "height":0,
@@ -728,8 +847,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5111.69,
-                 "y":2157.77
+                 "x":4745.10530887377,
+                 "y":2079.52226936299
                 }, 
                 {
                  "height":0,
@@ -751,31 +870,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5237.86,
-                 "y":2035.51
-                }, 
-                {
-                 "height":0,
-                 "id":1492,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"castle"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4368.97,
-                 "y":1349.46
+                 "x":4844.40286906786,
+                 "y":1983.30193402709
                 }, 
                 {
                  "height":0,
@@ -797,8 +893,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4073.95,
-                 "y":1339.53
+                 "x":4056.3893691431,
+                 "y":1563.55590926776
                 }, 
                 {
                  "height":0,
@@ -820,8 +916,77 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4200.15,
-                 "y":1217.27
+                 "x":4155.7105397581,
+                 "y":1467.33557393186
+                }, 
+                {
+                 "height":0,
+                 "id":1582,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"castle"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3978.83703768838,
+                 "y":2549.98092384009
+                }, 
+                {
+                 "height":0,
+                 "id":1583,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"castle"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4250.98812768142,
+                 "y":1568.21860966322
+                }, 
+                {
+                 "height":0,
+                 "id":1584,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"castle"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4945.77552292166,
+                 "y":2074.59961584845
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -854,77 +1019,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1177.52,
-                 "y":2421.33
-                }, 
-                {
-                 "height":0,
-                 "id":1532,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"desert"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":882.53,
-                 "y":2411.4
-                }, 
-                {
-                 "height":0,
-                 "id":1533,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"desert"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1008.7,
-                 "y":2289.14
-                }, 
-                {
-                 "height":0,
-                 "id":1534,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"desert"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2334.53,
-                 "y":2278.43
+                 "x":1152.85832156461,
+                 "y":2334.94768717035
                 }, 
                 {
                  "height":0,
@@ -946,8 +1042,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2039.54,
-                 "y":2268.5
+                 "x":1831.2801559033,
+                 "y":2214.66833293033
                 }, 
                 {
                  "height":0,
@@ -969,8 +1065,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2165.71,
-                 "y":2146.24
+                 "x":2059.36183013499,
+                 "y":2228.15298362647
                 }, 
                 {
                  "height":0,
@@ -992,35 +1088,12 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2534.82,
-                 "y":1188.18
+                 "x":2253.07246479551,
+                 "y":1340.44133579248
                 }, 
                 {
                  "height":0,
-                 "id":1538,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"desert"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2239.8,
-                 "y":1178.26
-                }, 
-                {
-                 "height":0,
-                 "id":1539,
+                 "id":1588,
                  "name":"clyde",
                  "point":true,
                  "properties":[
@@ -1038,8 +1111,100 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2366,
-                 "y":1056
+                 "x":1953.81818181818,
+                 "y":2065.21212121212
+                }, 
+                {
+                 "height":0,
+                 "id":1589,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"desert"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1047.75757575758,
+                 "y":2131.87878787879
+                }, 
+                {
+                 "height":0,
+                 "id":1590,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"desert"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2013.09090909091,
+                 "y":1310.90909090909
+                }, 
+                {
+                 "height":0,
+                 "id":1591,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"desert"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":932.606060606061,
+                 "y":2280.36363636364
+                }, 
+                {
+                 "height":0,
+                 "id":1592,
+                 "name":"clyde",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"desert"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2143.39393939394,
+                 "y":1174.54545454545
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1072,8 +1237,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2567.52,
-                 "y":5665.33
+                 "x":2070.80782358402,
+                 "y":5400.02120123582
                 }, 
                 {
                  "height":0,
@@ -1095,31 +1260,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2272.53,
-                 "y":5655.4
-                }, 
-                {
-                 "height":0,
-                 "id":1515,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"meadow"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2398.7,
-                 "y":5533.14
+                 "x":1838.64655480654,
+                 "y":5392.20615191564
                 }, 
                 {
                  "height":0,
@@ -1141,8 +1283,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2590.53,
-                 "y":4234.43
+                 "x":2592.91701641961,
+                 "y":4217.88282538
                 }, 
                 {
                  "height":0,
@@ -1164,8 +1306,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2295.54,
-                 "y":4224.5
+                 "x":2360.75574764212,
+                 "y":4210.06777605982
                 }, 
                 {
                  "height":0,
@@ -1187,8 +1329,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2421.71,
-                 "y":4102.24
+                 "x":2460.05330783622,
+                 "y":4113.84744072392
                 }, 
                 {
                  "height":0,
@@ -1210,8 +1352,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1140.82,
-                 "y":4108.19
+                 "x":1283.97490665517,
+                 "y":4606.53017420379
                 }, 
                 {
                  "height":0,
@@ -1233,13 +1375,13 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":845.83,
-                 "y":4098.26
+                 "x":1051.81363787768,
+                 "y":4598.71512488361
                 }, 
                 {
                  "height":0,
-                 "id":1572,
-                 "name":"clyde",
+                 "id":1577,
+                 "name":"pinky",
                  "point":true,
                  "properties":[
                         {
@@ -1250,14 +1392,37 @@
                         {
                          "name":"hp",
                          "type":"int",
-                         "value":25
+                         "value":27
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":972,
-                 "y":3976
+                 "x":1158.83824491403,
+                 "y":4409.2932492405
+                }, 
+                {
+                 "height":0,
+                 "id":1578,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"meadow"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1943.73701524132,
+                 "y":5229.36102460609
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1270,29 +1435,6 @@
          "id":6,
          "name":"tundra",
          "objects":[
-                {
-                 "height":0,
-                 "id":1522,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"tundra"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4459.52,
-                 "y":5473.33
-                }, 
                 {
                  "height":0,
                  "id":1523,
@@ -1313,31 +1455,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4164.53,
-                 "y":5463.4
-                }, 
-                {
-                 "height":0,
-                 "id":1524,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"tundra"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4290.7,
-                 "y":5341.14
+                 "x":4311.67710000131,
+                 "y":5201.09945811151
                 }, 
                 {
                  "height":0,
@@ -1359,77 +1478,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5822.53,
-                 "y":4158.43
-                }, 
-                {
-                 "height":0,
-                 "id":1526,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"tundra"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5527.54,
-                 "y":4148.5
-                }, 
-                {
-                 "height":0,
-                 "id":1527,
-                 "name":"clyde",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"tundra"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5653.71,
-                 "y":4026.24
-                }, 
-                {
-                 "height":0,
-                 "id":1528,
-                 "name":"pinky",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"biome",
-                         "type":"string",
-                         "value":"tundra"
-                        }, 
-                        {
-                         "name":"hp",
-                         "type":"int",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4504.82,
-                 "y":4236.18
+                 "x":5704.54636212232,
+                 "y":4750.06975908254
                 }, 
                 {
                  "height":0,
@@ -1451,8 +1501,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4209.8,
-                 "y":4226.26
+                 "x":4067.84571645169,
+                 "y":4220.18276576055
                 }, 
                 {
                  "height":0,
@@ -1474,8 +1524,182 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4336,
-                 "y":4104
+                 "x":4233.44884832881,
+                 "y":3953.57056776174
+                }, 
+                {
+                 "height":0,
+                 "id":1593,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"tundra"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4570.90909090909,
+                 "y":5200.84848484848
+                }, 
+                {
+                 "height":0,
+                 "id":1594,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"tundra"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4419.39393939394,
+                 "y":4991.75757575758
+                }, 
+                {
+                 "height":0,
+                 "id":1595,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"tundra"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5458.90909090909,
+                 "y":4725.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":1596,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"tundra"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5592.24242424242,
+                 "y":4570.78787878788
+                }, 
+                {
+                 "height":0,
+                 "id":1597,
+                 "name":"pinky",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"biome",
+                         "type":"string",
+                         "value":"tundra"
+                        }, 
+                        {
+                         "name":"hp",
+                         "type":"int",
+                         "value":27
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4554.18181818182,
+                 "y":4072
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":22,
+         "name":"Bosses",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1599,
+                 "name":"ZEUS",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1050.18181818182,
+                 "y":5278.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":1600,
+                 "name":"BERSERK",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1054.54545454545,
+                 "y":1342.42424242424
+                }, 
+                {
+                 "height":0,
+                 "id":1602,
+                 "name":"GOLEM",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4971.75757575758,
+                 "y":1485.93939393939
+                }, 
+                {
+                 "height":0,
+                 "id":1604,
+                 "name":"WIZARD",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5249.81818181818,
+                 "y":5254.42424242424
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1483,8 +1707,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":22,
- "nextobjectid":1573,
+ "nextlayerid":23,
+ "nextobjectid":1620,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.3",

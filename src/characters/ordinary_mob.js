@@ -117,7 +117,7 @@ export default class Ordinary extends Character {
 
     IsPlayerInRange() {
         const screenHeight = this.scene.cameras.main.height;
-        const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight * 0.6);
+        const Range = new Phaser.Geom.Circle(this.x, this.y, screenHeight * 0.4);
         const playerPos = new Phaser.Geom.Point(this.scene.player.x, this.scene.player.y);
         return Phaser.Geom.Circle.ContainsPoint(Range, playerPos);
     }

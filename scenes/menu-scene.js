@@ -96,6 +96,8 @@ export default class MenuScene extends Phaser.Scene {
             characterBackground1_selected.setVisible(false);
         };
 
+        const tutorialBackground = this.add.image(795, 350, 'tutorial_background').setVisible(false);
+
         let isHeroSelectionVisible = false;
 
         // Show hero selection when the start button is clicked
@@ -131,6 +133,9 @@ export default class MenuScene extends Phaser.Scene {
             });
 
         // Go to the next scene when the confirm button is clicked
+        let confirmButtonPressed = false;
+
+        // Go to the next scene or display tutorial background when the confirm button is clicked
         confirm_btn_container.setInteractive()
             .on('pointerover', () => {
                 confirm_btn.setTint(0x7DCEA0); // Apply darker tint
@@ -139,7 +144,17 @@ export default class MenuScene extends Phaser.Scene {
                 confirm_btn.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
-                this.scene.start('zeus');
+                if (!confirmButtonPressed) {
+                    tutorialBackground.setVisible(true);
+                    const tutorialLabel = this.add.text(670, 90, 'TUTORIAL', {
+                        color: 'white',
+                        fontSize: '48px',
+                        fontFamily: 'grobold'
+                    });
+                    confirmButtonPressed = true;
+                } else {
+                    this.scene.start('zeus');
+                }
             });
 
         // Toggle visibility of characterBackground1_selected
