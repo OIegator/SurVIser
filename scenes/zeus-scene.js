@@ -435,13 +435,19 @@ let ZeusScene = new Phaser.Class({
         worldLayer.setCollisionBetween(1, 500);
         aboveLayer.setDepth(10);
 
+
         this.physics.world.bounds.width = this.map.widthInPixels;
         this.physics.world.bounds.height = this.map.heightInPixels;
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.characterFactory = new CharacterFactory(this);
 
+        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 - 220, 'zeus_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 + 365, this.physics.world.bounds.height / 2 + 215, 'bers_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 + 365, this.physics.world.bounds.height / 2 - 220, 'golem_stone');
+        this.add.sprite(this.physics.world.bounds.width / 2 - 370, this.physics.world.bounds.height / 2 + 215, 'wizard_stone');
+
         // Creating characters
-        this.player = this.characterFactory.buildCharacter('vi', this.physics.world.bounds.width / 2 + 30, this.physics.world.bounds.height / 2 - 50, {player: true});
+        this.player = this.characterFactory.buildCharacter('vi', this.physics.world.bounds.width / 2 + 15, this.physics.world.bounds.height / 2 - 50, {player: true});
         this.gameObjects.push(this.player);
         this.physics.add.collider(this.player, worldLayer);
         this.cameras.main.startFollow(this.player);
