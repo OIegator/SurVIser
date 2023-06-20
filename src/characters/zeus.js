@@ -164,6 +164,7 @@ export default class Zeus extends Boss {
             this.isDead = true;
 
             this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'lightning', 'shock_icon'));
+            this.scene.deadBosses++;
 
             return State.SUCCEEDED;
         },

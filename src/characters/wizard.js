@@ -138,6 +138,7 @@ export default class Wizard extends Boss {
             this.isDead = true;
 
             this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y + 100, 'magic', 'magic_icon'));
+            this.scene.deadBosses++;
 
             return State.SUCCEEDED;
         },

@@ -413,6 +413,8 @@ let ZeusScene = new Phaser.Class({
         this.powerUpsGroup = this.physics.add.group();
         this.lightningGroup = new LightningGroup(this);
         this.bulletGroup = new BulletGroup(this);
+        this.deadBosses = 0;
+        this.gSpawn = false;
 
         this.map = this.make.tilemap({key: "map"});
 
@@ -799,6 +801,17 @@ let ZeusScene = new Phaser.Class({
             this.esc();
         }
 
+        if (this.deadBosses == 4 && this.gSpawn == false) {
+            this.gary = this.characterFactory.buildGary("gary", this.physics.world.bounds.width / 2 + 50, this.physics.world.bounds.height / 2 - 50, 100);
+            this.gameObjects.push(this.gary);
+            this.physics.add.collider(this.gary, this.worldLayer);
+            this.gSpawn = true;
+        }
+
+        if (this.gSpawn) {
+            console.log(this.gary.x);
+        }
+
         if (this.lightningGroup) {
             this.lightningGroup.update(time); // Call the update method of the lightning group
         }
@@ -850,7 +863,7 @@ let ZeusScene = new Phaser.Class({
 
             this.physics.overlap(this.attacks, this.golem, () => {
                 if (this.canDamage) {
-                    this.golem.behaviour.GetHit(this.player.calculateDamage());
+                    this.golem.behaviour.GetHit(this.player.calculateDamage()*0.4);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -859,16 +872,18 @@ let ZeusScene = new Phaser.Class({
                 }
             });
 
-            // this.physics.overlap(this.attacks, this.gary, () => {
-            //     if (this.canDamage && this.gary.isVulnerable) {
-            //         this.gary.behaviour.GetHit(25);
-            //
-            //         this.canDamage = false; // Set the flag false to prevent further damage
-            //         setTimeout(() => {
-            //             this.canDamage = true; // Set the flag to true after the delay
-            //         }, 1500); // 1.5 seconds delay
-            //     }
-            // });
+            if (this.gSpawn) {
+                this.physics.overlap(this.attacks, this.gary, () => {
+                    if (this.canDamage && this.gary.isVulnerable) {
+                        this.gary.behaviour.GetHit(this.player.calculateDamage());
+
+                        this.canDamage = false; // Set the flag false to prevent further damage
+                        setTimeout(() => {
+                            this.canDamage = true; // Set the flag to true after the delay
+                        }, 1500); // 1.5 seconds delay
+                    }
+                });
+            }
 
             this.physics.overlap(this.attacks, this.wizard, (attack, mob) => {
                 if (this.canDamage) {
@@ -884,7 +899,7 @@ let ZeusScene = new Phaser.Class({
 
             this.physics.overlap(this.attacks, this.bers, () => {
                 if (this.canDamage) {
-                    this.bers.behaviour.GetHit();
+                    this.bers.behaviour.GetHit(this.player.calculateDamage()*0.7);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -907,7 +922,7 @@ let ZeusScene = new Phaser.Class({
                     }
 
                 if (this.canDamage && this.zeus.isVulnerable) {
-                    this.zeus.behaviour.GetHit();
+                    this.zeus.behaviour.GetHit(this.player.calculateDamage());
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {

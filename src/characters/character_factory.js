@@ -176,10 +176,10 @@ export default class CharacterFactory {
 
     buildBers(spriteSheetName, x, y, maxHP, velocity = null) {
         let character = new Bers(this.scene, x, y, spriteSheetName, 2, maxHP, velocity);
-        character.maxSpeed = 100;
+        character.maxSpeed = 140;
         character.setCollideWorldBounds(true);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
-        character.speed = new Vector2(0.5, 0.5);
+        character.speed = new Vector2(0.7, 0.7);
         return character;
     }
 

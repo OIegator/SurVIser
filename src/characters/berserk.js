@@ -143,6 +143,7 @@ export default class Berserk extends Boss {
             this.isDead = true;
 
             this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'dd', 'dd_icon'));
+            this.scene.deadBosses++;
 
             return State.SUCCEEDED;
         },

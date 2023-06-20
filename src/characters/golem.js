@@ -129,6 +129,7 @@ export default class Golem extends Boss {
             this.isDead = true;
 
             this.scene.powerUpsGroup.add(new PowerUp(this.scene, this.x, this.y, 'armor', 'armor_icon'));
+            this.scene.deadBosses++;
 
             return State.SUCCEEDED;
         },
