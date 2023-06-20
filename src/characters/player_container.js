@@ -28,6 +28,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.tossedVector = new Vector2(0, 0);
         this.sprite = new Player(scene, 0, 0, name, frame, this);
         this.healthBar = new HealthBar(scene, -15, 65, 6, 60, this);
+        this.shieldIcon = null;
         this.fire = [];
         this.add(this.sprite);
         this.add(this.healthBar);
@@ -103,7 +104,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
                 this.hp -= 0;
             } else {
                 // Regular hit
-                this.hp -= damage;
+                this.hp -= this.powerUps.some(powerUp => powerUp.texture.key === 'armor') ? damage * 0.7 : damage;
             }
             this.isAttacking = false;
             this.healthBar.updateBar();
@@ -216,6 +217,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.sprite = newPlayer;
         this.sprite.animationSets = new AnimationLoader(this.scene, 'vi_skull', viConfigJson, 'vi_skull', 28).createAnimations();
         this.add(this.sprite);
+
+        this.shieldIcon = this.scene.add.sprite(-45, 65, 'shield'); // Adjust the position as needed
+        this.shieldIcon.setDepth(1); // Ensure the shield is displayed above other sprites
+        this.add(this.shieldIcon);
     }
 
     addFireBonus(scene) {

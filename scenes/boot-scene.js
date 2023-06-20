@@ -44,6 +44,7 @@ import todo_character from "../assets/sprites/ui/todo_character.png";
 import shock_icon from "../assets/sprites/ui/shock_icon.png";
 import armor from "../assets/sprites/ui/armor.png";
 import magic from "../assets/sprites/ui/magic.png";
+import shield from "../assets/sprites/ui/shiled.png";
 import dd from "../assets/sprites/ui/dd.png";
 import dd_icon from "../assets/sprites/ui/dd_icon.png";
 import magic_icon from "../assets/sprites/ui/magic_icon.png";
@@ -125,7 +126,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('smash', smash);
         this.load.image('poke', poke);
         this.load.image('fire', fire);
+
         this.load.image('eye', eye);
+        this.load.image('shield', shield);
 
         this.load.image('heal', heal);
         this.load.image('invc', invc);

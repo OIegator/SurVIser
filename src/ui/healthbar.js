@@ -31,10 +31,12 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     }
 
     updateBar() {
-        if(this.owner.sprite.scaleX < 0) {
+        if (this.owner.sprite.scaleX < 0) {
             this.x = this.defaultX - 25;
+            if (this.owner.shieldIcon) this.owner.shieldIcon.x = -45;
         } else {
             this.x = this.defaultX;
+            if (this.owner.shieldIcon) this.owner.shieldIcon.x = -20;
         }
         this.currentSize = this.owner.hp / this.owner.maxHp * this.width;
         if (this.currentSize < 0) {
