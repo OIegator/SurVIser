@@ -66,6 +66,22 @@ import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 import clydeSpriteSheet from "../assets/sprites/characters/clyde.png";
 
 import main_theme from "../assets/audio/main_theme.mp3";
+import attack_sound from "../assets/audio/attack_sound.mp3";
+import hit_sound from "../assets/audio/hit_sound.mp3";
+import fire_sound from "../assets/audio/fire_sound.mp3";
+import explosion_sound from "../assets/audio/explosion_sound.mp3";
+import heal_sound from "../assets/audio/heal_sound.mp3";
+import heal_sound2 from "../assets/audio/heal_sound2.mp3";
+import inv_sound from "../assets/audio/inv_sound.mp3";
+import btn_sound from "../assets/audio/btn_sound.mp3";
+import btn2_sound from "../assets/audio/btn2_sound.mp3";
+import gameover_sound from "../assets/audio/gameover_sound.mp3";
+import lvlup_sound from "../assets/audio/lvlup_sound.mp3";
+import player_hit_sound from "../assets/audio/player_hit.mp3";
+import unvulnerable_sound from "../assets/audio/unvulnerable_sound.mp3";
+import shoot_sound from "../assets/audio/shoot_sound.mp3";
+import lightning_sound from "../assets/audio/lightning_sound.mp3";
+import golem_attack_sound from "../assets/audio/golem_attack.mp3";
 
 import smash from "../assets/sprites/projectile/Sm05.png";
 import poke from "../assets/sprites/projectile/Sm10.png";
@@ -183,6 +199,22 @@ export default class Boot extends Phaser.Scene {
         this.load.image('todo_character', todo_character);
 
         this.load.audio('main_theme', main_theme);
+        this.load.audio('hit_sound', hit_sound);
+        this.load.audio('attack_sound', attack_sound);
+        this.load.audio('fire_sound', fire_sound);
+        this.load.audio('explosion_sound', explosion_sound);
+        this.load.audio('heal_sound', heal_sound);
+        this.load.audio('heal_sound2', heal_sound2);
+        this.load.audio('inv_sound', inv_sound);
+        this.load.audio('btn_sound', btn_sound);
+        this.load.audio('btn2_sound', btn2_sound);
+        this.load.audio('gameover_sound', gameover_sound);
+        this.load.audio('lvlup_sound', lvlup_sound);
+        this.load.audio('player_hit_sound', player_hit_sound);
+        this.load.audio('unvulnerable_sound', unvulnerable_sound);
+        this.load.audio('shoot_sound', shoot_sound);
+        this.load.audio('lightning_sound', lightning_sound);
+        this.load.audio('golem_attack_sound', golem_attack_sound);
 
 
         let loadingBar = this.add.graphics({

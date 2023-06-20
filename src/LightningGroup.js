@@ -25,6 +25,18 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
     }
 
     fire(x, y, target, duration) {
+        if (!this.attackSoundCooldown) {
+            this.scene.sound.play("lightning_sound");
+
+            // Set a cooldown to prevent playing the sound again too soon
+            this.attackSoundCooldown = true;
+            this.scene.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    this.attackSoundCooldown = false;
+                }
+            });
+        }
         this.body.reset(x, y);
         this.body.setSize(20, 20);
         this.duration = duration;

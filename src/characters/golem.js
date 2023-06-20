@@ -89,6 +89,18 @@ export default class Golem extends Boss {
             this.changeState("attack");
             this.setSteerings([]);
 
+            if (!this.attackSoundCooldown) {
+                this.scene.sound.play("golem_attack_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.attackSoundCooldown = true;
+                this.scene.time.addEvent({
+                    delay: 1000,
+                    callback: () => {
+                        this.attackSoundCooldown = false;
+                    }
+                });
+            }
             // Play attack animation
             const attackAnimations = this.animationSets.get('Attack');
             const animsController = this.anims;
@@ -102,9 +114,20 @@ export default class Golem extends Boss {
 
         GetHit: (damage) => {
             this.gotHit = true;
-            ;
             this.hp -= damage;
             this.setMeterPercentageAnimated(this.hp < 0 ? 0 : this.hp / 100);
+            if (!this.hitSoundCooldown) {
+                this.scene.sound.play("hit_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.hitSoundCooldown = true;
+                this.scene.time.addEvent({
+                    delay: 150,
+                    callback: () => {
+                        this.hitSoundCooldown = false;
+                    }
+                });
+            }
             // Play hit animation
             const hitAnimations = this.animationSets.get('Hit');
             const animsController = this.anims;

@@ -5,17 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir docs  --no-source-maps --public-url ./"
   },
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-raw": "^2.9.2",
+    "@parcel/config-default": "^2.9.2",
     "parcel": "^2.9.2",
     "process": "^0.11.10"
   },
   "dependencies": {
-    "@parcel/config-default": "^2.9.2",
-    "easystarjs": "^0.4.4",
     "mistreevous": "^3.1.0",
     "phaser": "^3.60.0"
   }

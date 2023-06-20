@@ -7,6 +7,7 @@ import MenuScene from "../scenes/menu-scene";
 import GameOverScene from "../scenes/gameover-scene";
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
 import PauseScene from "../scenes/pause-scene";
+import CreditsScene from "../scenes/credits-scene";
 
 
 const config = {
@@ -15,7 +16,7 @@ const config = {
     height: 880,
     pixelArt: false,
     zoom: 1.0,
-    scene: [Boot, MenuScene, ZeusScene, LvlUpScene, PauseScene, GameOverScene],
+    scene: [Boot, MenuScene, ZeusScene, LvlUpScene, PauseScene, GameOverScene, CreditsScene],
     physics: {
         default: "arcade",
         arcade: {

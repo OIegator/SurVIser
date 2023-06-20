@@ -109,6 +109,7 @@ export default class MenuScene extends Phaser.Scene {
                 start_btn.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
+                this.sound.play('btn2_sound');
                 isHeroSelectionVisible = true;
                 showHeroSelection();
                 start_btn_container.setVisible(false);
@@ -125,6 +126,7 @@ export default class MenuScene extends Phaser.Scene {
                 back_btn.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
+                this.sound.play('btn_sound');
                 isHeroSelectionVisible = false;
                 hideHeroSelection();
                 start_btn_container.setVisible(true);
@@ -144,6 +146,7 @@ export default class MenuScene extends Phaser.Scene {
                 confirm_btn.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
+                this.sound.play('btn2_sound');
                 if (!confirmButtonPressed) {
                     tutorialBackground.setVisible(true);
                     const tutorialLabel = this.add.text(670, 90, 'TUTORIAL', {
@@ -166,6 +169,7 @@ export default class MenuScene extends Phaser.Scene {
                 characterBackground1.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
+                this.sound.play('btn2_sound');
                 characterBackground1_selected.setVisible(!characterBackground1_selected.visible);
                 confirm_btn_container.setVisible(characterBackground1_selected.visible);
             });
@@ -179,6 +183,7 @@ export default class MenuScene extends Phaser.Scene {
                 characterBackground1_selected.clearTint(); // Remove tint
             })
             .on('pointerdown', () => {
+                this.sound.play('btn2_sound');
                 characterBackground1_selected.setVisible(false);
                 confirm_btn_container.setVisible(false);
             });

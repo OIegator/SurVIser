@@ -27,6 +27,7 @@ let ZeusScene = new Phaser.Class({
 
     gameover() {
         setTimeout(() => {
+            this.sound.pauseAll();
             this.scene.start('gameover');
         }, 2000);
     },
@@ -44,6 +45,7 @@ let ZeusScene = new Phaser.Class({
             this.cameras.main.setPostPipeline(BlurFX);
             this.input.keyboard.off('keydown_SPACE', this.lvlUP);
             this.pauseTimer();
+            this.sound.pauseAll();
             this.scene.pause();
             this.scene.launch('lvl-up');
         }
@@ -53,6 +55,7 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_ESC', this.esc);
         this.pauseTimer();
+        this.sound.pauseAll();
         this.scene.pause();
         this.scene.launch('pause');
     },
@@ -98,6 +101,7 @@ let ZeusScene = new Phaser.Class({
 
     onResume() {
         this.displayPowerUps();
+        this.sound.resumeAll();
         this.resumeTimer();
         this.cameras.main.resetPostPipeline();
     },
@@ -223,7 +227,9 @@ let ZeusScene = new Phaser.Class({
     },
 
     tacticalNuke() {
-        //Add all enemies lists here
+
+        this.sound.play('explosion_sound');
+
         this.enemies.forEach((element) => {
             if (this.cameras.main.worldView.contains(element.x, element.y)) {
                 if (element.constructor.name === "Ordinary" ||
@@ -754,13 +760,13 @@ let ZeusScene = new Phaser.Class({
         this.events.on('resume', this.resumeTimer, this);
 
         // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
-        this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 130, this.physics.world.bounds.height / 2 - 130, 'armor', 'armor_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 130, this.physics.world.bounds.height / 2 - 130, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
-        // this.sound.play("main_theme", {
-        //     loop: true
-        // });
+        this.sound.play("main_theme", {
+            loop: true
+        });
 
         // this.biomes = this.add.group();
         // this.biomes.add(this.createBiome(3450, 3400, 6900, 6800, 'desert'));
@@ -796,6 +802,18 @@ let ZeusScene = new Phaser.Class({
         });
 
         if (!this.player.isAlive) {
+            if (!this.gameoverSoundCooldown) {
+                this.sound.play("gameover_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.gameoverSoundCooldown = true;
+                this.time.addEvent({
+                    delay: 3000,
+                    callback: () => {
+                        this.gameoverSoundCooldown = false;
+                    }
+                });
+            }
             this.gameover();
         }
 
@@ -808,7 +826,7 @@ let ZeusScene = new Phaser.Class({
             this.esc();
         }
 
-        if (this.deadBosses == 4 && this.gSpawn == false) {
+        if (this.deadBosses === 4 && this.gSpawn === false) {
             this.gary = this.characterFactory.buildGary("gary", this.physics.world.bounds.width / 2 + 50, this.physics.world.bounds.height / 2 - 50, 100);
             this.gameObjects.push(this.gary);
             this.physics.add.collider(this.gary, this.worldLayer);
@@ -870,7 +888,7 @@ let ZeusScene = new Phaser.Class({
 
             this.physics.overlap(this.attacks, this.golem, () => {
                 if (this.canDamage) {
-                    this.golem.behaviour.GetHit(this.player.calculateDamage()*0.4);
+                    this.golem.behaviour.GetHit(this.player.calculateDamage() * 0.4);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -906,7 +924,7 @@ let ZeusScene = new Phaser.Class({
 
             this.physics.overlap(this.attacks, this.bers, () => {
                 if (this.canDamage) {
-                    this.bers.behaviour.GetHit(this.player.calculateDamage()*0.7);
+                    this.bers.behaviour.GetHit(this.player.calculateDamage() * 0.7);
 
                     this.canDamage = false; // Set the flag false to prevent further damage
                     setTimeout(() => {
@@ -925,8 +943,19 @@ let ZeusScene = new Phaser.Class({
 
             this.physics.overlap(this.attacks, this.zeus, () => {
                 if (!this.zeus.isVulnerable && this.zeus.state !== 'dead') {
-                    this.showDamageNumber(this.zeus.x, this.zeus.y, 'UNVULNERABLE', '#2E86C1', 32);
+                    if (!this.zeusUnvulnerableSoundCooldown) {
+                        this.sound.play("unvulnerable_sound");
+                        // Set a cooldown to prevent playing the sound again too soon
+                        this.zeusUnvulnerableSoundCooldown = true;
+                        this.time.addEvent({
+                            delay: 1000, // 1 second delay
+                            callback: () => {
+                                this.zeusUnvulnerableSoundCooldown = false;
+                            }
+                        });
                     }
+                    this.showDamageNumber(this.zeus.x, this.zeus.y, 'UNVULNERABLE', '#2E86C1', 32);
+                }
 
                 if (this.canDamage && this.zeus.isVulnerable) {
                     this.zeus.behaviour.GetHit(this.player.calculateDamage());
@@ -978,6 +1007,11 @@ let ZeusScene = new Phaser.Class({
                         self.expUP(80);
                         element.destroy();
                         object.splice(index, 1);
+                    }
+                } else if (element.constructor.name === "Gary") {
+                    if (element.isDead) {
+                        element.destroy();
+                        this.scene.start('credits');
                     }
                 } else {
                     if (element.isDead) {

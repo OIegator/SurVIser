@@ -14,6 +14,7 @@ export default class LvlUpScene extends Phaser.Scene {
     }
 
     create() {
+        this.sound.play('lvlup_sound');
         const player_config = this.registry.get('player_config');
         const powerUpsPool = [
             {
@@ -68,7 +69,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
         const emitter = this.add.particles(800, 100, 'star', {
             angle: {min: 240, max: 300},
-            speed: {min: 200, max: 300},
+            speed: {min: 250, max: 300},
             lifespan: 5000,
             gravityY: 180,
             quantity: 2,
@@ -204,6 +205,7 @@ export default class LvlUpScene extends Phaser.Scene {
 
             // Handle button selection
             if (code === 'Space' || code === 'Enter') {
+                this.sound.play('btn2_sound');
                 const container = this.buttonContainer[selectedButtonIndex];
                 const button = container.powerUp;
                 player_config[button.effect.stat] += button.effect.action;
@@ -225,6 +227,7 @@ export default class LvlUpScene extends Phaser.Scene {
                     updateButtonTint();
                 })
                 .on('pointerdown', () => {
+                    this.sound.play('btn2_sound');
                     player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
                     player_config.powerUps.push(container.powerUp);
                     this.registry.set('player_config', player_config);

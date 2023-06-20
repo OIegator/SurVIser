@@ -106,6 +106,18 @@ export default class Berserk extends Boss {
         },
        
         GetHit: (damage) => {
+            if (!this.hitSoundCooldown) {
+                this.scene.sound.play("hit_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.hitSoundCooldown = true;
+                this.scene.time.addEvent({
+                    delay: 150,
+                    callback: () => {
+                        this.hitSoundCooldown = false;
+                    }
+                });
+            }
             this.gotHit = true;
             //this.hp -= damage;
             const strength = this.scene.player.isConfig.strength;

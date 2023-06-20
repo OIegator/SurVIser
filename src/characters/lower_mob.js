@@ -122,6 +122,23 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
             const criticalRate = this.scene.player.isConfig.criticalRate;
             const criticalMultiplier = this.scene.player.isConfig.critical;
 
+            if (!this.hitSoundCooldown) {
+                const delay = Phaser.Math.RND.realInRange(0.05, 0.09) // Random delay between 100ms and 300ms
+                const detune = Phaser.Math.RND.integerInRange(-100, 100); // Random detune in cents
+
+                this.scene.sound.play("hit_sound", {
+                    delay: delay,
+                    detune: detune
+                });
+
+                this.scene.time.addEvent({
+                    delay: 1000, // 1 second delay
+                    callback: () => {
+                        this.hitSoundCooldown = false;
+                    }
+                });
+            }
+
             if (Math.random() < criticalRate) {
                 // Critical hit
                 this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);

@@ -98,6 +98,18 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
     GetHit(damage) {
         if (!this.Invc && this.isAlive) {
+            if (!this.hitSoundCooldown) {
+                this.scene.sound.play("player_hit_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.hitSoundCooldown = true;
+                this.scene.time.addEvent({
+                    delay: 150,
+                    callback: () => {
+                        this.hitSoundCooldown = false;
+                    }
+                });
+            }
             const dodgeRate = this.scene.player.isConfig.dodgeRate;
             if (Math.random() < dodgeRate) {
                 this.scene.showDamageNumber(this.x, this.y, 'Dodge!', '#000000', 36);
@@ -157,16 +169,19 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     collectPickUp(player, pickUp) {
         switch (pickUp.name) {
             case 'bigHeal':
+                this.scene.sound.play('heal_sound2');
                 this.hp = this.maxHp;
                 this.healthBar.updateBar();
                 break;
             case 'heal':
+                this.scene.sound.play('heal_sound');
                 this.hp += this.maxHp * 0.25;
                 if (this.hp > this.maxHp)
                     this.hp = this.maxHp;
                 this.healthBar.updateBar();
                 break;
             case 'invincible':
+                this.scene.sound.play('inv_sound');
                 this.Invc = true;
                 this.sprite.postFX.addGlow(0x0000ff);
                 const delayDuration = 6000; // Duration of the delay in milliseconds
@@ -197,11 +212,22 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
 
     attack() {
-        this.IsTossed = false;
-        const animations = this.sprite.animationSets.get('Attack');
-        const animsController = this.sprite.anims;
-        animsController.play(animations[0], true);
-        this.state = "attack"
+        if (!this.attackCooldown) {
+            this.scene.sound.play("attack_sound");
+            const animations = this.sprite.animationSets.get('Attack');
+            const animsController = this.sprite.anims;
+            animsController.play(animations[0], true);
+            this.state = "attack";
+
+            // Set a cooldown to prevent playing the sound again too soon
+            this.attackCooldown = true;
+            this.scene.time.addEvent({
+                delay: 1000, // 1 second delay
+                callback: () => {
+                    this.attackCooldown = false;
+                }
+            });
+        }
     }
 
     changeSpritesheet(name, frame) {

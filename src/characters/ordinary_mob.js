@@ -73,6 +73,23 @@ export default class Ordinary extends Character {
                 this.hp -= damage ? damage : strength;
             }
 
+            if (!this.hitSoundCooldown) {
+                const delay = Phaser.Math.RND.realInRange(0.05, 0.09) // Random delay between 100ms and 300ms
+                const detune = Phaser.Math.RND.integerInRange(-100, 100); // Random detune in cents
+
+                this.scene.sound.play("hit_sound", {
+                    delay: delay,
+                    detune: detune
+                });
+
+                this.scene.time.addEvent({
+                    delay: 1000, // 1 second delay
+                    callback: () => {
+                        this.hitSoundCooldown = false;
+                    }
+                });
+            }
+
             const animations = this.animationSets.get('Hit');
             const animsController = this.anims;
             animsController.play(animations[0], true);

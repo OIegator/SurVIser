@@ -88,6 +88,18 @@ export default class Shooter extends Character {
             return State.SUCCEEDED;
         },
         Attack: () => {
+            if (!this.shootSoundCooldown) {
+                this.scene.sound.play("shoot_sound");
+
+                // Set a cooldown to prevent playing the sound again too soon
+                this.shootSoundCooldown = true;
+                this.scene.time.addEvent({
+                    delay: 150,
+                    callback: () => {
+                        this.shootSoundCooldown = false;
+                    }
+                });
+            }
             this.state = "attack";
             this.setSteerings([]);
             this.scene.bulletGroup.fireBullet(this.x, this.y + 35, this.scene.player);
@@ -112,6 +124,22 @@ export default class Shooter extends Character {
                 animsController.currentAnim.paused = false;
                 this.gotDamage = true;
                 this.hitAnimationEnded = false;
+                if (!this.hitSoundCooldown) {
+                    const delay = Phaser.Math.RND.realInRange(0.05, 0.09) // Random delay between 100ms and 300ms
+                    const detune = Phaser.Math.RND.integerInRange(-100, 100); // Random detune in cents
+
+                    this.scene.sound.play("hit_sound", {
+                        delay: delay,
+                        detune: detune
+                    });
+
+                    this.scene.time.addEvent({
+                        delay: 1000, // 1 second delay
+                        callback: () => {
+                            this.hitSoundCooldown = false;
+                        }
+                    });
+                }
                 if (Math.random() < criticalRate) {
                     // Critical hit
                     this.scene.showDamageNumber(this.x, this.y, (damage ? damage : strength) * criticalMultiplier, '#ff0000', 32);

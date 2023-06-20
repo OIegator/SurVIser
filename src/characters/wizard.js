@@ -100,6 +100,26 @@ export default class Wizard extends Boss {
             this.scene.ProjectAttack(this.x, this.y, this.scene.player, 555, true);
             this.scene.ProjectAttack(this.x, this.y, this.scene.player, 1100, false);
             // Play attack animation
+
+            if (!this.attackSoundCooldown) {
+                const detune = Phaser.Math.RND.integerInRange(-100, 100); // Random detune in cents
+
+                this.scene.sound.play("fire_sound", {
+                    detune: detune
+                });
+
+                this.scene.sound.play("fire_sound", {
+                    delay: 0.5,
+                    detune: detune
+                });
+
+                this.scene.time.addEvent({
+                    delay: 1000, // 1 second delay
+                    callback: () => {
+                        this.attackSoundCooldown = false;
+                    }
+                });
+            }
             const attackAnimations = this.animationSets.get('Attack');
             const animsController = this.anims;
             animsController.play(attackAnimations[0]);
@@ -108,7 +128,19 @@ export default class Wizard extends Boss {
             return State.SUCCEEDED;
         },
         GetHit: (damage) => {
-            if (this.hp >0) {
+            if (this.hp > 0) {
+                if (!this.hitSoundCooldown) {
+                    this.scene.sound.play("hit_sound");
+
+                    // Set a cooldown to prevent playing the sound again too soon
+                    this.hitSoundCooldown = true;
+                    this.scene.time.addEvent({
+                        delay: 150,
+                        callback: () => {
+                            this.hitSoundCooldown = false;
+                        }
+                    });
+                }
                 this.gotHit = true;
                 this.hp -= damage;
                 this.setMeterPercentageAnimated(this.hp / 100);
