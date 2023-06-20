@@ -54,6 +54,11 @@ import barsSh from '../assets/bars/barHorizontal_shadow.png'
 import barPix from '../assets/bars/pixel_barHorizontalShadow.png'
 import barParts from '../assets/bars/barhorizontalparts.png'
 
+import zeus_stone from "../assets/sprites/ui/zeus_stone.png";
+import bers_stone from "../assets/sprites/ui/bers_stone.png";
+import golem_stone from "../assets/sprites/ui/golem_stone.png";
+import wizard_stone from "../assets/sprites/ui/wizard_stone.png";
+
 import inkySpriteSheet from "../assets/sprites/characters/inky.png";
 import pinkySpriteSheet from "../assets/sprites/characters/pinky.png";
 import clydeSpriteSheet from "../assets/sprites/characters/clyde.png";
@@ -134,6 +139,11 @@ export default class Boot extends Phaser.Scene {
         this.load.image('invc', invc);
         this.load.image('dmg', dmg);
 
+        this.load.image('zeus_stone', zeus_stone);
+        this.load.image('bers_stone', bers_stone);
+        this.load.image('golem_stone', golem_stone);
+        this.load.image('wizard_stone', wizard_stone);
+
         this.load.image('cursor', cursor);
         this.load.image('lvl_up_background', lvl_up_background);
         this.load.image('lvl_up_item_background', lvl_up_item_background);
@@ -156,6 +166,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('stats_background', stats_background);
         this.load.image('vi_icon', vi_icon);
         this.load.image('star', star);
+
+
 
         //loading menu
         this.load.image('menu_background', menu_background);
