@@ -178,7 +178,7 @@ let ZeusScene = new Phaser.Class({
                 add = -offset;
             const attack = new AutoAttack(this, x + add, y, key);
             attack.body.setSize(size, size);
-            if (attacker.constructor.name === "Golem")
+            if (attacker.constName === "Golem")
                 attack.isTossing = true;
             this.enAttacks.push(attack);
             this.physics.add.collider(attack, this.worldLayer);
@@ -755,7 +755,8 @@ let ZeusScene = new Phaser.Class({
                         attack.scaleX = 0.8 + 0.025 * args.player.isConfig.attackRange;
                         attack.scaleY = 0.5 + 0.025 * args.player.isConfig.attackRange;
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
-                            args.lightningGroup.fireLightning(args.player.x, args.player.y, args.enemies);
+                            const allEnem = args.enemies.concat(args.clydes);
+                            args.lightningGroup.fireLightning(args.player.x, args.player.y, allEnem);
                         }
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'dd')) {
                             attack = new AutoAttack(args, args.player.x - (add * 1.4), args.player.y + 30, 'attack');
@@ -822,7 +823,7 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
+        //this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 130, this.physics.world.bounds.height / 2 - 130, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
@@ -913,7 +914,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.clydes, (attack, mob) => {
-                if (attack.constructor.name === "Projectile") {
+                if (attack.constName === "Projectile") {
                         mob.behaviour.GetHit();
                         this.canDamage = false; // Set the flag false to prevent further damage
                         setTimeout(() => {
@@ -927,23 +928,15 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                if (attack.constructor.name === "Projectile") {
-                    if (mob.constructor.name === "Shooter" && this.canDamage) {
-                        mob.behaviour.GetHit();
-                        this.canDamage = false; // Set the flag false to prevent further damage
-                        setTimeout(() => {
-                            this.canDamage = true; // Set the flag to true after the delay
-                        }, 1500); // 1.5 seconds delay
-                    } else {
-                        mob.gotDamage = true;
-                    }
+                if (attack.constName === "Projectile") {
+                    mob.gotDamage = true;
                 } else if (!attack.affectedEnemies.includes(mob)) {
                     mob.gotDamage = true;
                     attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
                 }
             });
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration != 1500)
                     element.update(time);
             });
         }
@@ -1010,7 +1003,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration != 1500)
                     element.update(time);
             });
         }
@@ -1044,7 +1037,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration != 1500)
                     element.update(time);
             });
         }
@@ -1056,6 +1049,56 @@ let ZeusScene = new Phaser.Class({
             });
             const self = this;
             this.gameObjects.forEach(function (element, index, object) {
+
+                switch (element.constName) {
+                    case "Lower":
+                        if (element.isDead) {
+                            const rand = Math.random() * 100;
+                            if (rand <= 3)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(50);
+                            element.destroy();
+                            object.splice(index, 1);
+                            currLower--;
+                        }
+                        break;
+                    case "Ordinary":
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(210);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
+                    case "Shooter":
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(80);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
+                    case "Gary":
+                        if (element.isDead) {
+                            element.destroy();
+                            this.scene.start('credits');
+                        }
+                        break;
+                    default:
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
+                }
+                /*
                 if (element.constructor.name === "Lower") {
                     if (element.isDead) {
                         const rand = Math.random() * 100;
@@ -1097,7 +1140,7 @@ let ZeusScene = new Phaser.Class({
                         element.destroy();
                         object.splice(index, 1);
                     }
-                }
+                }*/
             });
 
             let i = currLower;
@@ -1129,7 +1172,7 @@ let ZeusScene = new Phaser.Class({
             currLower = maxLower;
 
             this.gameObjects.forEach(function (element) {
-                if (element.constructor.name === "Lower") {
+                if (element.constName === "Lower") {
                     element.outsideCameraCheck(self);
                 }
             });

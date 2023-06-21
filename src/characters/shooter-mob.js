@@ -42,6 +42,7 @@ export default class Shooter extends Character {
         this.animMultiplier = 1.8;
         this.hp = 0;
         this.maxSpeed = 120;
+        this.constName = "Shooter";
         this.lastAttackTime = 0;
         this.state = "idle";
         this.isDead = false;

@@ -41,6 +41,7 @@ export default class Golem extends Boss {
         this.isOffset(350, 240);
         this.state = "patrol";
         this.isDead = false;
+        this.constName = "Golem";
         this.patrolPoints = [
             new Vector2(x - 1000, y),
             new Vector2(x + 1000, y),

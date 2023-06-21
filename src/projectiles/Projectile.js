@@ -8,6 +8,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
         scene.add.existing(this);
         this.Tossing = false;
+        this.constName = "Projectile";
 
     }
 

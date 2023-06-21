@@ -68,6 +68,7 @@ export default class Gary extends Boss {
         this.setCircle(130);
         this.setOffset(140, 210);
         this.isOffset(140, 210);
+        this.constName = "Gary";
         this.state = "idle";
 
         this.eyeSpotted = false;

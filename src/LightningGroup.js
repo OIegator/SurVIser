@@ -111,10 +111,15 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
         if (!this.stopped) {
             this.scene.physics.overlap(this, this.target, (attack, mob) => {
                 if (!attack.affectedEnemies.includes(mob)) {
-                    if (mob.constructor.name === "Shooter") {
+
+                    if (mob.constName === "Shooter") {
                         mob.behaviour.GetHit();
+
                     } else {
-                        mob.gotDamage = true;
+                        if (mob.constName != "Lower" && mob.constName != "Ordinary")
+                            mob.GetHit(2);
+                        else
+                            mob.gotDamage = true;
                     }
                     setTimeout(() => {
                         if (!this.stopped) {
@@ -212,10 +217,15 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         if (this.active && time > this.startTime + this.duration * 0.8) {
             this.scene.physics.overlap(this.lightning, this.target, (attack, mob) => {
                 if (!attack.affectedEnemies.includes(mob)) {
-                    if (mob.constructor.name === "Shooter") {
+                    console.log(mob);
+                    if (mob.constName === "Shooter") {
                         mob.behaviour.GetHit();
+
                     } else {
-                        mob.gotDamage = true;
+                        if (mob.constName != "Lower" && mob.constName != "Ordinary")
+                            mob.GetHit(2);
+                        else
+                            mob.gotDamage = true;
                     }
                     attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
                 }
