@@ -12,6 +12,34 @@ export default class GameOverScene extends Phaser.Scene {
             fontSize: '96pt',
             fontFamily: 'grobold'
         });
+
+        // Restart Button
+        const restartButton = this.add.image(235, 780, 'red_btn');
+        const backLabel = this.add.text(130, 740, 'RESTART', {
+            color: 'white',
+            fontSize: '48px',
+            fontFamily: 'grobold'
+        });
+        restartButton.setInteractive();
+
+        restartButton.on('pointerup', () => {
+            this.scene.stop('gameover');
+            this.scene.stop('zeus');
+            this.scene.start('zeus');
+        });
+        restartButton.on('pointerover', () => {
+            restartButton.setTint(0x7DCEA0); // Apply darker tint
+        })
+        .on('pointerout', () => {
+            restartButton.clearTint(); // Remove tint
+        })
+
+        this.input.keyboard.on('keydown-SPACE', () => {
+            this.scene.stop('gameover');
+            this.scene.stop('zeus');
+            this.scene.start('zeus');
+        });
+
         const stats_background = this.add.image(50, 81, 'stats_background').setOrigin(0);
         this.add.image(60, 90, 'lvl_up_icon_background').setOrigin(0);
         this.add.image(75, 105, 'vi_icon').setOrigin(0);
