@@ -768,22 +768,22 @@ let ZeusScene = new Phaser.Class({
             loop: true
         });
 
-        // this.biomes = this.add.group();
+        this.biomes = this.add.group();
         // this.biomes.add(this.createBiome(3450, 3400, 6900, 6800, 'desert'));
         // this.biomes.add(this.createBiome(12300, 12200, 7400, 7600, 'tundra'));
         // this.biomes.add(this.createBiome(3700, 12600, 7400, 8600, 'meadow'));
         // this.biomes.add(this.createBiome(12800, 3200, 6800, 6400, 'castle'));
 
-        // this.biomes.add(this.createBiome(1600, 1300, 3200, 2900, 'desert'));
-        // this.biomes.add(this.createBiome(6500, 5700, 3200, 2900, 'tundra'));
-        // this.biomes.add(this.createBiome(1600, 5700, 3200, 2900, 'meadow'));
-        // this.biomes.add(this.createBiome(6500, 1300, 3200, 2900, 'castle'));
-        // const self = this;
-        //
-        // this.biomes.getChildren().forEach(function (biome) {
-        //     const biomeName = biome.getData('name');
-        //     self.biomeCrossed[biomeName] = false;
-        // });
+        this.biomes.add(this.createBiome(1300, 1450, 2600, 2900, 'desert'));
+        this.biomes.add(this.createBiome(5100, 4950, 2600, 2900, 'tundra'));
+        this.biomes.add(this.createBiome(1300, 4950, 2600, 2900, 'meadow'));
+        this.biomes.add(this.createBiome(5100, 1450, 2600, 2900, 'castle'));
+        const self = this;
+
+        this.biomes.getChildren().forEach(function (biome) {
+            const biomeName = biome.getData('name');
+            self.biomeCrossed[biomeName] = false;
+        });
     },
 
     update(time) {
