@@ -232,14 +232,14 @@ let ZeusScene = new Phaser.Class({
 
         this.enemies.forEach((element) => {
             if (this.cameras.main.worldView.contains(element.x, element.y)) {
-                if (element.constructor.name === "Ordinary" ||
-                    element.constructor.name === "Lower") {
-                    element.GetHit(50);
-                } else {
+                element.GetHit(50);
+            }
+        });
+
+        this.clydes.forEach((element) => {
+            if (this.cameras.main.worldView.contains(element.x, element.y)) {
                     element.behaviour.GetHit(50);
                 }
-
-            }
         });
     },
 
@@ -469,6 +469,7 @@ let ZeusScene = new Phaser.Class({
     create: function () {
         this.attacks = [];
         this.enemies = [];
+        this.clydes = [];
         this.enAttacks = [];
         this.pickUps = [];
         this.iconDictionary = {};
@@ -579,7 +580,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         // !!!Danger!!!
@@ -618,7 +619,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'meadow');
@@ -655,7 +656,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'desert');
@@ -692,7 +693,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'castle');
@@ -729,7 +730,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
         //////////////////
         /////////////////
@@ -851,7 +852,6 @@ let ZeusScene = new Phaser.Class({
     update(time) {
         //this.biomeCrossing(this);
 
-        console.log(this.zeus.constructor.name === "Zeus");
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
             color: 'white',
@@ -912,6 +912,20 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (this.attacks) {
+            this.physics.overlap(this.attacks, this.clydes, (attack, mob) => {
+                if (attack.constructor.name === "Projectile") {
+                        mob.behaviour.GetHit();
+                        this.canDamage = false; // Set the flag false to prevent further damage
+                        setTimeout(() => {
+                            this.canDamage = true; // Set the flag to true after the delay
+                        }, 1500); // 1.5 seconds delay
+                    
+                } else if (!attack.affectedEnemies.includes(mob)) {
+                    mob.behaviour.GetHit();
+                    attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
+                }
+            });
+
             this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
                 if (attack.constructor.name === "Projectile") {
                     if (mob.constructor.name === "Shooter" && this.canDamage) {
@@ -924,11 +938,7 @@ let ZeusScene = new Phaser.Class({
                         mob.gotDamage = true;
                     }
                 } else if (!attack.affectedEnemies.includes(mob)) {
-                    if (mob.constructor.name === "Shooter") {
-                        mob.behaviour.GetHit();
-                    } else {
-                        mob.gotDamage = true;
-                    }
+                    mob.gotDamage = true;
                     attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
                 }
             });
