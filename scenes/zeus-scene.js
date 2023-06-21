@@ -851,7 +851,7 @@ let ZeusScene = new Phaser.Class({
     update(time) {
         //this.biomeCrossing(this);
 
-
+        console.log(this.zeus.constructor.name === "Zeus");
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
             color: 'white',
