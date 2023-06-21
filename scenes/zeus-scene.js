@@ -884,7 +884,7 @@ let ZeusScene = new Phaser.Class({
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             //this.lvlUP();
             //this.player.healthBar.highColor = 0x0000ff;
-            this.player.GetHit(100);
+            //this.player.GetHit(100);
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
