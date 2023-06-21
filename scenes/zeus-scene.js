@@ -323,6 +323,68 @@ let ZeusScene = new Phaser.Class({
         return biome;
     },
 
+    checkBiome(scene) {
+        let count = 0;
+        scene.biomes.getChildren().forEach(function (biome) {
+            const biomeName = biome.getData('name');
+            if (Phaser.Geom.Rectangle.Contains(biome.getBounds(), scene.player.x, scene.player.y)) {
+                    scene.player.biome = biomeName;
+                }
+                else
+                    count++;
+        });
+        if (count == 4)
+            scene.player.biome = "border";
+    },
+
+    checkBosses(scene) {
+
+        switch (scene.player.biome) {
+            case "border":
+                if (scene.bers.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.bers.x, scene.bers.y))
+                    scene.bers.reset();
+                if (scene.golem.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.golem.x, scene.golem.y))
+                    scene.golem.reset();
+                if (scene.wizard.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.wizard.x, scene.wizard.y))
+                    scene.wizard.reset();
+                if (scene.zeus.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.zeus.x, scene.zeus.y))
+                    scene.zeus.reset();
+                break;
+            case "tundra":
+                if (scene.bers.state !== "patrol")
+                    scene.bers.reset();
+                if (scene.golem.state !== "patrol")
+                    scene.golem.reset();
+                if (scene.zeus.state !== "patrol")
+                    scene.zeus.reset();
+                break;
+            case "desert":
+                if (scene.wizard.state !== "patrol")
+                    scene.wizard.reset();
+                if (scene.golem.state !== "patrol")
+                    scene.golem.reset();
+                if (scene.zeus.state !== "patrol")
+                    scene.zeus.reset();
+                break;
+            case "meadow":
+                if (scene.wizard.state !== "patrol")
+                    scene.wizard.reset();
+                if (scene.golem.state !== "patrol")
+                    scene.golem.reset();
+                if (scene.bers.state !== "patrol")
+                    scene.bers.reset();
+                break;
+            case "castle":
+                if (scene.wizard.state !== "patrol")
+                    scene.wizard.reset();
+                if (scene.zeus.state !== "patrol")
+                    scene.zeus.reset();
+                if (scene.bers.state !== "patrol")
+                    scene.bers.reset();
+                break;
+        }
+    },
+
     biomeCrossing(scene) {
         // Check for overlap between the player and biomes
         scene.biomes.getChildren().forEach(function (biome) {
@@ -789,6 +851,7 @@ let ZeusScene = new Phaser.Class({
     update(time) {
         //this.biomeCrossing(this);
 
+
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
             color: 'white',
@@ -825,6 +888,9 @@ let ZeusScene = new Phaser.Class({
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             this.esc();
         }
+
+        this.checkBiome(this);
+        this.checkBosses(this);
 
         if (this.deadBosses === 4 && this.gSpawn === false) {
             this.gary = this.characterFactory.buildGary("gary", this.physics.world.bounds.width / 2 + 50, this.physics.world.bounds.height / 2 - 50, 100);

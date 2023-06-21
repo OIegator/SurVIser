@@ -44,12 +44,14 @@ export default class Berserk extends Boss {
         this.body.setSize(200, 250);
         this.body.setOffset(200, 180);
         this.isOffset(200, 180);
-        this.state = "idle";
+        this.state = "patrol";
         this.patrolPoints = [
-            new Vector2(x - 100, y),
-            new Vector2(x + 100, y),
+            new Vector2(x - 1000, y),
+            new Vector2(x + 1000, y),
         ];
         this.isDead = false;
+        this.startX = x;
+        this.startY = y;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
@@ -70,10 +72,11 @@ export default class Berserk extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                this.setSteerings([
-                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
-                ]);
             }
+            this.setSteerings([
+                new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
+            ]);
+            this.steerings = [];
             return State.SUCCEEDED;
         },
         Pursuit: () => {
@@ -221,7 +224,7 @@ export default class Berserk extends Boss {
         this.removeHealthBar();
         this.x = this.startX;
         this.y = this.startY;
-        console.log(this.behaviour.IsPlayerSpotted());
+        this.body.setVelocity(0, 0);
         this.changeState("patrol");
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }

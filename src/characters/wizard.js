@@ -44,13 +44,13 @@ export default class Wizard extends Boss {
         this.body.setSize(150, 190);
         this.body.setOffset(200, 265);
         this.isOffset(200, 265);
-        this.state = "idle";
+        this.state = "patrol";
         this.isVulnerable = false;
         this.isDead = false;
         this.gotHit = false;
         this.patrolPoints = [
-            new Vector2(x - 100, y),
-            new Vector2(x + 100, y),
+            new Vector2(x - 800, y),
+            new Vector2(x + 800, y),
         ];
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
         this.startX = x;
@@ -74,10 +74,11 @@ export default class Wizard extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                this.setSteerings([
-                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
-                ]);
             }
+            this.setSteerings([
+                new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
+            ]);
+            this.steerings = [];
             return State.SUCCEEDED;
         },
         Pursuit: () => {
@@ -236,7 +237,6 @@ export default class Wizard extends Boss {
         this.removeHealthBar();
         this.x = this.startX;
         this.y = this.startY;
-        console.log(this.behaviour.IsPlayerSpotted());
         this.changeState("patrol");
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }

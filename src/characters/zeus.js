@@ -51,14 +51,16 @@ export default class Zeus extends Boss {
         this.body.setSize(200, 270);
         this.setOffset(200, 130);
         this.isOffset(200, 130);
-        this.state = "idle";
+        this.state = "patrol";
         this.ammo = 3;
         this.isVulnerable = false;
         this.patrolPoints = [
-            new Vector2(x - 100, y),
-            new Vector2(x + 100, y),
+            new Vector2(x - 800, y),
+            new Vector2(x + 800, y),
         ];
         this.isDead = false;
+        this.startX = x;
+        this.startY = y;
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
@@ -72,10 +74,11 @@ export default class Zeus extends Boss {
         Patrol: () => {
             if (this.state !== "patrol") {
                 this.changeState("patrol");
-                this.setSteerings([
-                    new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
-                ]);
             }
+            this.setSteerings([
+                new Patrol(this, this.patrolPoints, 1, this.maxSpeed)
+            ]);
+            this.steerings = [];
             return State.SUCCEEDED;
         },
         Pursuit: () => {
@@ -223,6 +226,14 @@ export default class Zeus extends Boss {
         IsOutOfAmmo: () => {
             return this.ammo === 0;
         }
+    }
+
+    reset() {
+        this.removeHealthBar();
+        this.x = this.startX;
+        this.y = this.startY;
+        this.changeState("patrol");
+        this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }
 
     updateAnimation() {
