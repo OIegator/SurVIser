@@ -226,7 +226,7 @@ export default class LvlUpScene extends Phaser.Scene {
                     // If the pointer is not over any button, maintain the current selection
                     updateButtonTint();
                 })
-                .on('pointerdown', () => {
+                .on('pointerup', () => { // Changed from 'pointerdown' to 'pointerup'
                     this.sound.play('btn2_sound');
                     player_config[container.powerUp.effect.stat] = player_config[container.powerUp.effect.stat] + container.powerUp.effect.action;
                     player_config.powerUps.push(container.powerUp);
