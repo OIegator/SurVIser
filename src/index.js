@@ -21,7 +21,7 @@ const config = {
         default: "arcade",
         arcade: {
             gravity: {
-                y: 0// set to true to view zones
+                y: 0 // set to true to view zones
             },
             debug: false
         }
