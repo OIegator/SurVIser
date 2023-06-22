@@ -1,17 +1,3 @@
-class TargetDummy {
-    constructor(target) {
-        this.target = target;
-    }
-
-    getBounds() {
-        return new Phaser.Geom.Rectangle(this.target.x, this.target.y, 100, 100);
-    }
-
-    GetHit() {
-        console.log("dummy get hit");
-    }
-}
-
 class Lightning extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'lightning');
@@ -116,8 +102,8 @@ class Lightning extends Phaser.Physics.Arcade.Sprite {
                         mob.behaviour.GetHit();
 
                     } else {
-                        if (mob.constName != "Lower" && mob.constName != "Ordinary")
-                            mob.GetHit(2);
+                        if (mob.constName !== "Lower" && mob.constName !== "Ordinary")
+                            mob.GetHit(20);
                         else
                             mob.gotDamage = true;
                     }
@@ -217,13 +203,12 @@ class ShockCircle extends Phaser.Physics.Arcade.Sprite {
         if (this.active && time > this.startTime + this.duration * 0.8) {
             this.scene.physics.overlap(this.lightning, this.target, (attack, mob) => {
                 if (!attack.affectedEnemies.includes(mob)) {
-                    console.log(mob);
                     if (mob.constName === "Shooter") {
                         mob.behaviour.GetHit();
 
                     } else {
-                        if (mob.constName != "Lower" && mob.constName != "Ordinary")
-                            mob.GetHit(2);
+                        if (mob.constName !== "Lower" && mob.constName !== "Ordinary")
+                            mob.GetHit(30);
                         else
                             mob.gotDamage = true;
                     }

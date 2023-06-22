@@ -1080,7 +1080,7 @@ let ZeusScene = new Phaser.Class({
                     case "Gary":
                         if (element.isDead) {
                             element.destroy();
-                            this.scene.start('credits');
+                            self.scene.start('credits');
                         }
                         break;
                     default:
