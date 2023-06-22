@@ -884,6 +884,7 @@ let ZeusScene = new Phaser.Class({
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             //this.lvlUP();
             //this.player.healthBar.highColor = 0x0000ff;
+            //this.player.GetHit(100);
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
@@ -936,7 +937,7 @@ let ZeusScene = new Phaser.Class({
                 }
             });
             this.attacks.forEach(function (element) {
-                if (element.duration != 1500)
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
@@ -1003,7 +1004,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.duration != 1500)
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
@@ -1037,7 +1038,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.duration != 1500)
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
