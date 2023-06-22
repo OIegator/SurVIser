@@ -341,45 +341,45 @@ let ZeusScene = new Phaser.Class({
 
         switch (scene.player.biome) {
             case "border":
-                if (scene.bers.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.bers.x, scene.bers.y))
+                if (scene.bers.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.bers.x, scene.bers.y) && scene.bers.isDead == false)
                     scene.bers.reset();
-                if (scene.golem.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.golem.x, scene.golem.y))
+                if (scene.golem.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.golem.x, scene.golem.y) && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.wizard.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.wizard.x, scene.wizard.y))
+                if (scene.wizard.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.wizard.x, scene.wizard.y) && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.zeus.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.zeus.x, scene.zeus.y))
+                if (scene.zeus.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.zeus.x, scene.zeus.y) && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "tundra":
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "desert":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "meadow":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
                 break;
             case "castle":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
                 break;
         }
@@ -914,7 +914,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.attacks) {
             this.physics.overlap(this.attacks, this.clydes, (attack, mob) => {
-                if (attack.constName === "Projectile") {
+                if (attack.constName === "Projectile" && this.canDamage) {
                         mob.behaviour.GetHit();
                         this.canDamage = false; // Set the flag false to prevent further damage
                         setTimeout(() => {
