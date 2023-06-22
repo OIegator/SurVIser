@@ -37,6 +37,9 @@ export default class AnimationLoader {
     // Can be used to create single animation with modified properties
     createAnimation(name, frames, frameRate, repeat)
     {
+        if (this.scene.anims.exists(name)) {
+            return;
+        }
         this.scene.anims.create({
             key: name,
             frames: this.scene.anims.generateFrameNumbers(this.spritesheet, { frames: frames }),

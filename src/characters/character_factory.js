@@ -37,7 +37,6 @@ export default class CharacterFactory {
         this.berserkSpriteSheet = 'berserk';
         this.garySpriteSheet = 'gary';
         this.rockSpriteSheet = 'golem';
-        this.sansSpriteSheet = 'sans';
         this.wizardSpriteSheet = 'wizard';
 
         let animationLibrary =  new Map();
@@ -58,8 +57,6 @@ export default class CharacterFactory {
             new AnimationLoader(scene, this.garySpriteSheet, garyConfigJson, this.garySpriteSheet, 28).createAnimations());
         animationLibrary.set(this.rockSpriteSheet,
             new AnimationLoader(scene, this.rockSpriteSheet, rockConfigJson, this.rockSpriteSheet, 24).createAnimations());
-        animationLibrary.set(this.sansSpriteSheet,
-            new AnimationLoader(scene, this.sansSpriteSheet, sansConfigJson, this.sansSpriteSheet, 28).createAnimations());
         animationLibrary.set(this.wizardSpriteSheet,
             new AnimationLoader(scene, this.wizardSpriteSheet, wizardConfigJson, this.wizardSpriteSheet, 28).createAnimations());
 

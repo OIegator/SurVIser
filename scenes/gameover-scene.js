@@ -15,7 +15,7 @@ export default class GameOverScene extends Phaser.Scene {
 
         // Restart Button
         const restartButton = this.add.image(235, 780, 'red_btn');
-        const backLabel = this.add.text(130, 740, 'RESTART', {
+        const restartLabel = this.add.text(130, 740, 'RESTART', {
             color: 'white',
             fontSize: '48px',
             fontFamily: 'grobold'

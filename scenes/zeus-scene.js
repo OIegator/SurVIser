@@ -2,23 +2,17 @@ import {LightningGroup} from "../src/LightningGroup";
 import {BulletGroup} from "../src/BulletGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
-//======================FX===============
-import PixelatedFX from '../assets/pipelines/PixelatedFX.js';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
-import Seek from "../src/ai/steerings/seek";
 import HealthBar from "../src/UI-Bar/HealthBar";
-import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
 import PickUp from "../src/power-ups/pick-up";
 
-let inZone = false;
-const maxLower = 10;
-let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, bulletGroup: undefined, zeus: undefined, biomes: undefined,
+    music: undefined,
 
 
     initialize: function ZeusScene() {
@@ -27,7 +21,9 @@ let ZeusScene = new Phaser.Class({
 
     gameover() {
         setTimeout(() => {
-            this.sound.pauseAll();
+            this.music.stop();
+            this.events.off();
+            this.gameoverSoundCooldown = false;
             this.scene.start('gameover');
         }, 2000);
     },
@@ -45,7 +41,7 @@ let ZeusScene = new Phaser.Class({
             this.cameras.main.setPostPipeline(BlurFX);
             this.input.keyboard.off('keydown_SPACE', this.lvlUP);
             this.pauseTimer();
-            this.sound.pauseAll();
+            this.music.pause();
             this.scene.pause();
             this.scene.launch('lvl-up');
         }
@@ -55,7 +51,7 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_ESC', this.esc);
         this.pauseTimer();
-        this.sound.pauseAll();
+        this.music.pause();
         this.scene.pause();
         this.scene.launch('pause');
     },
@@ -124,7 +120,6 @@ let ZeusScene = new Phaser.Class({
             const duration = 1500;
             const speed = distance / duration;
             const speedSec = 1000 * speed;
-            const tSpeed = 1 / duration;
 
             const fire = new Projectile(this, start.x, start.y, 'fire');
             this.enAttacks.push(fire);
@@ -133,7 +128,6 @@ let ZeusScene = new Phaser.Class({
             fire.setCircle(50);
             fire.postFX.addGlow(0xffea00);
             fire.setOffset(80, 30);
-            //fire.setRotation(angle);
 
             if (Math.abs(angle) < 90)
                 fire.flipX = true;
@@ -154,8 +148,6 @@ let ZeusScene = new Phaser.Class({
                     curve.getTangent(t, tempVec);
                     fire.body.velocity.copy(tempVec.scale(speedSec));
                     fire.setRotation(tempVec.angle());
-                    //Rotate the fire. Пока отключил, потому что непонятно как сделать красиво
-                    //ship.setRotation(tempVec.angle()/10.0);
                 }
             };
 
@@ -333,7 +325,7 @@ let ZeusScene = new Phaser.Class({
                 else
                     count++;
         });
-        if (count == 4)
+        if (count === 4)
             scene.player.biome = "border";
     },
 
@@ -467,6 +459,8 @@ let ZeusScene = new Phaser.Class({
     },
 
     create: function () {
+        this.maxLower = 10;
+        this.currLower = 0;
         this.attacks = [];
         this.enemies = [];
         this.clydes = [];
@@ -524,7 +518,6 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.registry.set('player_config', this.player.isConfig);
 
-
         this.zeus = this.characterFactory.buildZeus("zeus", 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
@@ -540,10 +533,6 @@ let ZeusScene = new Phaser.Class({
         this.wizard = this.characterFactory.buildWizard("wizard", this.physics.world.bounds.width - 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
-
-        // this.gary = this.characterFactory.buildGary("gary", this.physics.world.bounds.width / 2 + 500, this.physics.world.bounds.height / 2 - 500, 100);
-        // this.gameObjects.push(this.gary);
-        // this.physics.add.collider(this.gary, worldLayer);
 
         let pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -778,7 +767,7 @@ let ZeusScene = new Phaser.Class({
         this.expBar = new HealthBar({
             scene: this,
             max: 500,
-            current: 100,
+            current: 1,
             animate: true,
             damageColor: false,
             displayData: {
@@ -823,14 +812,15 @@ let ZeusScene = new Phaser.Class({
         // Resume the timer when the scene is resumed
         this.events.on('resume', this.resumeTimer, this);
 
-        //this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
+        // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 100, this.physics.world.bounds.height / 2 - 100, 'lightning', 'shock_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, this.physics.world.bounds.width / 2 + 130, this.physics.world.bounds.height / 2 - 130, 'armor', 'armor_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
-        this.sound.play("main_theme", {
+        this.music = this.sound.add("main_theme", {
             loop: true
         });
+        this.music.play();
 
         this.biomes = this.add.group();
         // this.biomes.add(this.createBiome(3450, 3400, 6900, 6800, 'desert'));
@@ -872,7 +862,7 @@ let ZeusScene = new Phaser.Class({
                 // Set a cooldown to prevent playing the sound again too soon
                 this.gameoverSoundCooldown = true;
                 this.time.addEvent({
-                    delay: 3000,
+                    delay: 2000,
                     callback: () => {
                         this.gameoverSoundCooldown = false;
                     }
@@ -882,9 +872,13 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.lvlUP();
-            //this.player.healthBar.highColor = 0x0000ff;
-            //this.player.GetHit(100);
+            // this.lvlUP();
+            // this.player.healthBar.highColor = 0x0000ff;
+            // this.player.GetHit(100);
+            // this.registry.destroy();
+            // this.events.off();
+            // this.music.stop();
+            // this.scene.restart();
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
@@ -1046,7 +1040,7 @@ let ZeusScene = new Phaser.Class({
 
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
-                element.update(inZone);
+                element.update();
             });
             const self = this;
             this.gameObjects.forEach(function (element, index, object) {
@@ -1060,7 +1054,7 @@ let ZeusScene = new Phaser.Class({
                             self.expUP(50);
                             element.destroy();
                             object.splice(index, 1);
-                            currLower--;
+                            self.currLower--;
                         }
                         break;
                     case "Ordinary":
@@ -1099,53 +1093,10 @@ let ZeusScene = new Phaser.Class({
                         }
                         break;
                 }
-                /*
-                if (element.constructor.name === "Lower") {
-                    if (element.isDead) {
-                        const rand = Math.random() * 100;
-                        if (rand <= 3)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(50);
-                        element.destroy();
-                        object.splice(index, 1);
-                        currLower--;
-                    }
-                } else if (element.constructor.name === "Ordinary") {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(210);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
-                } else if (element.constructor.name === "Shooter") {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(80);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
-                } else if (element.constructor.name === "Gary") {
-                    if (element.isDead) {
-                        element.destroy();
-                        this.scene.start('credits');
-                    }
-                } else {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
-                }*/
             });
 
-            let i = currLower;
-            while (i < maxLower) {
+            let i = this.currLower;
+            while (i < this.maxLower) {
                 const inky = this.characterFactory.buildLowerCharacter(this, "inky", this.player.x, this.player.y, this.cameras.main.width);
                 this.gameObjects.push(inky);
 
@@ -1170,7 +1121,7 @@ let ZeusScene = new Phaser.Class({
                 i++;
             }
 
-            currLower = maxLower;
+            this.currLower = this.maxLower;
 
             this.gameObjects.forEach(function (element) {
                 if (element.constName === "Lower") {
