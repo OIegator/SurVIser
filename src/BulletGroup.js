@@ -16,7 +16,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(10);
         this.setActive(true);
         this.setVisible(true);
-        const speed = 500;
+        const speed = 400;
         const dx = target.x - x;
         const dy = target.y - y;
         const angle = Math.atan2(dy, dx);
