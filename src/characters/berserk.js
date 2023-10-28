@@ -163,7 +163,7 @@ export default class Berserk extends Boss {
             return State.SUCCEEDED;
         },
         InitHealthBar: () => {
-            this.initHealthBar(550, 850);
+            this.initHealthBar(this.scene.scale.width * 0.35, this.scene.scale.height * 0.95);
             return State.SUCCEEDED;
         },
         IsFarEnough: () => {
@@ -173,10 +173,6 @@ export default class Berserk extends Boss {
             return !Phaser.Geom.Circle.ContainsPoint(closeRange, playerPos);
         },
         IsCloseEnough: () => {
-            // Get the screen size
-            const screenWidth = this.scene.cameras.main.width;
-            const screenHeight = this.scene.cameras.main.height;
-            // Calculate the range zone based on screen size
 
             const attackZone = {
                 x: this.scene.player.x-100,
@@ -224,7 +220,11 @@ export default class Berserk extends Boss {
         this.removeHealthBar();
         this.x = this.startX;
         this.y = this.startY;
-        this.body.setVelocity(0, 0);
+        try {
+            this.body.setVelocity(0, 0);
+        } catch (error) {
+            console.error("Произошла ошибка: " + error.message);
+        }
         this.changeState("patrol");
         this.behaviourTree = new BehaviourTree(treeDefinition, this.behaviour);
     }

@@ -1,42 +1,73 @@
 export default class MenuScene extends Phaser.Scene {
+
+    handlerScene = null
+    sceneStopped = false
     constructor() {
         super('menu');
     }
 
+    preload() {
+        this.width = this.game.screenBaseSize.width;
+        this.height = this.game.screenBaseSize.height;
+
+        this.handlerScene = this.scene.get('handler');
+        this.handlerScene.sceneRunning = 'menu';
+        this.sceneStopped = false;
+    }
     create() {
-        this.add.image(0, 0, 'menu_background').setOrigin(0);
-        this.add.text(540, 10, 'SurVIser', {
+        const  width = this.handlerScene.scale.width;
+        const  height = this.handlerScene.scale.height;
+        // CONFIG SCENE
+        this.handlerScene.updateResize(this)
+        // CONFIG SCENE
+
+        const bg = this.add.image(0, 0, 'menu_background').setOrigin(0);
+        const scaleX = width / bg.width;
+        const scaleY = height / bg.height;
+        bg.setScale(scaleX, scaleY );
+        this.add.text(540 * scaleX, 10 * scaleY, 'SurVIser', {
             color: 'white',
             fontSize: '100pt',
             fontFamily: 'grobold'
         });
 
+        const character_selection_container = this.add.container(795 * scaleX, 350 * scaleY);
         // Create the hero selection objects but set them as invisible initially
-        const characterSelectionBackground = this.add.image(795, 350, 'character_selection_background');
-        const characterSelectionTitle = this.add.text(590, 90, 'Character Selection', {
+        const characterSelectionBackground = this.add.image(0, 0, 'character_selection_background');
+        const characterSelectionTitle = this.add.text( 110 - characterSelectionBackground.width / 2, - characterSelectionBackground.height / 2  + 30 , 'Character Selection', {
             color: 'white',
             fontSize: '42px',
             fontFamily: 'grobold'
-        });
-        const characterBackground1 = this.add.image(600, 280, 'character_background').setVisible(false);
-        const characterBackground1_selected = this.add.image(600, 280, 'character_selected_background').setVisible(false);
-        const characterBackground2 = this.add.image(795, 280, 'character_background').setVisible(false);
-        const todoCharacter = this.add.image(795, 280, 'todo_character').setVisible(false);
-        const todoLabel = this.add.text(755, 338, '???', {
+        }).setOrigin(0);
+        const characterBackground1 = this.add.image(130 - characterSelectionBackground.width / 2 ,50 - characterSelectionBackground.height / 5 , 'character_background').setVisible(false);
+        const characterBackground1_selected = this.add.image(130 - characterSelectionBackground.width / 2 , 50 - characterSelectionBackground.height / 5 , 'character_selected_background').setVisible(false);
+        const characterBackground2 = this.add.image(150 + characterBackground1.width - characterSelectionBackground.width / 2 , 50 - characterSelectionBackground.height / 5, 'character_background').setVisible(false);
+        const todoCharacter = this.add.image(150 + characterBackground1.width - characterSelectionBackground.width / 2, 50 - characterSelectionBackground.height / 5, 'todo_character').setVisible(false);
+        const todoLabel = this.add.text(110 + characterBackground1.width - characterSelectionBackground.width / 2, 110 - characterSelectionBackground.height / 5, '???', {
             color: 'white',
             fontSize: '40px',
             fontFamily: 'grobold'
         }).setVisible(false);
-        const viCharacter = this.add.image(590, 220, 'vi').setVisible(false);
+        const viCharacter = this.add.image(130 - characterSelectionBackground.width / 2,- 10 - characterSelectionBackground.height / 5, 'vi').setVisible(false);
         viCharacter.setScale(0.85);
-        const viLabel = this.add.text(580, 338, 'Vi', {
+        const viLabel = this.add.text(100 - characterSelectionBackground.width / 2, 110 - characterSelectionBackground.height / 5, 'Vi', {
             color: 'white',
             fontSize: '40px',
+            fontFamily: 'grobold'
+        }).setVisible(false);
+        const tutorialBackground = this.add.image(0, 0, 'tutorial_background').setVisible(false);
+        const tutorialLabel = this.add.text(180 - characterSelectionBackground.width / 2, - characterSelectionBackground.height / 2  + 30 , 'TUTORIAL', {
+            color: 'white',
+            fontSize: '48px',
             fontFamily: 'grobold'
         }).setVisible(false);
 
+        character_selection_container.add([characterSelectionBackground, characterSelectionTitle, characterBackground1 ,
+            characterBackground1_selected, characterBackground2, todoCharacter, todoLabel, viCharacter, viLabel, tutorialBackground, tutorialLabel]);
+        character_selection_container.setSize(characterSelectionBackground.width, characterSelectionBackground.height);
+
         // Container for the start button
-        const start_btn_container = this.add.container(795, 770);
+        const start_btn_container = this.add.container(795 * scaleX, 770 * scaleY);
         const start_btn = this.add.image(0, 0, 'green_btn');
         const startLabel = this.add.text(-80, -30, 'START', {
             color: 'white',
@@ -47,7 +78,7 @@ export default class MenuScene extends Phaser.Scene {
         start_btn_container.setSize(start_btn.width, start_btn.height);
 
         // Container for the back button
-        const back_btn_container = this.add.container(795, 770);
+        const back_btn_container = this.add.container(795 * scaleX, 770 * scaleY);
         const back_btn = this.add.image(0, 0, 'red_btn');
         const backLabel = this.add.text(-80, -30, 'BACK', {
             color: 'white',
@@ -58,7 +89,7 @@ export default class MenuScene extends Phaser.Scene {
         back_btn_container.setSize(back_btn.width, back_btn.height);
 
         // Container for the confirm button
-        const confirm_btn_container = this.add.container(795, 770);
+        const confirm_btn_container = this.add.container(795 * scaleX, 770 * scaleY);
         const confirm_btn = this.add.image(0, 0, 'green_btn');
         const confirmLabel = this.add.text(-110, -30, 'CONFIRM', {
             color: 'white',
@@ -95,8 +126,6 @@ export default class MenuScene extends Phaser.Scene {
             todoLabel.setVisible(false);
             characterBackground1_selected.setVisible(false);
         };
-
-        const tutorialBackground = this.add.image(795, 350, 'tutorial_background').setVisible(false);
 
         let isHeroSelectionVisible = false;
 
@@ -149,11 +178,7 @@ export default class MenuScene extends Phaser.Scene {
                 this.sound.play('btn2_sound');
                 if (!confirmButtonPressed) {
                     tutorialBackground.setVisible(true);
-                    const tutorialLabel = this.add.text(670, 90, 'TUTORIAL', {
-                        color: 'white',
-                        fontSize: '48px',
-                        fontFamily: 'grobold'
-                    });
+                    tutorialLabel.setVisible(true);
                     confirmButtonPressed = true;
                 } else {
                     this.scene.start('zeus');

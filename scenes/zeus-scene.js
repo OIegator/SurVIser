@@ -3,11 +3,8 @@ import {BulletGroup} from "../src/BulletGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
 //======================FX===============
-import PixelatedFX from '../assets/pipelines/PixelatedFX.js';
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
-import Seek from "../src/ai/steerings/seek";
 import HealthBar from "../src/UI-Bar/HealthBar";
-import PowerUp from "../src/power-ups/power-up";
 import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
 import PickUp from "../src/power-ups/pick-up";
@@ -505,7 +502,6 @@ let ZeusScene = new Phaser.Class({
         worldLayer.setCollisionBetween(1, 500);
         aboveLayer.setDepth(10);
 
-
         this.physics.world.bounds.width = this.map.widthInPixels;
         this.physics.world.bounds.height = this.map.heightInPixels;
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -772,7 +768,7 @@ let ZeusScene = new Phaser.Class({
             loop: true
         });
 
-        const fullWidth = 1540;
+        const fullWidth = this.scale.width - 50;
         this.expBar = new HealthBar({
             scene: this,
             max: 500,
@@ -793,14 +789,14 @@ let ZeusScene = new Phaser.Class({
         this.elapsedTime = 0;
         this.isTimerPaused = false;
 
-        this.timerText = this.add.text(760, 30, '0:00', {
+        this.timerText = this.add.text(this.scale.width / 2, 30, '0:00', {
             color: 'white',
             fontSize: '32pt',
             fontFamily: 'Squada One'
         });
         this.timerText.setScrollFactor(0);
         this.timerText.setDepth(11);
-        this.lvlText = this.add.text(1500, 5, this.player.isConfig.lvl + " LVL", {
+        this.lvlText = this.add.text(this.scale.width - 100, 5, this.player.isConfig.lvl + " LVL", {
             color: 'white',
             fontSize: '16pt',
             fontFamily: 'Squada One'
@@ -847,6 +843,7 @@ let ZeusScene = new Phaser.Class({
             self.biomeCrossed[biomeName] = false;
         });
     },
+
 
     update(time) {
         //this.biomeCrossing(this);
@@ -1077,7 +1074,7 @@ let ZeusScene = new Phaser.Class({
                 } else if (element.constructor.name === "Gary") {
                     if (element.isDead) {
                         element.destroy();
-                        this.scene.start('credits');
+                        self.start('credits');
                     }
                 } else {
                     if (element.isDead) {

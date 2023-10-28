@@ -5,7 +5,16 @@ export default class PauseScene extends Phaser.Scene {
         super('pause');
     }
 
+    handlerScene = null
+    sceneStopped = false
+    preload() {
+        this.width = this.game.screenBaseSize.width;
+        this.height = this.game.screenBaseSize.height;
 
+        this.handlerScene = this.scene.get('handler');
+        this.handlerScene.sceneRunning = 'menu';
+        this.sceneStopped = false;
+    }
     resume() {
         const zeus_scene = this.scene.get('zeus');
         zeus_scene.onResume();
@@ -14,6 +23,9 @@ export default class PauseScene extends Phaser.Scene {
     }
 
     create() {
+        // CONFIG SCENE
+        this.handlerScene.updateResize(this)
+        // CONFIG SCENE
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         const player_config = this.registry.get('player_config');
 

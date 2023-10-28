@@ -98,6 +98,8 @@ import dmg from "../assets/sprites/projectile/red_sphere.png";
 
 export default class Boot extends Phaser.Scene {
 
+    handlerScene = null
+    sceneStopped = false
     constructor() {
         super('boot');
     }
@@ -111,7 +113,14 @@ export default class Boot extends Phaser.Scene {
         this.bersFrameConfig = { frameWidth: 500, frameHeight: 500 };
         this.golemFrameConfig = {frameWidth: 996, frameHeight: 709};
         this.wizardFrameConfig = { frameWidth: 500, frameHeight: 500 };
-        this.garyFrameConfig = {frameWidth: 500, frameHeight: 500},
+        this.garyFrameConfig = {frameWidth: 500, frameHeight: 500};
+
+        this.width = this.game.screenBaseSize.width;
+        this.height = this.game.screenBaseSize.height;
+
+        this.handlerScene = this.scene.get('handler');
+        this.handlerScene.sceneRunning = 'boot';
+        this.sceneStopped = false;
 
         //loading map tiles and json with positions
         this.load.image("tiles", tilemapPng);
@@ -185,8 +194,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('vi_icon', vi_icon);
         this.load.image('star', star);
 
-
-
         //loading menu
         this.load.image('menu_background', menu_background);
         this.load.image('gameover_background', gameover_background);
@@ -222,7 +229,7 @@ export default class Boot extends Phaser.Scene {
                 color: 0xffffff
             }
         })
-        this.add.text(700, 500,  "LOADING", {
+        this.add.text(this.game.renderer.width / 2 - 60, this.game.renderer.height / 2 - 50,  "LOADING", {
             color: 'white',
             fontSize: '32pt',
             fontFamily: 'grobold'
@@ -256,7 +263,12 @@ export default class Boot extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(800, 500,  "LOADING", {
+        const { width, height} = this
+        // CONFIG SCENE
+        this.handlerScene.updateResize(this)
+        // CONFIG SCENE
+
+        this.add.text(width / 2, height / 2,  "LOADING", {
             color: 'white',
             fontSize: '32pt',
             fontFamily: 'grobold'

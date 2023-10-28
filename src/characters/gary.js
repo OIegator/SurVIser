@@ -249,8 +249,6 @@ export default class Gary extends Boss {
             const dashSpeed = 1000; // Adjust the speed as desired
             const tintedAreaHeight = 50;
 
-            // Calculate the direction vector towards the specified coordinates
-            const direction = new Phaser.Math.Vector2(endX - startX, endY - startY).normalize().scale(dashSpeed);
 
             const distance = Phaser.Math.Distance.Between(startX, startY, endX, endY);
             const duration = (distance / dashSpeed) * 1000; // Calculate the duration based on the distance and speed
@@ -323,9 +321,6 @@ export default class Gary extends Boss {
             // Calculate the end coordinates based on the random angle and distance
             const endX = startX + Math.cos(randomAngle) * randomDistance;
             const endY = startY + Math.sin(randomAngle) * randomDistance;
-
-            // Calculate the direction vector towards the random coordinates
-            const direction = new Phaser.Math.Vector2(endX - startX, endY - startY).normalize().scale(dashSpeed);
 
             const distance = Phaser.Math.Distance.Between(startX, startY, endX, endY);
             const duration = distance / dashSpeed * 1000; // Calculate the duration based on the distance and speed
@@ -484,7 +479,7 @@ export default class Gary extends Boss {
             return State.SUCCEEDED;
         },
         InitHealthBar: () => {
-            this.initHealthBar(550, 850);
+            this.initHealthBar(this.scene.scale.width * 0.35, this.scene.scale.height * 0.95);
 
             return State.SUCCEEDED;
         },

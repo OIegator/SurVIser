@@ -160,7 +160,7 @@ export default class Golem extends Boss {
             return State.SUCCEEDED;
         },
         InitHealthBar: () => {
-            this.initHealthBar(550, 850);
+            this.initHealthBar(this.scene.scale.width * 0.35, this.scene.scale.height * 0.95);
             return State.SUCCEEDED;
         },
         IsFarEnough: () => {
@@ -170,10 +170,6 @@ export default class Golem extends Boss {
             return !Phaser.Geom.Circle.ContainsPoint(closeRange, playerPos);
         },
         IsCloseEnough: () => {
-            // Get the screen size
-            const screenWidth = this.scene.cameras.main.width;
-            const screenHeight = this.scene.cameras.main.height;
-            // Calculate the range zone based on screen size
 
             const attackZone = {
                 x: this.scene.player.x - 100,

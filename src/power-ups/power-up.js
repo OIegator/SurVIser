@@ -17,6 +17,7 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
         this.setScale(dictScale[name]);
         this.postFX.addGlow(dictColor[name]);
         this.key = key;
+       // this.postFX.addBloom();
         scene.physics.world.enable(this);
         scene.add.existing(this);
     }

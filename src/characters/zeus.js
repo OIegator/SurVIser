@@ -183,7 +183,7 @@ export default class Zeus extends Boss {
             return State.SUCCEEDED;
         },
         InitHealthBar: () => {
-            this.initHealthBar(550, 850);
+            this.initHealthBar(this.scene.scale.width * 0.35, this.scene.scale.height * 0.95);
             return State.SUCCEEDED;
         },
         IsFarEnough: () => {
