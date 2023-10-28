@@ -181,7 +181,7 @@ export default class LvlUpScene extends Phaser.Scene {
         updateButtonTint();
 
         // Handle keyboard input
-        this.input.keyboard.on('keydown', (event) => {
+        this.input.keyboard.on('keyup', (event) => {
             const { code } = event;
             const previousButton = selectedButton;
 

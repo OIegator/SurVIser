@@ -2,20 +2,17 @@ import {LightningGroup} from "../src/LightningGroup";
 import {BulletGroup} from "../src/BulletGroup";
 import CharacterFactory from "../src/characters/character_factory"
 import AutoAttack from "../src/projectiles/AutoAttack.js"
-//======================FX===============
 import BlurFX from '../assets/pipelines/BlurPostFX.js';
 import HealthBar from "../src/UI-Bar/HealthBar";
 import Ordinary from "../src/characters/ordinary_mob";
 import Projectile from "../src/projectiles/Projectile";
 import PickUp from "../src/power-ups/pick-up";
 
-let inZone = false;
-const maxLower = 10;
-let currLower = 0;
 
 let ZeusScene = new Phaser.Class({
 
     Extends: Phaser.Scene, lightningGroup: undefined, bulletGroup: undefined, zeus: undefined, biomes: undefined,
+    music: undefined,
 
 
     initialize: function ZeusScene() {
@@ -24,7 +21,9 @@ let ZeusScene = new Phaser.Class({
 
     gameover() {
         setTimeout(() => {
-            this.sound.pauseAll();
+            this.music.stop();
+            this.events.off();
+            this.gameoverSoundCooldown = false;
             this.scene.start('gameover');
         }, 2000);
     },
@@ -42,7 +41,7 @@ let ZeusScene = new Phaser.Class({
             this.cameras.main.setPostPipeline(BlurFX);
             this.input.keyboard.off('keydown_SPACE', this.lvlUP);
             this.pauseTimer();
-            this.sound.pauseAll();
+            this.music.pause();
             this.scene.pause();
             this.scene.launch('lvl-up');
         }
@@ -52,7 +51,7 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.setPostPipeline(BlurFX);
         this.input.keyboard.off('keydown_ESC', this.esc);
         this.pauseTimer();
-        this.sound.pauseAll();
+        this.music.pause();
         this.scene.pause();
         this.scene.launch('pause');
     },
@@ -121,7 +120,6 @@ let ZeusScene = new Phaser.Class({
             const duration = 1500;
             const speed = distance / duration;
             const speedSec = 1000 * speed;
-            const tSpeed = 1 / duration;
 
             const fire = new Projectile(this, start.x, start.y, 'fire');
             this.enAttacks.push(fire);
@@ -130,7 +128,6 @@ let ZeusScene = new Phaser.Class({
             fire.setCircle(50);
             fire.postFX.addGlow(0xffea00);
             fire.setOffset(80, 30);
-            //fire.setRotation(angle);
 
             if (Math.abs(angle) < 90)
                 fire.flipX = true;
@@ -151,8 +148,6 @@ let ZeusScene = new Phaser.Class({
                     curve.getTangent(t, tempVec);
                     fire.body.velocity.copy(tempVec.scale(speedSec));
                     fire.setRotation(tempVec.angle());
-                    //Rotate the fire. Пока отключил, потому что непонятно как сделать красиво
-                    //ship.setRotation(tempVec.angle()/10.0);
                 }
             };
 
@@ -175,7 +170,7 @@ let ZeusScene = new Phaser.Class({
                 add = -offset;
             const attack = new AutoAttack(this, x + add, y, key);
             attack.body.setSize(size, size);
-            if (attacker.constructor.name === "Golem")
+            if (attacker.constName === "Golem")
                 attack.isTossing = true;
             this.enAttacks.push(attack);
             this.physics.add.collider(attack, this.worldLayer);
@@ -229,14 +224,14 @@ let ZeusScene = new Phaser.Class({
 
         this.enemies.forEach((element) => {
             if (this.cameras.main.worldView.contains(element.x, element.y)) {
-                if (element.constructor.name === "Ordinary" ||
-                    element.constructor.name === "Lower") {
-                    element.GetHit(50);
-                } else {
+                element.GetHit(50);
+            }
+        });
+
+        this.clydes.forEach((element) => {
+            if (this.cameras.main.worldView.contains(element.x, element.y)) {
                     element.behaviour.GetHit(50);
                 }
-
-            }
         });
     },
 
@@ -330,7 +325,7 @@ let ZeusScene = new Phaser.Class({
                 else
                     count++;
         });
-        if (count == 4)
+        if (count === 4)
             scene.player.biome = "border";
     },
 
@@ -338,45 +333,45 @@ let ZeusScene = new Phaser.Class({
 
         switch (scene.player.biome) {
             case "border":
-                if (scene.bers.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.bers.x, scene.bers.y))
+                if (scene.bers.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.bers.x, scene.bers.y) && scene.bers.isDead == false)
                     scene.bers.reset();
-                if (scene.golem.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.golem.x, scene.golem.y))
+                if (scene.golem.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.golem.x, scene.golem.y) && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.wizard.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.wizard.x, scene.wizard.y))
+                if (scene.wizard.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.wizard.x, scene.wizard.y) && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.zeus.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.zeus.x, scene.zeus.y))
+                if (scene.zeus.state !== "patrol" && !scene.cameras.main.worldView.contains(scene.zeus.x, scene.zeus.y) && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "tundra":
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "desert":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
                 break;
             case "meadow":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.golem.state !== "patrol")
+                if (scene.golem.state !== "patrol" && scene.bers.isDead == false)
                     scene.golem.reset();
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
                 break;
             case "castle":
-                if (scene.wizard.state !== "patrol")
+                if (scene.wizard.state !== "patrol" && scene.bers.isDead == false)
                     scene.wizard.reset();
-                if (scene.zeus.state !== "patrol")
+                if (scene.zeus.state !== "patrol" && scene.bers.isDead == false)
                     scene.zeus.reset();
-                if (scene.bers.state !== "patrol")
+                if (scene.bers.state !== "patrol" && scene.bers.isDead == false)
                     scene.bers.reset();
                 break;
         }
@@ -464,8 +459,11 @@ let ZeusScene = new Phaser.Class({
     },
 
     create: function () {
+        this.maxLower = 10;
+        this.currLower = 0;
         this.attacks = [];
         this.enemies = [];
+        this.clydes = [];
         this.enAttacks = [];
         this.pickUps = [];
         this.iconDictionary = {};
@@ -502,6 +500,7 @@ let ZeusScene = new Phaser.Class({
         worldLayer.setCollisionBetween(1, 500);
         aboveLayer.setDepth(10);
 
+
         this.physics.world.bounds.width = this.map.widthInPixels;
         this.physics.world.bounds.height = this.map.heightInPixels;
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -519,7 +518,6 @@ let ZeusScene = new Phaser.Class({
         this.cameras.main.startFollow(this.player);
         this.registry.set('player_config', this.player.isConfig);
 
-
         this.zeus = this.characterFactory.buildZeus("zeus", 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.zeus);
         this.physics.add.collider(this.zeus, worldLayer);
@@ -535,10 +533,6 @@ let ZeusScene = new Phaser.Class({
         this.wizard = this.characterFactory.buildWizard("wizard", this.physics.world.bounds.width - 1200, this.physics.world.bounds.height - 1200, 100);
         this.gameObjects.push(this.wizard);
         this.physics.add.collider(this.wizard, worldLayer);
-
-        // this.gary = this.characterFactory.buildGary("gary", this.physics.world.bounds.width / 2 + 500, this.physics.world.bounds.height / 2 - 500, 100);
-        // this.gameObjects.push(this.gary);
-        // this.physics.add.collider(this.gary, worldLayer);
 
         let pinkies = this.characterFactory.buildOrdinaries('pinky');
         pinkies.forEach((pinky) => {
@@ -575,7 +569,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         // !!!Danger!!!
@@ -614,7 +608,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'meadow');
@@ -651,7 +645,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'desert');
@@ -688,7 +682,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
 
         pinkies = this.characterFactory.buildOrdinaries('pinky', 'castle');
@@ -725,7 +719,7 @@ let ZeusScene = new Phaser.Class({
                 this.physics.add.collider(clyde, enemy);
             });
 
-            this.enemies.push(clyde);
+            this.clydes.push(clyde);
         });
         //////////////////
         /////////////////
@@ -750,7 +744,8 @@ let ZeusScene = new Phaser.Class({
                         attack.scaleX = 0.8 + 0.025 * args.player.isConfig.attackRange;
                         attack.scaleY = 0.5 + 0.025 * args.player.isConfig.attackRange;
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'lightning')) {
-                            args.lightningGroup.fireLightning(args.player.x, args.player.y, args.enemies);
+                            const allEnem = args.enemies.concat(args.clydes);
+                            args.lightningGroup.fireLightning(args.player.x, args.player.y, allEnem);
                         }
                         if (args.player.powerUps.some(powerUp => powerUp.texture.key === 'dd')) {
                             attack = new AutoAttack(args, args.player.x - (add * 1.4), args.player.y + 30, 'attack');
@@ -768,11 +763,11 @@ let ZeusScene = new Phaser.Class({
             loop: true
         });
 
-        const fullWidth = this.scale.width - 50;
+        const fullWidth = 1540;
         this.expBar = new HealthBar({
             scene: this,
             max: 500,
-            current: 100,
+            current: 1,
             animate: true,
             damageColor: false,
             displayData: {
@@ -789,14 +784,14 @@ let ZeusScene = new Phaser.Class({
         this.elapsedTime = 0;
         this.isTimerPaused = false;
 
-        this.timerText = this.add.text(this.scale.width / 2, 30, '0:00', {
+        this.timerText = this.add.text(760, 30, '0:00', {
             color: 'white',
             fontSize: '32pt',
             fontFamily: 'Squada One'
         });
         this.timerText.setScrollFactor(0);
         this.timerText.setDepth(11);
-        this.lvlText = this.add.text(this.scale.width - 100, 5, this.player.isConfig.lvl + " LVL", {
+        this.lvlText = this.add.text(1500, 5, this.player.isConfig.lvl + " LVL", {
             color: 'white',
             fontSize: '16pt',
             fontFamily: 'Squada One'
@@ -822,9 +817,10 @@ let ZeusScene = new Phaser.Class({
         // this.powerUpsGroup.add(new PowerUp(this, 8314, 8000, 'dd', 'dd_icon'));
         // this.powerUpsGroup.add(new PowerUp(this, 8414, 8000, 'magic', 'magic_icon'));
 
-        this.sound.play("main_theme", {
+        this.music = this.sound.add("main_theme", {
             loop: true
         });
+        this.music.play();
 
         this.biomes = this.add.group();
         // this.biomes.add(this.createBiome(3450, 3400, 6900, 6800, 'desert'));
@@ -844,10 +840,8 @@ let ZeusScene = new Phaser.Class({
         });
     },
 
-
     update(time) {
         //this.biomeCrossing(this);
-
 
         this.lvlText.setText(this.player.isConfig.lvl + ' LVL')
         this.lvlText.setStyle({
@@ -868,7 +862,7 @@ let ZeusScene = new Phaser.Class({
                 // Set a cooldown to prevent playing the sound again too soon
                 this.gameoverSoundCooldown = true;
                 this.time.addEvent({
-                    delay: 3000,
+                    delay: 2000,
                     callback: () => {
                         this.gameoverSoundCooldown = false;
                     }
@@ -878,8 +872,13 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            //this.lvlUP();
-            //this.player.healthBar.highColor = 0x0000ff;
+            // this.lvlUP();
+            // this.player.healthBar.highColor = 0x0000ff;
+            // this.player.GetHit(100);
+            // this.registry.destroy();
+            // this.events.off();
+            // this.music.stop();
+            // this.scene.restart();
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
@@ -909,28 +908,30 @@ let ZeusScene = new Phaser.Class({
         }
 
         if (this.attacks) {
-            this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
-                if (attack.constructor.name === "Projectile") {
-                    if (mob.constructor.name === "Shooter" && this.canDamage) {
+            this.physics.overlap(this.attacks, this.clydes, (attack, mob) => {
+                if (attack.constName === "Projectile" && this.canDamage) {
                         mob.behaviour.GetHit();
                         this.canDamage = false; // Set the flag false to prevent further damage
                         setTimeout(() => {
                             this.canDamage = true; // Set the flag to true after the delay
                         }, 1500); // 1.5 seconds delay
-                    } else {
-                        mob.gotDamage = true;
-                    }
+                    
                 } else if (!attack.affectedEnemies.includes(mob)) {
-                    if (mob.constructor.name === "Shooter") {
-                        mob.behaviour.GetHit();
-                    } else {
-                        mob.gotDamage = true;
-                    }
+                    mob.behaviour.GetHit();
+                    attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
+                }
+            });
+
+            this.physics.overlap(this.attacks, this.enemies, (attack, mob) => {
+                if (attack.constName === "Projectile") {
+                    mob.gotDamage = true;
+                } else if (!attack.affectedEnemies.includes(mob)) {
+                    mob.gotDamage = true;
                     attack.affectedEnemies.push(mob); // Add the enemy to affectedEnemies
                 }
             });
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
@@ -997,7 +998,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
@@ -1031,7 +1032,7 @@ let ZeusScene = new Phaser.Class({
             });
 
             this.attacks.forEach(function (element) {
-                if (element.constructor.name !== "ShockCircle")
+                if (element.duration !== 1500)
                     element.update(time);
             });
         }
@@ -1039,56 +1040,63 @@ let ZeusScene = new Phaser.Class({
 
         if (this.gameObjects) {
             this.gameObjects.forEach((element) => {
-                element.update(inZone);
+                element.update();
             });
             const self = this;
             this.gameObjects.forEach(function (element, index, object) {
-                if (element.constructor.name === "Lower") {
-                    if (element.isDead) {
-                        const rand = Math.random() * 100;
-                        if (rand <= 3)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(50);
-                        element.destroy();
-                        object.splice(index, 1);
-                        currLower--;
-                    }
-                } else if (element.constructor.name === "Ordinary") {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(210);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
-                } else if (element.constructor.name === "Shooter") {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        self.expUP(80);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
-                } else if (element.constructor.name === "Gary") {
-                    if (element.isDead) {
-                        element.destroy();
-                        self.start('credits');
-                    }
-                } else {
-                    if (element.isDead) {
-                        const rand = Math.floor(Math.random() * 3);
-                        if (rand === 1)
-                            self.spawnPickUp(element.x, element.y);
-                        element.destroy();
-                        object.splice(index, 1);
-                    }
+
+                switch (element.constName) {
+                    case "Lower":
+                        if (element.isDead) {
+                            const rand = Math.random() * 100;
+                            if (rand <= 3)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(50);
+                            element.destroy();
+                            object.splice(index, 1);
+                            self.currLower--;
+                        }
+                        break;
+                    case "Ordinary":
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(210);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
+                    case "Shooter":
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            self.expUP(80);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
+                    case "Gary":
+                        if (element.isDead) {
+                            element.destroy();
+                            self.scene.start('credits');
+                        }
+                        break;
+                    default:
+                        if (element.isDead) {
+                            const rand = Math.floor(Math.random() * 3);
+                            if (rand === 1)
+                                self.spawnPickUp(element.x, element.y);
+                            element.destroy();
+                            object.splice(index, 1);
+                        }
+                        break;
                 }
             });
 
-            let i = currLower;
-            while (i < maxLower) {
+            let i = this.currLower;
+            while (i < this.maxLower) {
                 const inky = this.characterFactory.buildLowerCharacter(this, "inky", this.player.x, this.player.y, this.cameras.main.width);
                 this.gameObjects.push(inky);
 
@@ -1113,10 +1121,10 @@ let ZeusScene = new Phaser.Class({
                 i++;
             }
 
-            currLower = maxLower;
+            this.currLower = this.maxLower;
 
             this.gameObjects.forEach(function (element) {
-                if (element.constructor.name === "Lower") {
+                if (element.constName === "Lower") {
                     element.outsideCameraCheck(self);
                 }
             });

@@ -30,6 +30,7 @@ export default class Lower extends Phaser.Physics.Arcade.Sprite {
         super(scene, spawnX, spawnY, name, frame);
         this.scene = scene;
         this.setScale(0.4);
+        this.constName = "Lower";
         scene.physics.world.enable(this);
         scene.add.existing(this);
         this.velocity = velocity;

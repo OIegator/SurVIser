@@ -160,7 +160,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         }
 
         if(powerUp.name === "armor") {
-            this.changeSpritesheet('pinky', 2);
+            this.changeSpritesheet('vi_skull', 2);
         }
         // Remove the power-up from the scene
         powerUp.destroy();

@@ -10,6 +10,7 @@ export default class Ordinary extends Character {
         this.body.setOffset(120, 210);
         this.isOffset(120, 210);
         this.hp = 0;
+        this.constName = "Ordinary";
         this.maxSpeed = 50;
         this.lastAttackTime = 0;
         this.state = 'idle';
